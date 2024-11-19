@@ -24,10 +24,8 @@ public class NativeCurses {
      public static final int DARK_YELLOW = 15;
      public static final int LIGHT_YELLOW = 16;
  
-     // dll library
      static { System.loadLibrary("curses"); }
  
-     // JNI native methods
      public native void init();
      public native void destroy();
      public native void cls();
@@ -39,8 +37,9 @@ public class NativeCurses {
      public native int getch();
      public native int getHeight();
      public native int getWidth();
- 
-     // constructor()
+     public native void drawBox(int x, int y, int width, int height);
+     private native int createWindow(int x, int y, int width, int height);
+
      public NativeCurses() {
          init();
      }

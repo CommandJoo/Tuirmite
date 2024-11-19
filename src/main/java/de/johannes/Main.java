@@ -11,11 +11,9 @@ public class Main {
         boolean stop = false;
         while(!stop) {
             curses.setColor(NativeCurses.DARK_CYAN);
-            curses.drawString("Hello World: "+curses.getHeight()+":"+curses.getWidth(), 10+(new Random().nextInt(10)), 2);
+            curses.drawBox(0, 0, 20, 10);
             curses.getch();
-            curses.cls();
         }
         curses.destroy();
-        curses.cls();
     }
 }

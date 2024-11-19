@@ -1,12 +1,16 @@
 #include "stdio.h"
+#include "string.h"
 #include "de_curses_NativeCurses.h"
 #include <curses.h>
 #include <locale.h>
-#include "string.h"
+#include <stdlib.h>
+#include "time.h"
 
 // init()
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_init(JNIEnv * env, jobject obj) {
 	setlocale(LC_CTYPE, "");
+	srand(time(NULL));
+	HashMap map = new Hash	
     // initialize standard curses features
     initscr();
     cbreak();
@@ -26,13 +30,13 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_init(JNIEnv * env, jobject ob
 }
 
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_destroy(JNIEnv *, jobject) {
-	curs_set(1);
 	clear();
+	curs_set(1);
+	endwin();
 }
 
 // cls()
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_cls(JNIEnv * env, jobject obj) {
-
 	clear();
 }
 
@@ -79,9 +83,7 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_print(JNIEnv * env, jobject o
 
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_printstr(JNIEnv * env, jobject obj, jstring str) {
     const char *txt = (*env)->GetStringUTFChars(env, str, 0);
-	for(int i = 0; i < strlen(txt); i++) {
-		addch(txt[i]);
-	}
+	printw(txt);
 	refresh();
     (*env)->ReleaseStringUTFChars(env, str, txt);
 }
@@ -110,3 +112,20 @@ JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getHeight(JNIEnv *, jobject) 
 JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getWidth(JNIEnv *, jobject) {
     return getmaxx(stdscr);
 }
+
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawBox(JNIEnv *, jobject obj, jint x, jint y, jint width, jint height) {
+	WINDOW *local_win;
+    local_win = newwin(height, width, y, x);
+	wborder(local_win, 0, 0, 0, 0, 0, 0, 0, 0);
+    box(local_win, 0 , 0);
+    wrefresh(local_win);
+	delwin(local_win);
+}
+
+JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_createWindow(JNIEnv *, jobject obj, jint x, jint y, jint width, jint height) {
+	WINDOW *local_win = newwin(height, width, y, x);
+	
+	return rand() % 10000;
+}
+
+
