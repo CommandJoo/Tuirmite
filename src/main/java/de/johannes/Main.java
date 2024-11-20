@@ -1,10 +1,6 @@
 package de.johannes;
 
 import de.curses.NativeCurses;
-import de.curses.window.Textfield;
-import de.curses.window.Window;
-
-import java.util.Random;
 
 public class Main {
 
