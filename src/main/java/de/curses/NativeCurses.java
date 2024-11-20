@@ -36,6 +36,7 @@ public class NativeCurses {
 
     public native void setColor(int color);
     public native int defineColor(int color, float r, float g, float b);
+    public native int defineColorPair(int color, int foreground, int background);
 
     public native void print(char ch);
 

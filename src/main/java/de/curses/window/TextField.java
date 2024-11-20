@@ -43,4 +43,8 @@ public class TextField extends Window{
     public String input() {
         return input.toString();
     }
+
+    public void clear() {
+        this.input.setLength(0);
+    }
 }

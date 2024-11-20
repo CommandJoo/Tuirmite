@@ -78,8 +78,12 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_setColor(JNIEnv * env, jobjec
 
 JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_defineColor(JNIEnv *, jobject, jint color, jfloat r, jfloat g, jfloat b) {
 	init_color(color, r*1000, g*1000, b*1000);
-    init_pair(color, color, COLOR_BLACK);
 	return color;
+}
+
+JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_defineColorPair(JNIEnv *, jobject, jint pair, jint foreground, jint background) {
+    init_pair(pair, foreground, background);
+	return pair;
 }
 
 // print()
