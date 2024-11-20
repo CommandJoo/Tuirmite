@@ -35,6 +35,7 @@ public class NativeCurses {
     public native void moveCursor(int x, int y);
 
     public native void setColor(int color);
+    public native int defineColor(int color, float r, float g, float b);
 
     public native void print(char ch);
 
@@ -59,6 +60,11 @@ public class NativeCurses {
     }
 
     public void drawString(String str, int x, int y) {
+        moveCursor(x, y);
+        printstr(str);
+    }
+    public void drawString(String str, int x, int y, int color) {
+        setColor(color);
         moveCursor(x, y);
         printstr(str);
     }

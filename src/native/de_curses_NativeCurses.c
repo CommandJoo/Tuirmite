@@ -19,7 +19,6 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_init(JNIEnv * env, jobject ob
     keypad(stdscr, TRUE);
     curs_set(0);
     // set pre-definied colors
-	use_default_colors();
     start_color();
     init_pair(de_curses_NativeCurses_BLACK, COLOR_BLACK, COLOR_BLACK);
     init_pair(de_curses_NativeCurses_LIGHT_GRAY, COLOR_WHITE, COLOR_BLACK);
@@ -75,6 +74,12 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_setColor(JNIEnv * env, jobjec
     } else {
         wattron(stdscr, COLOR_PAIR(color) | A_NORMAL);
     }
+}
+
+JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_defineColor(JNIEnv *, jobject, jint color, jfloat r, jfloat g, jfloat b) {
+	init_color(color, r*1000, g*1000, b*1000);
+    init_pair(color, color, COLOR_BLACK);
+	return color;
 }
 
 // print()
