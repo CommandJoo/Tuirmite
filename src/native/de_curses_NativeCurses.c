@@ -9,15 +9,17 @@
 // init()
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_init(JNIEnv * env, jobject obj) {
 	setlocale(LC_CTYPE, "");
+	
 	srand(time(NULL));
-	HashMap map = new Hash	
     // initialize standard curses features
     initscr();
-    cbreak();
+    //cbreak();
+	raw();//accept ctrl-c as getch() args
     noecho();
     keypad(stdscr, TRUE);
     curs_set(0);
     // set pre-definied colors
+	use_default_colors();
     start_color();
     init_pair(de_curses_NativeCurses_BLACK, COLOR_BLACK, COLOR_BLACK);
     init_pair(de_curses_NativeCurses_LIGHT_GRAY, COLOR_WHITE, COLOR_BLACK);
@@ -88,11 +90,31 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_printstr(JNIEnv * env, jobjec
     (*env)->ReleaseStringUTFChars(env, str, txt);
 }
 
+bool kbhit() {
+int ch = getch();
+	if(ch != ERR) {
+		ungetch(ch);
+		refresh();
+		return true;
+	}else {
+		refresh();
+		return false;
+	}
+}
 
-JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getch(JNIEnv * env, jobject obj) {
-    flushinp();
-    int ch = getch();
-    return ch;
+JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getch(JNIEnv * env, jobject obj, jboolean val) {
+    //flushinp();
+	if(!val) {
+		nodelay(stdscr, TRUE);
+		if(kbhit()) {
+			return getch();
+		}else {
+			return 0;
+		}
+	}else {
+		nodelay(stdscr, FALSE);
+		return getch();
+	}
 }
 
 /*
@@ -114,18 +136,12 @@ JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getWidth(JNIEnv *, jobject) {
 }
 
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawBox(JNIEnv *, jobject obj, jint x, jint y, jint width, jint height) {
-	WINDOW *local_win;
-    local_win = newwin(height, width, y, x);
-	wborder(local_win, 0, 0, 0, 0, 0, 0, 0, 0);
-    box(local_win, 0 , 0);
-    wrefresh(local_win);
-	delwin(local_win);
+	mvaddch(y, x, ACS_ULCORNER);
+	mvvline(y+1, x, 0, height-1);
+	mvaddch(y, x+width, ACS_URCORNER);
+	mvvline(y+1, x+width, 0, height-1);
+	mvaddch(y+height, x, ACS_LLCORNER);
+	mvhline(y, x+1, 0, width-1);
+	mvaddch(y+height, x+width, ACS_LRCORNER);
+	mvhline(y+height, x+1, 0, width-1);
 }
-
-JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_createWindow(JNIEnv *, jobject obj, jint x, jint y, jint width, jint height) {
-	WINDOW *local_win = newwin(height, width, y, x);
-	
-	return rand() % 10000;
-}
-
-
