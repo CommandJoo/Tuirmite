@@ -52,13 +52,13 @@ public abstract class Window {
     }
 
     public void drawString(int x, int y, String s, int width, int color) {
-        if(x+width > this.x+this.width) {
-            width-=(x+width)-(this.x+this.width);
+        if(this.x+x+width > this.x+this.width) {
+            width-=(this.x+x+width)-(this.x+this.width);
         }
         if(s.length() > width) s = s.substring(0, width);
-        NativeCurses.instance().drawString(s, x, y, color);
+        NativeCurses.instance().drawString(s, this.x+x, this.y+y, color);
         NativeCurses.instance().drawString(" ".repeat(width-s.length()),
-                x+s.length(), y, 0);
+                this.x+x+s.length(), this.y+y, 0);
         this.touch();
     }
 
@@ -67,12 +67,12 @@ public abstract class Window {
             int overlap = s.length()-width;
             s = s.substring(overlap/2, width-(overlap/2));
         }
-        NativeCurses.instance().drawString(s, x-(s.length()/2), y, color);
+        NativeCurses.instance().drawString(s, this.x+x-(s.length()/2), this.y+y, color);
         int free = width-s.length();
         NativeCurses.instance().drawString(" ".repeat(free/2),
-                x-(s.length()/2)-(free/2), y,0);
+                this.x+x-(s.length()/2)-(free/2), this.y+y,0);
         NativeCurses.instance().drawString(" ".repeat(free/2),
-                x+(s.length()/2)+(free/2), y,0);
+                this.x+x+(s.length()/2)+(free/2), this.y+y,0);
         this.touch();
     }
 

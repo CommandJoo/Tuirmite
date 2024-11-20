@@ -31,11 +31,11 @@ public class TextField extends Window{
 
             String text = !input.isEmpty() ? input.toString() : placeholder;
             String cursor = !input.isEmpty() ? blinker.check(500) ? " " : "█" : "";
-            drawString(x+1,y+1, text+cursor, width-2, color);
+            drawString(1,1, text+cursor, width-2, color);
             if(blinker.check(1000)) blinker.reset();
 
             if(false) {
-                if(!input.isEmpty()) drawString(x+1, y+2, String.valueOf((int)input.charAt(input.length()-1)), 2, color);
+                if(!input.isEmpty()) drawString(1, 2, String.valueOf((int)input.charAt(input.length()-1)), 2, color);
             }
         }
     }
