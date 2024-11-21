@@ -4,16 +4,19 @@ import de.curses.util.Timer;
 
 public class TextField extends Window{
     protected final String placeholder;
+    protected final Window parent;
 
-    public TextField(int x, int y, int width) {
-        this(x,y,width, "");
+    public TextField(Window parent, int x, int y, int width) {
+        this(parent, x,y,width, "");
     }
 
-    public TextField(int x, int y, int width, String placeholder) {
-        super(x, y, width, 2);
+    public TextField(Window parent, int x, int y, int width, String placeholder) {
+        super(parent.x+x, parent.y+y, width, 2);
         this.input = new StringBuilder();
         this.blinker = new Timer();
         this.placeholder = placeholder;
+        this.parent = parent;
+        this.color = parent.color;
     }
 
     protected final StringBuilder input;

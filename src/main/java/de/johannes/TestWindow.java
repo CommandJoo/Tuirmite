@@ -14,7 +14,7 @@ public class TestWindow extends Window {
 
     public TestWindow(int x, int y, int width, int height) {
         super(x, y, width, height, ColorBuilder.create().defineForeground(Color.red).build(), "Hello World");
-        this.tf = new TextField(x+1, y+height-3, width-2, "Enter Password:");
+        this.tf = new TextField(this,1, height-3, width-2, "Enter Password:");
         this.lines = new LinkedList<>();
     }
 

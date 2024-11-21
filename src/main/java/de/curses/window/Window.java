@@ -1,6 +1,7 @@
 package de.curses.window;
 
 import de.curses.NativeCurses;
+import de.curses.util.ColorBuilder;
 
 import java.util.Random;
 
@@ -90,4 +91,13 @@ public abstract class Window {
     public boolean touched() {
         return this.touched;
     }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public void setColor(String hex) {
+        this.color = new ColorBuilder().defineForeground(hex).build();
+    }
+
 }

@@ -2,12 +2,12 @@ package de.curses.window;
 
 public class PasswordField extends TextField{
 
-    public PasswordField(int x, int y, int width) {
-        super(x, y, width);
+    public PasswordField(Window parent, int x, int y, int width) {
+        super(parent, x, y, width);
     }
 
-    public PasswordField(int x, int y, int width, String placeholder) {
-        super(x, y, width, placeholder);
+    public PasswordField(Window parent, int x, int y, int width, String placeholder) {
+        super(parent, x, y, width, placeholder);
     }
 
     @Override
