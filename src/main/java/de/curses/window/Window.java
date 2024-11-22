@@ -36,20 +36,15 @@ public abstract class Window {
     }
 
     public void init() {}
-
-    public void drawWindow() throws IOException {
+    public void drawWindow()  {
         if(this.touched()) {
             this.touched = false;
             this.drawBox();
             this.draw();
         }
     }
-
-    protected abstract void draw() throws IOException;
-
-    public void handleKey(char ch) {
-
-    }
+    protected abstract void draw();
+    public abstract void handleKey(char ch);
 
 
     private void drawBox() {
@@ -87,6 +82,14 @@ public abstract class Window {
                 this.x+x+s.length(), this.y+y, 0);
         this.touch();
     }
+    public void drawStringIndependent(int x, int y, String s, int width, int color) {
+        if(width < 0) return;
+        if(s.length() > width) s = s.substring(0, width);
+        NativeCurses.instance().drawString(s, x, y, color);
+        NativeCurses.instance().drawString(" ".repeat(width-s.length()),
+                x+s.length(), y, 0);
+        this.touch();
+    }
 
     public void drawCenteredString(int x, int y, String s, int width, int color) {
         if(width==-1) {
@@ -105,8 +108,25 @@ public abstract class Window {
                 this.x+x+(s.length()/2)+(free/2), this.y+y,0);
         this.touch();
     }
+    public void drawCenteredStringIndependent(int x, int y, String s, int width, int color) {
+        if(width==-1) {
+            NativeCurses.instance().drawString(s, x-(s.length()/2), y, color);
+            return;
+        }
+        if(s.length() > width) {
+            int overlap = s.length()-width;
+            s = s.substring(overlap/2, width-(overlap/2));
+        }
+        NativeCurses.instance().drawString(s, x-(s.length()/2), y, color);
+        int free = width-s.length();
+        NativeCurses.instance().drawString(" ".repeat(free/2),
+                x-(s.length()/2)-(free/2), y,0);
+        NativeCurses.instance().drawString(" ".repeat(free/2),
+                x+(s.length()/2)+(free/2), y,0);
+        this.touch();
+    }
 
-    public void drawSubWindow(Window window) throws IOException {
+    public void drawSubWindow(Window window) {
         if(window != null) {
             window.drawWindow();
             this.touch();

@@ -21,8 +21,7 @@ public class Main {
         winman.render();
         winman.handleKey();
 
-        Window login = winman.addWindow(0, new LoginWindow());
-        Window test = winman.addWindow(1, new TestWindow());
-        winman.changeWindow(login);
+        Window login = winman.addWindow(0, new LoginWindow(), true);
+        Window test = winman.addWindow(1, new TestWindow(), false);
     }
 }

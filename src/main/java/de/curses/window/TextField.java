@@ -40,7 +40,7 @@ public class TextField extends Window{
         if(ch != 0) {
             if(ch == 263) {
                 input.setLength(Math.max(input.length() - 1, 0));
-            } else if(ch != 10){
+            } else if(ch != 10 && ch != 27){
                 input.append(ch);
             }
         }

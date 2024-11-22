@@ -23,7 +23,7 @@ public class LoginWindow extends Window {
     }
 
     @Override
-    protected void draw() throws IOException {
+    protected void draw()  {
         this.drawSubWindow(username);
         this.drawCenteredString(width/2, 3, "To Login to your Account", -1, color);
         this.drawCenteredString(width/2, 4, "Please enter", -1, color);
@@ -36,7 +36,6 @@ public class LoginWindow extends Window {
         if(ch == 10) {
             Main.username = this.username.input();
             this.username.clear();
-            NativeCurses.instance().cls();
             WindowManager.instance().changeWindow(WindowManager.instance().getWindow(1));
         }
         this.handleKeyForSub(this.username, ch);

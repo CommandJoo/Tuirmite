@@ -1,6 +1,7 @@
 package de.johannes;
 
 import de.curses.NativeCurses;
+import de.curses.WindowManager;
 import de.curses.util.ColorBuilder;
 import de.curses.util.Files;
 import de.curses.window.TextField;
@@ -27,18 +28,10 @@ public class TestWindow extends Window {
     LinkedList<String> lines;
 
     @Override
-    protected void draw() throws IOException {
-        try {
-            for (int i = 0; i < lines.size(); i++) {
-                String line = lines.get(i);
-                drawString(1, 1 + i, line, line.length(), color);
-            }
-        } catch (Exception e) {
-            List<String> exceptions = new ArrayList<>();
-            for(StackTraceElement str : e.getStackTrace()) {
-                exceptions.add(str.toString());
-            }
-            Files.writeFile("/home/Johannes/Coding/output.txt", exceptions);
+    protected void draw() {
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            drawString(1, 1 + i, line, line.length(), color);
         }
         this.drawSubWindow(tf);
     }
@@ -46,6 +39,10 @@ public class TestWindow extends Window {
     @Override
     public void handleKey(char ch) {
         this.handleKeyForSub(tf, ch);
+        if(ch == 27) {
+            Main.username = "";
+            WindowManager.instance().changeWindow(WindowManager.instance().getWindow(0));
+        }
         if (ch == 10) {
             LocalTime ldt = LocalDateTime.now().toLocalTime();
             String time = ldt.getHour() + ":" + ldt.getMinute() + " " + ldt.getSecond();
