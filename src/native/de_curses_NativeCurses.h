@@ -39,6 +39,28 @@ extern "C" {
 #define de_curses_NativeCurses_DARK_YELLOW 15L
 #undef de_curses_NativeCurses_LIGHT_YELLOW
 #define de_curses_NativeCurses_LIGHT_YELLOW 16L
+#undef de_curses_NativeCurses_CORNER_UPPER_LEFT
+#define de_curses_NativeCurses_CORNER_UPPER_LEFT 9484L
+#undef de_curses_NativeCurses_CORNER_UPPER_RIGHT
+#define de_curses_NativeCurses_CORNER_UPPER_RIGHT 9488L
+#undef de_curses_NativeCurses_CORNER_LOWER_LEFT
+#define de_curses_NativeCurses_CORNER_LOWER_LEFT 9492L
+#undef de_curses_NativeCurses_CORNER_LOWER_RIGHT
+#define de_curses_NativeCurses_CORNER_LOWER_RIGHT 9496L
+#undef de_curses_NativeCurses_TEE_DOWN_POINTING
+#define de_curses_NativeCurses_TEE_DOWN_POINTING 9516L
+#undef de_curses_NativeCurses_TEE_UP_POINTING
+#define de_curses_NativeCurses_TEE_UP_POINTING 9524L
+#undef de_curses_NativeCurses_TEE_RIGHT_POINTING
+#define de_curses_NativeCurses_TEE_RIGHT_POINTING 9500L
+#undef de_curses_NativeCurses_TEE_LEFT_POINTING
+#define de_curses_NativeCurses_TEE_LEFT_POINTING 9508L
+#undef de_curses_NativeCurses_CROSS
+#define de_curses_NativeCurses_CROSS 9532L
+#undef de_curses_NativeCurses_LINE_HORIZONTAL
+#define de_curses_NativeCurses_LINE_HORIZONTAL 9472L
+#undef de_curses_NativeCurses_LINE_VERTICAL
+#define de_curses_NativeCurses_LINE_VERTICAL 9474L
 /*
  * Class:     de_curses_NativeCurses
  * Method:    init
@@ -122,10 +144,10 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_printstr
 /*
  * Class:     de_curses_NativeCurses
  * Method:    getch
- * Signature: (Z)I
+ * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getch
-  (JNIEnv *, jobject, jboolean);
+  (JNIEnv *, jobject);
 
 /*
  * Class:     de_curses_NativeCurses
@@ -150,6 +172,38 @@ JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getWidth
  */
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawBox
   (JNIEnv *, jobject, jint, jint, jint, jint);
+
+/*
+ * Class:     de_curses_NativeCurses
+ * Method:    drawHorizontalLine
+ * Signature: (III)V
+ */
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawHorizontalLine
+  (JNIEnv *, jobject, jint, jint, jint);
+
+/*
+ * Class:     de_curses_NativeCurses
+ * Method:    drawVerticalLine
+ * Signature: (III)V
+ */
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawVerticalLine
+  (JNIEnv *, jobject, jint, jint, jint);
+
+/*
+ * Class:     de_curses_NativeCurses
+ * Method:    drawCorner
+ * Signature: (III)V
+ */
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawCorner
+  (JNIEnv *, jobject, jint, jint, jint);
+
+/*
+ * Class:     de_curses_NativeCurses
+ * Method:    drawTee
+ * Signature: (III)V
+ */
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawTee
+  (JNIEnv *, jobject, jint, jint, jint);
 
 #ifdef __cplusplus
 }

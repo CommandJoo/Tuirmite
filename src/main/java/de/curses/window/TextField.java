@@ -22,16 +22,8 @@ public class TextField extends Window{
     protected final StringBuilder input;
     protected final Timer blinker;
     @Override
-    protected void draw(char ch) {
+    protected void draw() {
         if(input != null) {
-            if(ch != 0) {
-                if(ch == 263) {
-                    input.setLength(Math.max(input.length() - 1, 0));
-                } else if(ch != 10){
-                    input.append(ch);
-                }
-            }
-
             String text = !input.isEmpty() ? input.toString() : placeholder;
             String cursor = !input.isEmpty() ? blinker.check(500) ? " " : "█" : "";
             drawString(1,1, text+cursor, width-2, color);
@@ -39,6 +31,17 @@ public class TextField extends Window{
 
             if(false) {
                 if(!input.isEmpty()) drawString(1, 2, String.valueOf((int)input.charAt(input.length()-1)), 2, color);
+            }
+        }
+    }
+
+    @Override
+    public void handleKey(char ch) {
+        if(ch != 0) {
+            if(ch == 263) {
+                input.setLength(Math.max(input.length() - 1, 0));
+            } else if(ch != 10){
+                input.append(ch);
             }
         }
     }

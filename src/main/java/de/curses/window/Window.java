@@ -31,25 +31,48 @@ public abstract class Window {
         this.height = height;
         this.color = color;
         this.title = title;
+        this.init();
     }
 
-    public void drawWindow(char ch) {
+    public void init() {}
+
+    public void drawWindow() {
         if(this.touched()) {
             this.touched = false;
             this.drawBox();
-            this.draw(ch);
+            this.draw();
         }
     }
 
-    protected abstract void draw(char ch);
+    protected abstract void draw();
+
+    public void handleKey(char ch) {
+
+    }
+
 
     private void drawBox() {
         NativeCurses.instance().setColor(color);
-        NativeCurses.instance().drawBox(x,y,width,height);
 
-        if(!this.title.isEmpty()) {
-            drawCenteredString(x+width/2-1, y, title, title.length()+2, color);
+        NativeCurses.instance().drawCorner(x,y,2);
+        NativeCurses.instance().drawCorner(x+width,y,1);
+        NativeCurses.instance().drawCorner(x,y+height,3);
+        NativeCurses.instance().drawCorner(x+width,y+height,0);
+
+        if(title.isEmpty()) {
+            NativeCurses.instance().drawHorizontalLine(y, x+1, x+width);
+        }else {
+            int halfTitle = (title.length()+3)/2;
+            int correction = title.length()%2==0 ? 1 : 0;
+            NativeCurses.instance().drawHorizontalLine(y, x+1, x+((width/2)-halfTitle-1-correction));
+            NativeCurses.instance().drawHorizontalLine(y, x+((width/2)+halfTitle), x+width);
+            NativeCurses.instance().drawTee(x+(width/2)-halfTitle-1-correction, y, 1);
+            NativeCurses.instance().drawTee(x+(width/2)+halfTitle-1, y, 0);
+            drawCenteredString(width/2-1, 0, title, title.length(), color);
         }
+        NativeCurses.instance().drawHorizontalLine(y+height, x+1, x+width);
+        NativeCurses.instance().drawVerticalLine(x, y+1, y+height);
+        NativeCurses.instance().drawVerticalLine(x+width, y+1, y+height);
     }
 
     public void drawString(int x, int y, String s, int width, int color) {
@@ -64,6 +87,10 @@ public abstract class Window {
     }
 
     public void drawCenteredString(int x, int y, String s, int width, int color) {
+        if(width==-1) {
+            NativeCurses.instance().drawString(s, this.x+x-(s.length()/2), this.y+y, color);
+            return;
+        }
         if(s.length() > width) {
             int overlap = s.length()-width;
             s = s.substring(overlap/2, width-(overlap/2));
@@ -77,11 +104,15 @@ public abstract class Window {
         this.touch();
     }
 
-    public void drawSubWindow(Window window, char ch) {
+    public void drawSubWindow(Window window) {
         if(window != null) {
-            window.drawWindow(ch);
+            window.drawWindow();
             this.touch();
         }
+    }
+
+    public void handleKeyForSub(Window window, char ch) {
+        window.handleKey(ch);
     }
 
     protected void touch() {

@@ -1,3 +1,4 @@
+all: header compile lib
 header:
 	javac -h . ../main/java/de/curses/NativeCurses.java
 compile:

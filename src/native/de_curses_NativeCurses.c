@@ -111,19 +111,8 @@ int ch = getch();
 	}
 }
 
-JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getch(JNIEnv * env, jobject obj, jboolean val) {
-    //flushinp();
-	if(!val) {
-		nodelay(stdscr, TRUE);
-		if(kbhit()) {
-			return getch();
-		}else {
-			return 0;
-		}
-	}else {
-		nodelay(stdscr, FALSE);
-		return getch();
-	}
+JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getch(JNIEnv * env, jobject obj) {
+	return getch();
 }
 
 /*
@@ -153,4 +142,68 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawBox(JNIEnv *, jobject obj
 	mvhline(y, x+1, 0, width-1);
 	mvaddch(y+height, x+width, ACS_LRCORNER);
 	mvhline(y+height, x+1, 0, width-1);
+}
+
+/*
+ * Class:     de_curses_NativeCurses
+ * Method:    drawHorizontalLine
+ * Signature: (III)V
+ */
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawHorizontalLine(JNIEnv *, jobject, jint y, jint x1, jint x2) {
+	mvhline(y, x1, 0, x2-x1);
+}
+
+/*
+ * Class:     de_curses_NativeCurses
+ * Method:    drawVerticalLine
+ * Signature: (III)V
+ */
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawVerticalLine(JNIEnv *, jobject, jint x, jint y1, jint y2) {
+	mvvline(y1, x, 0, y2-y1);
+}
+
+/*
+ * Class:     de_curses_NativeCurses
+ * Method:    drawCorner
+ * Signature: (II)V
+ */
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawCorner(JNIEnv *, jobject, jint x, jint y, jint type) {
+	switch(type) {
+		case 0:
+			mvaddch(y,x, ACS_LRCORNER);
+			break;
+		case 1:
+			mvaddch(y,x, ACS_URCORNER);
+			break;
+		case 2:
+			mvaddch(y,x, ACS_ULCORNER);
+			break;
+		case 3:
+			mvaddch(y,x, ACS_LLCORNER);
+			break;
+		default:
+			break;
+	}
+}
+
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawTee(JNIEnv *, jobject, jint x, jint y, jint type) {
+	switch(type) {
+		case 0:
+			mvaddch(y,x, ACS_LTEE);
+			break;
+		case 1:
+			mvaddch(y,x, ACS_RTEE);
+			break;
+		case 2:
+			mvaddch(y,x, ACS_BTEE);
+			break;
+		case 3:
+			mvaddch(y,x, ACS_TTEE);
+			break;
+		case 4:
+			mvaddch(y,x, ACS_PLUS);
+			break;
+		default:
+			break;
+	}
 }
