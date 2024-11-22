@@ -3,6 +3,7 @@ package de.curses;
 import de.curses.util.Timer;
 import de.curses.window.Window;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class WindowManager {
@@ -33,7 +34,11 @@ public class WindowManager {
             while (running) {
                 if(fpsTimer.check(1000/fps)) {
                     if(active != null) {
-                        active.drawWindow();
+                        try {
+                            active.drawWindow();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                     fpsTimer.reset();
                 }

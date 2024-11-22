@@ -2,15 +2,18 @@ package de.johannes;
 
 import de.curses.NativeCurses;
 import de.curses.util.ColorBuilder;
-import de.curses.window.PasswordField;
+import de.curses.util.Files;
 import de.curses.window.TextField;
 import de.curses.window.Window;
 
-import javax.print.attribute.standard.MediaSize;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class TestWindow extends Window {
 
@@ -24,13 +27,18 @@ public class TestWindow extends Window {
     LinkedList<String> lines;
 
     @Override
-    protected void draw() {
+    protected void draw() throws IOException {
         try {
             for (int i = 0; i < lines.size(); i++) {
                 String line = lines.get(i);
-                drawString(x + 1, y + 1 + i, line, line.length(), color);
+                drawString(1, 1 + i, line, line.length(), color);
             }
         } catch (Exception e) {
+            List<String> exceptions = new ArrayList<>();
+            for(StackTraceElement str : e.getStackTrace()) {
+                exceptions.add(str.toString());
+            }
+            Files.writeFile("/home/Johannes/Coding/output.txt", exceptions);
         }
         this.drawSubWindow(tf);
     }

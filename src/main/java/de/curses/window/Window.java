@@ -3,6 +3,7 @@ package de.curses.window;
 import de.curses.NativeCurses;
 import de.curses.util.ColorBuilder;
 
+import java.io.IOException;
 import java.util.Random;
 
 public abstract class Window {
@@ -36,7 +37,7 @@ public abstract class Window {
 
     public void init() {}
 
-    public void drawWindow() {
+    public void drawWindow() throws IOException {
         if(this.touched()) {
             this.touched = false;
             this.drawBox();
@@ -44,7 +45,7 @@ public abstract class Window {
         }
     }
 
-    protected abstract void draw();
+    protected abstract void draw() throws IOException;
 
     public void handleKey(char ch) {
 
@@ -76,8 +77,9 @@ public abstract class Window {
     }
 
     public void drawString(int x, int y, String s, int width, int color) {
+        if(width < 0) return;
         if(this.x+x+width > this.x+this.width) {
-            width-=(this.x+x+width)-(this.x+this.width);
+            width-=(this.width-x);
         }
         if(s.length() > width) s = s.substring(0, width);
         NativeCurses.instance().drawString(s, this.x+x, this.y+y, color);
@@ -104,7 +106,7 @@ public abstract class Window {
         this.touch();
     }
 
-    public void drawSubWindow(Window window) {
+    public void drawSubWindow(Window window) throws IOException {
         if(window != null) {
             window.drawWindow();
             this.touch();

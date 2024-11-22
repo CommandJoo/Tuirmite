@@ -7,6 +7,7 @@ import de.curses.window.TextField;
 import de.curses.window.Window;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class LoginWindow extends Window {
     public LoginWindow() {
@@ -22,7 +23,7 @@ public class LoginWindow extends Window {
     }
 
     @Override
-    protected void draw() {
+    protected void draw() throws IOException {
         this.drawSubWindow(username);
         this.drawCenteredString(width/2, 3, "To Login to your Account", -1, color);
         this.drawCenteredString(width/2, 4, "Please enter", -1, color);
