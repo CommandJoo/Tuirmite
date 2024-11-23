@@ -1,7 +1,6 @@
 package de.johannes;
 
 import de.curses.WindowManager;
-import de.curses.util.Timer;
 import de.curses.window.Window;
 
 public class Main {
@@ -16,5 +15,10 @@ public class Main {
 
         Window login = winman.addWindow(0, new LoginWindow(), true);
         Window test = winman.addWindow(1, new TestWindow(), false);
+    }
+
+
+    public static String username() {
+        return username;
     }
 }
