@@ -8,10 +8,13 @@ import java.util.Random;
 
 public abstract class Window {
 
-    protected final int x, y, width, height;
-    protected int color;
+    public final int x;
+    public final int y;
+    public final int width;
+    public final int height;
+    public int color;
     protected final String title;
-    protected boolean touched = true;
+    public boolean touched = true;
 
     public Window(int x, int y, int width, int height) {
         this(x,y,width,height, NativeCurses.WHITE);

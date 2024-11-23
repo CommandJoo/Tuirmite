@@ -1,6 +1,8 @@
-package de.curses.window;
+package de.curses.window.components;
 
-public class PasswordField extends TextField{
+import de.curses.window.Window;
+
+public class PasswordField extends TextField {
 
     public PasswordField(Window parent, int x, int y, int width) {
         super(parent, x, y, width);

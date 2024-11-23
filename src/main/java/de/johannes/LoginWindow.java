@@ -3,11 +3,10 @@ package de.johannes;
 import de.curses.NativeCurses;
 import de.curses.WindowManager;
 import de.curses.util.ColorBuilder;
-import de.curses.window.TextField;
+import de.curses.window.components.TextField;
 import de.curses.window.Window;
 
 import java.awt.*;
-import java.io.IOException;
 
 public class LoginWindow extends Window {
     public LoginWindow() {

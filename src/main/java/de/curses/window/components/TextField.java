@@ -1,8 +1,10 @@
-package de.curses.window;
+package de.curses.window.components;
 
 import de.curses.util.Timer;
+import de.curses.window.Keys;
+import de.curses.window.Window;
 
-public class TextField extends Window{
+public class TextField extends Window {
     protected final String placeholder;
     protected final Window parent;
 
@@ -29,7 +31,7 @@ public class TextField extends Window{
             drawString(1,1, text+cursor, width-2, color);
             if(blinker.check(1000)) blinker.reset();
 
-            if(false) {
+            if(true) {
                 if(!input.isEmpty()) drawString(1, 2, String.valueOf((int)input.charAt(input.length()-1)), 2, color);
             }
         }
@@ -38,9 +40,9 @@ public class TextField extends Window{
     @Override
     public void handleKey(char ch) {
         if(ch != 0) {
-            if(ch == 263) {
+            if(ch == Keys.BACK_SPACE) {
                 input.setLength(Math.max(input.length() - 1, 0));
-            } else if(ch != 10 && ch != 27){
+            } else if(ch != Keys.ENTER && ch != Keys.DOUBLE_ESCAPE){
                 input.append(ch);
             }
         }

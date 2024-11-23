@@ -3,18 +3,13 @@ package de.johannes;
 import de.curses.NativeCurses;
 import de.curses.WindowManager;
 import de.curses.util.ColorBuilder;
-import de.curses.util.Files;
-import de.curses.window.TextField;
+import de.curses.window.components.TextField;
 import de.curses.window.Window;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public class TestWindow extends Window {
 
