@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("com.gradleup.shadow") version("8.3.3")
+    id("maven-publish")
 }
 
 group = "de.johannes"
