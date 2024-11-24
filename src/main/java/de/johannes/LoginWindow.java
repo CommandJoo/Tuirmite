@@ -3,6 +3,7 @@ package de.johannes;
 import de.curses.NativeCurses;
 import de.curses.WindowManager;
 import de.curses.util.ColorBuilder;
+import de.curses.window.components.Button;
 import de.curses.window.components.TextField;
 import de.curses.window.components.Window;
 
@@ -11,8 +12,8 @@ import java.awt.*;
 public class LoginWindow extends Window {
     public LoginWindow() {
         super(null,
-                NativeCurses.instance().getWidth()/2-30,
-                NativeCurses.instance().getHeight()/2-6,
+                NativeCurses.instance().getWidth() / 2 - 30,
+                NativeCurses.instance().getHeight() / 2 - 6,
                 60,
                 12,
                 ColorBuilder.create().defineForeground(new Color(70, 200, 150)).build(),
@@ -20,26 +21,26 @@ public class LoginWindow extends Window {
     }
 
     private TextField username;
+    private Button enter;
 
     @Override
     public void init() {
         super.init();
-        this.username = new TextField(this, 1, height-3, width-2, "Username");
-        this.username.setFocused(true);
+        this.username = (TextField) this.addComponent(0, new TextField(this, 1, height - 3, (width / 4) * 3 - 2, "Username"));
+        this.enter = (Button) this.addComponent(1, new Button(this, width / 4 * 3, height - 3, width / 4 - 1, 2, "Enter"));
     }
 
     @Override
-    public void draw()  {
-        this.drawComponent(username);
-        this.drawCenteredString(width/2, 3, "To Login to your Account", -1, color);
-        this.drawCenteredString(width/2, 4, "Please enter", -1, color);
-        this.drawCenteredString(width/2, 5, "Your accounts username", -1, color);
-        this.drawCenteredString(width/2, 6, "Into the Textfield down below:", -1, color);
+    public void draw() {
+        this.drawCenteredString(width / 2, 3, "To Login to your Account", -1, color);
+        this.drawCenteredString(width / 2, 4, "Please enter", -1, color);
+        this.drawCenteredString(width / 2, 5, "Your accounts username", -1, color);
+        this.drawCenteredString(width / 2, 6, "Into the Text field down below:", -1, color);
     }
 
     @Override
     public boolean handleKey(char ch) {
-        if(ch == 10) {
+        if (ch == 10) {
             Main.username = this.username.input();
             this.username.clear();
             WindowManager.instance().changeWindow(WindowManager.instance().getWindow(1));

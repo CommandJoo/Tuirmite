@@ -21,7 +21,7 @@ public class TestWindow extends Window {
                 30,
                 ColorBuilder.create().defineForeground(Color.red).build(),
                 "Hello World");
-        this.tf = new TextField(this, 1, height - 3, width - 2, "Enter Message:", (int)'c');
+        this.tf = (TextField) this.addComponent(0, new TextField(this, 1, height - 3, width - 2, "Enter Message:", (int)'c'));
         this.lines = new LinkedList<>();
     }
 

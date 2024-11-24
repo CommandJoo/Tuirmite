@@ -3,10 +3,18 @@ package de.curses.window.components;
 import de.curses.NativeCurses;
 import de.curses.window.Component;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
 public abstract class Window extends Component {
 
     protected final String title;
     public boolean touched = true;
+
+    private HashMap<Integer, Component> components;
 
     public Window(Window parent, int x, int y, int width, int height) {
         this(parent, x, y, width, height, NativeCurses.WHITE);
@@ -19,6 +27,7 @@ public abstract class Window extends Component {
     }
     public Window(Window parent, int x, int y, int width, int height, int color, String title) {
         super(parent, x, y, width, height, color);
+        this.components = new HashMap<>();
         this.title = title;
         this.init();
     }
@@ -27,6 +36,9 @@ public abstract class Window extends Component {
         if (this.touched()) {
             this.touched = false;
             this.drawBox(-1);
+            for(Component component : this.getComponents()) {
+                drawComponent(component);
+            }
             this.draw();
         }
     }
@@ -101,5 +113,25 @@ public abstract class Window extends Component {
         return this.touched;
     }
 
+    public Component addComponent(int id, Component component) {
+        if (this.components.containsKey(id))
+            throw new IllegalArgumentException("Component with ID: " + id + " already registered");
+        this.components.put(id, component);
+        return component;
+    }
+
+    public List<Component> getComponents() {
+        return List.copyOf(this.components.values());
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Component>List<? extends T> getComponents(Class<T> clazz) {
+        List<Component> components = getComponents();
+        List<T> elements = new ArrayList<>();
+        components.forEach(comp -> {
+            if(comp.getClass().isAssignableFrom(clazz)) elements.add((T) comp);
+        });
+        return elements;
+    }
 
 }

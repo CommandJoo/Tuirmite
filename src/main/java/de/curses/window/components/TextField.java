@@ -33,15 +33,15 @@ public class TextField extends Component {
     protected final Timer blinker;
     @Override
     public void draw() {
-        this.drawBox(focused ? -1 : 17);
+        this.drawBox((focused||toggleKey==-1) ? -1 : 17);
         if(input != null) {
             String text = !input.isEmpty() ? input.toString() : placeholder;
             String cursor = !input.isEmpty() ? blinker.check(500) ? " " : "█" : "";
-            drawString(1,1, text+cursor, width-2, focused ? color : 17);
+            drawString(1,1, text+cursor, width-2, (focused||toggleKey==-1) ? color : 17);
             if(blinker.check(1000)) blinker.reset();
 
             if(false) {
-                if(!input.isEmpty()) drawString(1, 2, String.valueOf((int)input.charAt(input.length()-1)), 2, focused ? color : 17);
+                if(!input.isEmpty()) drawString(1, 2, String.valueOf((int)input.charAt(input.length()-1)), 2, (focused||toggleKey==-1) ? color : 17);
             }
         }
     }
