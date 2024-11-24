@@ -1,7 +1,7 @@
 package de.johannes;
 
 import de.curses.WindowManager;
-import de.curses.window.Window;
+import de.curses.window.components.Window;
 
 public class Main {
 

@@ -1,10 +1,7 @@
-package de.curses.window;
+package de.curses.window.components;
 
 import de.curses.NativeCurses;
-import de.curses.util.ColorBuilder;
-
-import java.io.IOException;
-import java.util.Random;
+import de.curses.window.Component;
 
 public abstract class Window extends Component {
 
@@ -92,8 +89,8 @@ public abstract class Window extends Component {
         }
     }
 
-    public void handleKeyForSub(Component component, char ch) {
-        component.handleKey(ch);
+    public boolean handleKeyForSub(Component component, char ch) {
+        return component.handleKey(ch);
     }
 
     protected void touch() {

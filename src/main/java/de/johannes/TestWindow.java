@@ -4,7 +4,7 @@ import de.curses.NativeCurses;
 import de.curses.WindowManager;
 import de.curses.util.ColorBuilder;
 import de.curses.window.components.TextField;
-import de.curses.window.Window;
+import de.curses.window.components.Window;
 
 import java.awt.*;
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class TestWindow extends Window {
                 30,
                 ColorBuilder.create().defineForeground(Color.red).build(),
                 "Hello World");
-        this.tf = new TextField(this, 1, height - 3, width - 2, "Enter Password:");
+        this.tf = new TextField(this, 1, height - 3, width - 2, "Enter Message:", (int)'c');
         this.lines = new LinkedList<>();
     }
 
@@ -29,7 +29,7 @@ public class TestWindow extends Window {
     LinkedList<String> lines;
 
     @Override
-    protected void draw() {
+    public void draw() {
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             drawString(1, 1 + i, line, line.length(), color);
@@ -38,17 +38,20 @@ public class TestWindow extends Window {
     }
 
     @Override
-    public void handleKey(char ch) {
-        this.handleKeyForSub(tf, ch);
-        if(ch == 27) {
-            Main.username = "";
-            WindowManager.instance().changeWindow(WindowManager.instance().getWindow(0));
+    public boolean handleKey(char ch) {
+        boolean b = this.handleKeyForSub(tf, ch);
+        if(!b) {
+            if(ch == 27 && !this.tf.isFocused()) {
+                Main.username = "";
+                WindowManager.instance().changeWindow(WindowManager.instance().getWindow(0));
+            }
+            if (ch == 10) {
+                LocalTime ldt = LocalDateTime.now().toLocalTime();
+                String time = ldt.getHour() + ":" + ldt.getMinute() + " " + ldt.getSecond();
+                lines.add(time + " (" + Main.username + "): " + this.tf.input());
+                this.tf.clear();
+            }
         }
-        if (ch == 10) {
-            LocalTime ldt = LocalDateTime.now().toLocalTime();
-            String time = ldt.getHour() + ":" + ldt.getMinute() + " " + ldt.getSecond();
-            lines.add(time + " (" + Main.username + "): " + this.tf.input());
-            this.tf.clear();
-        }
+        return false;
     }
 }

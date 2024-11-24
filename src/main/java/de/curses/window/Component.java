@@ -2,6 +2,7 @@ package de.curses.window;
 
 import de.curses.NativeCurses;
 import de.curses.util.ColorBuilder;
+import de.curses.window.components.Window;
 
 public abstract class Component {
 
@@ -30,8 +31,8 @@ public abstract class Component {
     }
 
     public void init() {}
-    protected abstract void draw();
-    public abstract void handleKey(char ch);
+    public abstract void draw();
+    public abstract boolean handleKey(char ch);
 
     protected void drawBox(int color) {
             NativeCurses.instance().setColor(color == -1 ? this.color : color);

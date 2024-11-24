@@ -1,7 +1,5 @@
 package de.curses.window.components;
 
-import de.curses.window.Window;
-
 public class PasswordField extends TextField {
 
     public PasswordField(Window parent, int x, int y, int width) {
@@ -12,8 +10,12 @@ public class PasswordField extends TextField {
         super(parent, x, y, width, placeholder);
     }
 
+    public PasswordField(Window parent, int x, int y, int width, String placeholder, int toggleKey) {
+        super(parent, x, y, width, placeholder, toggleKey);
+    }
+
     @Override
-    protected void draw() {
+    public void draw() {
         if(input != null) {
             String text = !input.isEmpty() ? "*".repeat(input.length()) : placeholder;
             String cursor = !input.isEmpty() ? blinker.check(500) ? " " : "█" : "";

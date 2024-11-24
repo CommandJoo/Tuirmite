@@ -1,9 +1,8 @@
 package de.curses;
 
 import de.curses.util.Timer;
-import de.curses.window.Window;
+import de.curses.window.components.Window;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 public class WindowManager {
@@ -47,9 +46,13 @@ public class WindowManager {
             while (running) {
                 int in = NativeCurses.instance().getch();
                 if (in == 3) {
-                    running = false;
-                    kill();
-                    System.exit(0);
+                    try {
+                        running = false;
+                        Thread.sleep((long) (1000/(fps*0.75)));
+                        kill();
+                        System.exit(0);
+                    } catch(Exception _) {
+                    }
                     break;
                 }
                 if (active != null) {
