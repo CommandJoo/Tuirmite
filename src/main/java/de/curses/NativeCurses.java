@@ -167,7 +167,9 @@ public class NativeCurses {
      * @return the color id
      */
     public native int defineColor(int color, float r, float g, float b);
-
+    public int defineColor(int color, int r, int g, int b) {
+        return defineColor(color, r/255F, g/255F, b/255F);
+    }
     /**
      * Define color pair int.
      *
@@ -273,6 +275,8 @@ public class NativeCurses {
         }
         instance = this;
         init();
+        defineColor(17, 0.4F, 0.4F, 0.4F);
+        defineColorPair(17, 17, 0);
     }
 
     /**

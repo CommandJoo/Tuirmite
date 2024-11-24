@@ -14,7 +14,13 @@ import java.util.LinkedList;
 public class TestWindow extends Window {
 
     public TestWindow() {
-        super(NativeCurses.instance().getWidth() / 2 - 30, NativeCurses.instance().getHeight() / 2 - 15, 60, 30, ColorBuilder.create().defineForeground(Color.red).build(), "Hello World");
+        super(null,
+                NativeCurses.instance().getWidth() / 2 - 30,
+                NativeCurses.instance().getHeight() / 2 - 15,
+                60,
+                30,
+                ColorBuilder.create().defineForeground(Color.red).build(),
+                "Hello World");
         this.tf = new TextField(this, 1, height - 3, width - 2, "Enter Password:");
         this.lines = new LinkedList<>();
     }
@@ -28,7 +34,7 @@ public class TestWindow extends Window {
             String line = lines.get(i);
             drawString(1, 1 + i, line, line.length(), color);
         }
-        this.drawSubWindow(tf);
+        this.drawComponent(tf);
     }
 
     @Override

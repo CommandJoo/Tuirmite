@@ -18,6 +18,7 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_init(JNIEnv * env, jobject ob
     noecho();
     keypad(stdscr, TRUE);
     curs_set(0);
+	set_escdelay(0);
     // set pre-definied colors
     start_color();
     init_pair(de_curses_NativeCurses_BLACK, COLOR_BLACK, COLOR_BLACK);

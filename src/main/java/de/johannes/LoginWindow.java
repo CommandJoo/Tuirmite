@@ -10,7 +10,13 @@ import java.awt.*;
 
 public class LoginWindow extends Window {
     public LoginWindow() {
-        super(NativeCurses.instance().getWidth()/2-30, NativeCurses.instance().getHeight()/2-6, 60, 12, ColorBuilder.create().defineForeground(new Color(70, 200, 150)).build(), "Login");
+        super(null,
+                NativeCurses.instance().getWidth()/2-30,
+                NativeCurses.instance().getHeight()/2-6,
+                60,
+                12,
+                ColorBuilder.create().defineForeground(new Color(70, 200, 150)).build(),
+                "Login");
     }
 
     private TextField username;
@@ -23,7 +29,7 @@ public class LoginWindow extends Window {
 
     @Override
     protected void draw()  {
-        this.drawSubWindow(username);
+        this.drawComponent(username);
         this.drawCenteredString(width/2, 3, "To Login to your Account", -1, color);
         this.drawCenteredString(width/2, 4, "Please enter", -1, color);
         this.drawCenteredString(width/2, 5, "Your accounts username", -1, color);
