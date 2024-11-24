@@ -22,7 +22,7 @@ cd ./src/native
 make
 ```
 
-Running the source Code
+Running the Jar
 ```sh
 java -Djava.library.path="src/native" -jar "build/libs/NativeTUI-1.0.0-all.jar"
 ```
