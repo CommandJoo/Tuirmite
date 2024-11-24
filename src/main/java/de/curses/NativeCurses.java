@@ -1,5 +1,11 @@
 package de.curses;
 
+import de.curses.util.Files;
+import de.johannes.Main;
+import org.apache.commons.io.IOUtils;
+
+import java.io.*;
+
 /**
  * The type Native curses.
  */
@@ -115,10 +121,6 @@ public class NativeCurses {
      * The constant LINE_VERTICAL.
      */
     public static final char LINE_VERTICAL = '│';
-
-    static {
-        System.loadLibrary("curses");
-    }
 
     /**
      * Init NativeCurses.
@@ -274,6 +276,9 @@ public class NativeCurses {
             throw new RuntimeException("Can only have one instance of NativeCurses running!\nPlease use NativeCurses.instance()");
         }
         instance = this;
+
+        Files.loadLibrary("curses");
+
         init();
         defineColor(17, 0.4F, 0.4F, 0.4F);
         defineColorPair(17, 17, 0);

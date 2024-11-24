@@ -1,1 +1,1 @@
-java -Djava.library.path="${tuipath}src/native" -jar "${tuipath}build/libs/NativeTUI-1.0.0-all.jar"
+java -jar "${tuipath}build/libs/NativeTUI-1.0.0-all.jar"

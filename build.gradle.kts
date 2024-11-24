@@ -18,6 +18,10 @@ dependencies {
 
     implementation("net.sf.jopt-simple:jopt-simple:4.7")
     implementation("com.google.code.gson:gson:2.11.0")
+    implementation("commons-io:commons-io:2.18.0")
+
+    implementation(fileTree(mapOf("dir" to "src/native", "include" to listOf("*.so"))))
+    implementation(fileTree(mapOf("dir" to "src/native", "include" to listOf("*.dll"))))
 }
 
 tasks.withType<Jar> {
