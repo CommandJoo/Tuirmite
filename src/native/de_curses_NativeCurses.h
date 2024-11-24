@@ -61,6 +61,8 @@ extern "C" {
 #define de_curses_NativeCurses_LINE_HORIZONTAL 9472L
 #undef de_curses_NativeCurses_LINE_VERTICAL
 #define de_curses_NativeCurses_LINE_VERTICAL 9474L
+#undef de_curses_NativeCurses_ATTR_REVERSE
+#define de_curses_NativeCurses_ATTR_REVERSE 4L
 /*
  * Class:     de_curses_NativeCurses
  * Method:    init

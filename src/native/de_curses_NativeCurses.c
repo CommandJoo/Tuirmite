@@ -53,6 +53,7 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_moveCursor(JNIEnv * env, jobj
     refresh();
 }
 
+
 // setColor()
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_setColor(JNIEnv * env, jobject obj, jint color) {
     wattroff(stdscr, A_BOLD);

@@ -8,13 +8,11 @@ import java.util.Random;
 public class ColorBuilder {
 
     private static int pairindex, colorindex;
-    private int colorpair, foreground, background;
+    private int foreground, background;
 
     public ColorBuilder() {
         this.foreground= NativeCurses.WHITE;
         this.background= 0;
-        this.colorpair = 20+pairindex;
-        pairindex++;
     }
 
     public static ColorBuilder create() {
@@ -27,9 +25,12 @@ public class ColorBuilder {
         colorindex++;
         return this;
     }
-
     public ColorBuilder defineForeground(String hex) {
-        return this.defineForeground(Color.getColor(hex));
+        return this.defineForeground(Color.decode(hex));
+    }
+    public ColorBuilder defineForeground(int color) {
+        foreground = color;
+        return this;
     }
 
     public ColorBuilder defineBackground(Color color) {
@@ -38,13 +39,22 @@ public class ColorBuilder {
         colorindex++;
         return this;
     }
-
     public ColorBuilder defineBackground(String hex) {
-        return this.defineBackground(Color.getColor(hex));
+        return this.defineBackground(Color.decode(hex));
+    }
+    public ColorBuilder defineBackground(int color) {
+        background = color;
+        return this;
     }
 
     public int build() {
-        return NativeCurses.instance().defineColorPair(this.colorpair, this.foreground, this.background);
+        pairindex++;
+        return NativeCurses.instance().defineColorPair(20+pairindex-1, this.foreground, this.background);
+    }
+
+    public int buildReverse() {
+        pairindex++;
+        return NativeCurses.instance().defineColorPair(20+pairindex-1, this.background, this.foreground);
     }
 
 }

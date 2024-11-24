@@ -83,7 +83,7 @@ public class TextField extends Component {
             if(ch == Keys.BACK_SPACE) {
                 input.setLength(Math.max(input.length() - 1, 0));
                 return true;
-            } else if(ch != Keys.ENTER && ch != Keys.ESCAPE){
+            } else if(ch != Keys.ENTER && ch != Keys.ESCAPE && ((int)ch < 258 || (int)ch > 261)){
                 input.append(ch);
                 return true;
             }else if(ch == Keys.ESCAPE) {
