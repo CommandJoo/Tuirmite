@@ -95,9 +95,10 @@ public abstract class Window extends Component {
 
     public void drawComponent(Component comp) {
         if (comp != null) {
-            if(comp instanceof Window window) {
+            if(comp instanceof Window) {
+                Window window = ((Window) comp);
                 window.drawWindow();
-            }else {
+            } else {
                 comp.draw();
             }
             this.touch();
