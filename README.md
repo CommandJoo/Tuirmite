@@ -24,7 +24,7 @@ make
 
 Running the source Code
 ```sh
-java -Djava.library.path="src/native" -jar "build/libs/NativeTUI-1.0-all.jar"
+java -Djava.library.path="src/native" -jar "build/libs/NativeTUI-1.0.0-all.jar"
 ```
 
 ### Creating a GUI in Java NativeCurses
