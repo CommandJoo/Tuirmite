@@ -24,7 +24,9 @@ make
 
 Running the Jar
 ```sh
-java -Djava.library.path="src/native" -jar "build/libs/NativeTUI-1.0.0-all.jar"
+java -jar "build/libs/JavaCurses.jar"
+#or
+./run
 ```
 
 ### Creating a GUI in Java NativeCurses

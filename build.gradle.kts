@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "de.johannes"
-version = "1.0.0"
+version = "1.0.1"
 
 repositories {
     mavenCentral()
@@ -28,6 +28,7 @@ tasks.withType<Jar> {
     manifest {
         attributes["Main-Class"] = "de.johannes.Main"
     }
+    archiveFileName = "JavaCurses.jar"
 }
 
 tasks.test {
