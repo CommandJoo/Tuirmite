@@ -2,6 +2,7 @@
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
 </p>
+<a href="https://www.cprogramming.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="c" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a>
 
 > Java NativeCurses is an NCurses wrapper written in Java, it provides direct access to many NCurses methods, and also provides an API for directly creating GUIs using Windows Buttons and Text fields
 
@@ -86,7 +87,8 @@ public class MyWindow {
     }
 }
 ```
-A working example of a simple login and chat interface can be found in [ExampleProject](src/main/java/de/johannes/Main.java)
+A working example of a simple login and chat interface can be found in [ExampleProject](src/main/java/de/johannes/testmenu/LoginWindow.java)
+<br> A Simple Snake-Game can also be found here: [Snake](src/main/java/de/johannes/snake/SnakeWindow.java)
 ***
 ## Author
 

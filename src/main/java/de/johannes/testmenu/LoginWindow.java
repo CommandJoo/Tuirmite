@@ -1,15 +1,14 @@
-package de.johannes;
+package de.johannes.testmenu;
 
 import de.curses.NativeCurses;
 import de.curses.WindowManager;
 import de.curses.util.ColorBuilder;
-import de.curses.util.Files;
 import de.curses.window.components.Button;
 import de.curses.window.components.TextField;
 import de.curses.window.components.Window;
+import de.johannes.Main;
 
 import java.awt.*;
-import java.io.File;
 
 public class LoginWindow extends Window {
     public LoginWindow() {
@@ -34,10 +33,10 @@ public class LoginWindow extends Window {
 
     @Override
     public void draw() {
-        this.drawCenteredString(width / 2, 3, "To Login to your Account", -1, color);
-        this.drawCenteredString(width / 2, 4, "Please enter", -1, color);
-        this.drawCenteredString(width / 2, 5, "Your accounts username", -1, color);
-        this.drawCenteredString(width / 2, 5, "Into the Text field down below:",  -1, color);
+        this.drawCenteredString(width / 2, 3, "To Login to your Account", color);
+        this.drawCenteredString(width / 2, 4, "Please enter", color);
+        this.drawCenteredString(width / 2, 5, "Your accounts username", color);
+        this.drawCenteredString(width / 2, 5, "Into the Text field down below:", color);
         if(selected() != null) this.selected().setSelected(true);
     }
 

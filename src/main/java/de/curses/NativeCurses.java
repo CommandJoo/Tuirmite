@@ -269,7 +269,11 @@ Thank you!
      * @param y    the y
      * @param type the type 0 = Right Tee, 1 = Left Tee, 2 = Bottom Tee, 3 = Top Tee, 4 = Cross
      */
-    public native void drawTee(int x, int y, int type);
+    private native void drawTee(int x, int y, int type);
+    public void drawTee(int x, int y, int type, int color) {
+        setColor(color);
+        drawTee(x,y, type);
+    }
 
     public native void refresh();
 

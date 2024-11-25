@@ -1,10 +1,11 @@
-package de.johannes;
+package de.johannes.testmenu;
 
 import de.curses.NativeCurses;
 import de.curses.WindowManager;
 import de.curses.util.ColorBuilder;
 import de.curses.window.components.TextField;
 import de.curses.window.components.Window;
+import de.johannes.Main;
 
 import java.awt.*;
 import java.time.LocalDateTime;
@@ -32,7 +33,7 @@ public class TestWindow extends Window {
     public void draw() {
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
-            drawString(1, 1 + i, line, line.length(), color);
+            drawString(1, 1 + i, line, color);
         }
         this.drawComponent(tf);
     }

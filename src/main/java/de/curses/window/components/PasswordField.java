@@ -19,7 +19,7 @@ public class PasswordField extends TextField {
         if(input != null) {
             String text = !input.isEmpty() ? "*".repeat(input.length()) : placeholder;
             String cursor = !input.isEmpty() ? blinker.check(500) ? " " : "█" : "";
-            drawString(1,1, text+cursor, width-2, color);
+            drawString(1,1, text+cursor, color);
             if(blinker.check(1000)) blinker.reset();
         }
     }

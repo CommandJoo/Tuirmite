@@ -57,40 +57,34 @@ public abstract class Window extends Component {
         NativeCurses.instance().drawCorner(x, y + height, 3);
         NativeCurses.instance().drawCorner(x + width, y + height, 0);
 
-        if (title.isEmpty()) {
-            NativeCurses.instance().drawHorizontalLine(y, x + 1, x + width);
-        } else {
-            int halfTitle = (title.length() + 3) / 2;
-            int correction = title.length() % 2 == 0 ? 1 : 0;
-            NativeCurses.instance().drawHorizontalLine(y, x + 1, x + ((width / 2) - halfTitle - 1 - correction));
-            NativeCurses.instance().drawHorizontalLine(y, x + ((width / 2) + halfTitle), x + width);
-            NativeCurses.instance().drawTee(x + (width / 2) - halfTitle - 1 - correction, y, 1);
-            NativeCurses.instance().drawTee(x + (width / 2) + halfTitle - 1, y, 0);
-            drawCenteredString(width / 2 - 1, 0, title, title.length(), rendercolor);
-        }
+        NativeCurses.instance().drawHorizontalLine(y, x + 1, x + width);
         NativeCurses.instance().drawHorizontalLine(y + height, x + 1, x + width);
         NativeCurses.instance().drawVerticalLine(x, y + 1, y + height);
         NativeCurses.instance().drawVerticalLine(x + width, y + 1, y + height);
+
+        if(!title.isEmpty()) {
+            drawDecoration(width/2-((title.length()+4)/2), false, title, rendercolor);
+        }
     }
 
     @Override
-    public void drawCenteredString(int x, int y, String s, int width, int color) {
-        super.drawCenteredString(x, y, s, width, color);
+    public void drawCenteredString(int x, int y, String s, int color) {
+        super.drawCenteredString(x, y, s, color);
         this.touch();
     }
     @Override
-    public void drawCenteredStringIndependent(int x, int y, String s, int width, int color) {
-        super.drawCenteredStringIndependent(x, y, s, width, color);
+    public void drawCenteredStringIndependent(int x, int y, String s, int color) {
+        super.drawCenteredStringIndependent(x, y, s, color);
         this.touch();
     }
     @Override
-    public void drawString(int x, int y, String s, int width, int color) {
-        super.drawString(x, y, s, width, color);
+    public void drawString(int x, int y, String s, int color) {
+        super.drawString(x, y, s, color);
         this.touch();
     }
     @Override
-    public void drawStringIndependent(int x, int y, String s, int width, int color) {
-        super.drawStringIndependent(x, y, s, width, color);
+    public void drawStringIndependent(int x, int y, String s, int color) {
+        super.drawStringIndependent(x, y, s, color);
         this.touch();
     }
 

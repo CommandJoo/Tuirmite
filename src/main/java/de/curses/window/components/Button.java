@@ -27,7 +27,7 @@ public class Button extends Component {
     @Override
     public void draw() {
         this.drawBox(-1);
-        this.drawCenteredString(width/2, 1, text, text.length(), selected ? selectedColor : color);
+        this.drawCenteredString(width/2, 1, text, selected ? selectedColor : color);
     }
 
     @Override
