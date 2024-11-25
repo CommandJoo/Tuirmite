@@ -6,6 +6,20 @@
 > Java NativeCurses is an NCurses wrapper written in Java, it provides direct access to many NCurses methods, and also provides an API for directly creating GUIs using Windows Buttons and Text fields
 
 ***
+## Quickstart
+Download
+```shell
+https://github.com/CommandJoo/Java-Native-NCurses/releases/download/1.0.1/JavaCurses.jar
+```
+And add it as a Library to your Project
+
+Alternatively
+Clone the Repository
+```shell
+git clone https://github.com/CommandJoo/Java-Native-NCurses
+```
+
+***
 ## Usage
 
 ### Running the Application
@@ -75,7 +89,7 @@ public class MyWindow {
 }
 ```
 A working example of a simple login and chat interface can be found in [ExampleProject](src/main/java/de/johannes/Main.java)
-
+***
 ## Author
 
 **Johannes Hans** ([@CommandJoo](https://github.com/CommandJoo))
