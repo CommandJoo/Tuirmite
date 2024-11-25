@@ -8,10 +8,8 @@
 ***
 ## Quickstart
 Download
-```shell
-https://github.com/CommandJoo/Java-Native-NCurses/releases/download/1.0.1/JavaCurses.jar
-```
-And add it as a Library to your Project
+[The latest version](https://github.com/CommandJoo/Java-Native-NCurses/releases/latest)
+and add it as a Library to your Project
 
 Alternatively
 Clone the Repository
