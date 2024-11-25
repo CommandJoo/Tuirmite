@@ -35,6 +35,7 @@ public class WindowManager {
                     if (active != null) {
                         active.drawWindow();
                     }
+                    NativeCurses.instance().refresh();
                     fpsTimer.reset();
                 }
             }

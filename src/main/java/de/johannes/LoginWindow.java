@@ -37,7 +37,7 @@ public class LoginWindow extends Window {
         this.drawCenteredString(width / 2, 3, "To Login to your Account", -1, color);
         this.drawCenteredString(width / 2, 4, "Please enter", -1, color);
         this.drawCenteredString(width / 2, 5, "Your accounts username", -1, color);
-        this.drawCenteredString(width / 2, 6, "Into the Text field down below:",  -1, color);
+        this.drawCenteredString(width / 2, 5, "Into the Text field down below:",  -1, color);
         if(selected() != null) this.selected().setSelected(true);
     }
 

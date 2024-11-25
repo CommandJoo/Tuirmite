@@ -1,9 +1,5 @@
 package de.curses.util;
 
-import de.curses.NativeCurses;
-import de.johannes.Main;
-import org.apache.commons.io.IOUtils;
-
 import java.io.*;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -25,7 +21,7 @@ public class Files {
     public static void loadLibrary(String name) {
         String libName = System.mapLibraryName(name);
         try {
-            InputStream inputStream = Main.class.getResourceAsStream("/"+libName);
+            InputStream inputStream = Files.class.getResourceAsStream("/"+libName);
             File fileOut = Files.getJarPath();
             File lib = new File(Files.getJarPath().getParentFile(), "/"+libName);
             if(lib.exists()) lib.delete();
@@ -41,7 +37,7 @@ public class Files {
 
     public static File getJarPath() {
         try {
-            String path = NativeCurses.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            String path = Files.class.getProtectionDomain().getCodeSource().getLocation().getPath();
             return new File(URLDecoder.decode(path, StandardCharsets.UTF_8));
         } catch (Exception _) {
             return null;

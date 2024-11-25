@@ -6,7 +6,7 @@ import de.curses.window.components.Window;
 public class Main {
 
     public static String username = "";
-    public static final int FPS = 20;
+    public static final int FPS = 60;
 
     public static void main(String[] args) throws InterruptedException {
         WindowManager winman = new WindowManager(FPS);

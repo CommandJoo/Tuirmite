@@ -1,5 +1,6 @@
-all: header compile lib
+all: compile lib
 header:
+	javac ../main/java/de/curses/util/Files.java
 	javac -h . ../main/java/de/curses/NativeCurses.java
 compile:
 	cc -c -fPIC -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux de_curses_NativeCurses.c -o de_curses_NativeCurses.o

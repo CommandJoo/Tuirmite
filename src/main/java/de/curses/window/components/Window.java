@@ -37,6 +37,7 @@ public abstract class Window extends Component {
 
     public void drawWindow() {
         if (this.touched()) {
+            NativeCurses.instance().clearBox(x,y,width,height);
             this.touched = false;
             this.drawBox(-1);
             for(Component component : this.getComponents()) {

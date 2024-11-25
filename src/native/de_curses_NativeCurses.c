@@ -50,7 +50,7 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_setCursor(JNIEnv * env, jobje
 // moveCursor()
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_moveCursor(JNIEnv * env, jobject obj, jint x, jint y) {
     move(y, x);
-    refresh();
+	//refresh
 }
 
 
@@ -91,26 +91,14 @@ JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_defineColorPair(JNIEnv *, job
 // print()
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_print(JNIEnv * env, jobject obj, jchar ch) {
     addch(ch);
-    refresh();
+    //refresh();
 }
 
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_printstr(JNIEnv * env, jobject obj, jstring str) {
     const char *txt = (*env)->GetStringUTFChars(env, str, 0);
 	printw(txt);
-	refresh();
+	//refresh();
     (*env)->ReleaseStringUTFChars(env, str, txt);
-}
-
-bool kbhit() {
-int ch = getch();
-	if(ch != ERR) {
-		ungetch(ch);
-		refresh();
-		return true;
-	}else {
-		refresh();
-		return false;
-	}
 }
 
 JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getch(JNIEnv * env, jobject obj) {
@@ -209,3 +197,9 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawTee(JNIEnv *, jobject, ji
 			break;
 	}
 }
+
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_refresh(JNIEnv *, jobject) {
+	refresh();
+}
+
+

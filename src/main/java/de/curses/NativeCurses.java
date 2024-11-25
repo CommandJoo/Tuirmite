@@ -1,10 +1,6 @@
 package de.curses;
 
 import de.curses.util.Files;
-import de.johannes.Main;
-import org.apache.commons.io.IOUtils;
-
-import java.io.*;
 
 /**
  * The type Native curses.
@@ -191,7 +187,19 @@ public class NativeCurses {
 
     /**
      * Print a string.
-     *
+     *Good evening everyone – teachers, parents, family, and of course, my fellow graduates.
+
+Today is a moment we’ve been dreaming about for years – or maybe dreading when exams came around. But here we are, standing together, because we did it. We survived the exams, the essays, the group projects, and even those dreaded oral presentations. The Abitur isn’t just a certificate; it’s proof of our determination, our hard work, and the support we’ve given each other along the way.
+
+Let’s be honest – there were moments when we all doubted ourselves. Late nights spent cramming for tests, feeling like we’d never figure out calculus, or wondering how we’d survive without coffee. But those challenges taught us more than any textbook ever could. We learned resilience. We learned how to adapt. And most importantly, we learned that we’re stronger when we stick together.
+
+To our teachers: thank you for your patience, your dedication, and for believing in us even when we struggled to believe in ourselves. You didn’t just teach us facts and formulas – you taught us how to think, how to question, and how to grow. To our families: thank you for being our biggest cheerleaders, for supporting us through every success and every failure, and for always reminding us to keep going.
+
+Now, as we leave this chapter behind, we step into a world that’s full of possibilities. Whether we’re heading to university, starting apprenticeships, traveling the world, or simply figuring things out, we’re ready. We’ve proven that we can handle challenges, and we’ll carry these lessons with us wherever we go.
+
+So, let’s celebrate not just what we’ve achieved, but who we’ve become. Congratulations to the Class of [Year]! This is just the beginning, and I can’t wait to see where life takes us next.
+
+Thank you!
      * @param str the str
      */
     public native void printstr(String str);
@@ -263,6 +271,8 @@ public class NativeCurses {
      */
     public native void drawTee(int x, int y, int type);
 
+    public native void refresh();
+
     /**
      * The constant instance.
      */
@@ -308,6 +318,13 @@ public class NativeCurses {
         setColor(color);
         moveCursor(x, y);
         printstr(str);
+    }
+
+    public void clearBox(int x, int y, int width, int height) {
+        String line = " ".repeat(width);
+        for(int i = 0; i < height; i++) {
+            drawString(line, x,y+i);
+        }
     }
 
     /**
