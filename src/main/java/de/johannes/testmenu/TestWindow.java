@@ -44,7 +44,7 @@ public class TestWindow extends Window {
         if(!b) {
             if(ch == 27 && !this.tf.isFocused()) {
                 Main.username = "";
-                WindowManager.instance().changeWindow(WindowManager.instance().getWindow(0));
+//                WindowManager.instance().changeWindow(WindowManager.instance().getWindow(0));
             }
             if (ch == 10) {
                 LocalTime ldt = LocalDateTime.now().toLocalTime();

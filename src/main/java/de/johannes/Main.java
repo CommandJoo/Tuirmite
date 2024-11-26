@@ -4,6 +4,7 @@ import de.curses.NativeCurses;
 import de.curses.WindowManager;
 import de.curses.window.components.Window;
 import de.johannes.snake.SnakeWindow;
+import de.johannes.snake.StatsWindow;
 
 public class Main {
 
@@ -15,9 +16,8 @@ public class Main {
         winman.render();
         winman.handleKey();
 
-        Window game = winman.addWindow(2, new SnakeWindow(NativeCurses.instance()), true);
-//        Window login = winman.addWindow(0, new LoginWindow(), true);
-//        Window test = winman.addWindow(1, new TestWindow(), false);
+        Window game = winman.addWindow(2, new SnakeWindow(NativeCurses.instance()));
+        Window stats = winman.addWindow(3, new StatsWindow(NativeCurses.instance()));
     }
 
 

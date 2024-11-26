@@ -48,7 +48,7 @@ public class LoginWindow extends Window {
             this.setSelected(null);
             Main.username = this.username.input();
             this.username.clear();
-            WindowManager.instance().changeWindow(WindowManager.instance().getWindow(1));
+//            WindowManager.instance().changeWindow(WindowManager.instance().getWindow(1));
             return true;
         }
         return this.handleKeyForSub(this.username, ch);

@@ -11,7 +11,6 @@ public class WindowManager {
     private boolean running;
 
     private final HashMap<Integer, Window> windows;
-    private Window active;
 
     public final int fps;
     private final Timer fpsTimer;
@@ -32,9 +31,60 @@ public class WindowManager {
         new Thread(() -> {
             while (running) {
                 if (fpsTimer.check(1000 / fps)) {
-                    if (active != null) {
-                        active.drawWindow();
-                    }
+                    windows.forEach((id1, window1) -> {
+                        window1.drawWindow();
+                        windows.forEach((id2, window2) -> {
+                            if(window2.x + window2.width == window1.x) {
+                                if(window2.y == window1.y) {
+                                    NativeCurses.instance().drawTee(window1.x, window1.y, 3, window1.color);
+                                    NativeCurses.instance().drawTee(window1.x, window1.y+window1.height, 2, window1.color);
+                                }else if(window2.y < window1.y) {
+                                    NativeCurses.instance().drawTee(window1.x, window1.y, 0, window1.color);
+                                    NativeCurses.instance().drawTee(window1.x, window2.y+window1.height, 1, window1.color);
+                                }else if(window2.y < window1.y+window1.height) {
+                                    NativeCurses.instance().drawTee(window1.x, window2.y, 1, window1.color);
+                                    NativeCurses.instance().drawTee(window1.x, window1.y+window2.height, 0, window1.color);
+                                }
+                            }
+                            else if(window1.x + window1.width == window2.x) {
+                                if(window1.y == window2.y) {
+                                    NativeCurses.instance().drawTee(window2.x, window2.y, 3, window2.color);
+                                    NativeCurses.instance().drawTee(window2.x, window2.y+window2.height, 2, window2.color);
+                                }else if(window1.y < window2.y) {
+                                    NativeCurses.instance().drawTee(window2.x, window2.y, 0, window2.color);
+                                    NativeCurses.instance().drawTee(window2.x, window1.y+window2.height, 1, window2.color);
+                                }else if(window1.y < window2.y+window2.height) {
+                                    NativeCurses.instance().drawTee(window2.x, window1.y, 1, window2.color);
+                                    NativeCurses.instance().drawTee(window2.x, window2.y+window1.height, 0, window2.color);
+                                }
+                            }
+                            if(window2.y + window2.height == window1.y) {
+                                if(window2.x == window1.x) {
+                                    NativeCurses.instance().drawTee(window1.x, window1.y, 0, window1.color);
+                                    NativeCurses.instance().drawTee(window1.x+window1.width, window1.y, 1, window1.color);
+                                }else if(window2.x < window1.x) {
+                                    NativeCurses.instance().drawTee(window1.x, window1.y, 3, window2.color);
+                                    NativeCurses.instance().drawTee(window2.x+window1.width, window1.y, 2, window2.color);
+                                }else if(window2.x < window1.x+window1.width) {
+                                    NativeCurses.instance().drawTee(window2.x, window1.y, 2, window2.color);
+                                    NativeCurses.instance().drawTee(window1.x+window2.width, window1.y, 3, window2.color);
+                                }
+
+                            }
+                            if(window1.y + window1.height == window2.y) {
+                                if(window1.x == window2.x) {
+                                    NativeCurses.instance().drawTee(window2.x, window2.y, 0, window2.color);
+                                    NativeCurses.instance().drawTee(window2.x+window2.width, window2.y, 1, window2.color);
+                                }else if(window1.x < window2.x) {
+                                    NativeCurses.instance().drawTee(window2.x, window2.y, 3, window1.color);
+                                    NativeCurses.instance().drawTee(window1.x+window2.width, window2.y, 2, window1.color);
+                                }else if(window1.x < window2.x+window2.width) {
+                                    NativeCurses.instance().drawTee(window1.x, window2.y, 2, window1.color);
+                                    NativeCurses.instance().drawTee(window2.x+window1.width, window2.y, 3, window1.color);
+                                }
+                            }
+                        });
+                    });
                     NativeCurses.instance().refresh();
                     fpsTimer.reset();
                 }
@@ -56,8 +106,8 @@ public class WindowManager {
                     }
                     break;
                 }
-                if (active != null) {
-                    active.handleKey((char) in);
+                for(Window window : windows.values()) {
+                    window.draw();
                 }
             }
         }).start();
@@ -68,21 +118,15 @@ public class WindowManager {
     }
 
 
-    public Window addWindow(int id, Window window, boolean activate) {
+    public Window addWindow(int id, Window window) {
         if (this.windows.containsKey(id))
             throw new IllegalArgumentException("Window with ID: " + id + " already registered");
         this.windows.put(id, window);
-        return activate ? changeWindow(window) : window;
+        return window;
     }
 
     public Window getWindow(int id) {
         return this.windows.getOrDefault(id, null);
-    }
-
-    public Window changeWindow(Window window) {
-        NativeCurses.instance().cls();
-        this.active = window;
-        return this.active;
     }
 
     public static WindowManager instance() {
