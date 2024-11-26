@@ -117,19 +117,19 @@ public class SnakeWindow extends Window {
 
     @Override
     public boolean handleKey(char ch) {
-        if (ch == 'a') {
+        if (ch == 'a' && direction != 0) {
             direction = 1;
             return true;
         }
-        if (ch == 'd') {
+        if (ch == 'd' && direction != 1) {
             direction = 0;
             return true;
         }
-        if (ch == 's') {
+        if (ch == 's' && direction != 3) {
             direction = 2;
             return true;
         }
-        if (ch == 'w') {
+        if (ch == 'w' && direction != 2) {
             direction = 3;
             return true;
         }

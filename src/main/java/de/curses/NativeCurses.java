@@ -37,7 +37,8 @@ public class NativeCurses {
     public static final char LINE_VERTICAL =         '│';
 
     public static final int ATTRIB_REVERSE =           0;
-    public static final int ATTRIB_BLINKING =          1;//TODO IMPLEMENT
+    public static final int ATTRIB_DIM =          1;
+    public static final int ATTRIB_ITALIC   =          2;
 
 
 

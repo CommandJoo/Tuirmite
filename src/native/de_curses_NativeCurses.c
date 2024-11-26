@@ -114,6 +114,13 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_attron(JNIEnv *, jobject, jin
 	switch(attr) {
 		case 0:
 			attron(A_REVERSE);
+			break;
+		case 1:
+			attron(A_DIM);
+			break;
+		case 2:
+			attron(A_ITALIC);
+			break;
 		default:
 			break;
 	}
@@ -128,6 +135,13 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_attroff(JNIEnv *, jobject, ji
 	switch(attr) {
 		case 0:
 			attroff(A_REVERSE);
+			break;
+		case 1:
+			attroff(A_DIM);
+			break;
+		case 2:
+			attroff(A_ITALIC);
+			break;
 		default: 
 			break;
 	}
