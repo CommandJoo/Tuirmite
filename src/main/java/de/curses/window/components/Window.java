@@ -36,7 +36,6 @@ public abstract class Window extends Component {
     }
 
     public void drawWindow() {
-        if (this.touched()) {
             NativeCurses.instance().clearBox(x,y,width,height);
             this.touched = false;
             this.drawBox(-1);
@@ -44,7 +43,6 @@ public abstract class Window extends Component {
                 drawComponent(component);
             }
             this.draw();
-        }
     }
 
     @Override
@@ -70,22 +68,18 @@ public abstract class Window extends Component {
     @Override
     public void drawCenteredString(int x, int y, String s, int color) {
         super.drawCenteredString(x, y, s, color);
-        this.touch();
     }
     @Override
     public void drawCenteredStringIndependent(int x, int y, String s, int color) {
         super.drawCenteredStringIndependent(x, y, s, color);
-        this.touch();
     }
     @Override
     public void drawString(int x, int y, String s, int color) {
         super.drawString(x, y, s, color);
-        this.touch();
     }
     @Override
     public void drawStringIndependent(int x, int y, String s, int color) {
         super.drawStringIndependent(x, y, s, color);
-        this.touch();
     }
 
     public void drawComponent(Component comp) {
@@ -96,7 +90,6 @@ public abstract class Window extends Component {
             } else {
                 comp.draw();
             }
-            this.touch();
         }
     }
 
@@ -148,14 +141,6 @@ public abstract class Window extends Component {
 
     public boolean handleKeyForSub(Component component, char ch) {
         return component.handleKey(ch);
-    }
-
-    protected void touch() {
-        this.touched = true;
-    }
-
-    public boolean touched() {
-        return this.touched;
     }
 
     public Component addComponent(int id, Component component) {
