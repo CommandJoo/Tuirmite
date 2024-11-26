@@ -28,7 +28,7 @@ public class LoginWindow extends Window {
     public void init() {
         super.init();
         this.username = (TextField) this.addComponent(0, new TextField(this, 1, height - 3, (width / 4) * 3 - 2, "Username"));
-        this.enter = (Button) this.addComponent(1, new Button(this, width / 4 * 3, height - 3, width / 4 - 1, 2, color, ColorBuilder.create().defineForeground(new Color(70, 200, 150)).buildReverse(), "Enter"));
+        this.enter = (Button) this.addComponent(1, new Button(this, width / 4 * 3, height - 3, width / 4 - 1, 2, color, "Enter"));
     }
 
     @Override

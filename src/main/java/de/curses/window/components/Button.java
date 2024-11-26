@@ -8,26 +8,30 @@ public class Button extends Component {
 
     private final String text;
     private boolean selected;
-    private int selectedColor;
 
     public Button(Window parent, int x, int y, int width, int height, String text) {
         super(parent, x, y, width, height, parent.color);
         this.text = text;
         this.color = parent.color;
-        this.selectedColor = NativeCurses.BLACK;
     }
 
-    public Button(Window parent, int x, int y, int width, int height, int color, int selectedColor, String text) {
+    public Button(Window parent, int x, int y, int width, int height, int color, String text) {
         super(parent, x, y, width, height);
         this.text = text;
         this.color = color;
-        this.selectedColor = selectedColor;
     }
 
     @Override
     public void draw() {
         this.drawBox(-1);
-        this.drawCenteredString(width/2, 1, text, selected ? selectedColor : color);
+        if(selected) {
+            NativeCurses.instance().attron(0);
+            this.drawCenteredString(width/2, 1, text, color);
+            NativeCurses.instance().attroff(0);
+        }else {
+            this.drawCenteredString(width/2, 1, text, color);
+        }
+
     }
 
     @Override

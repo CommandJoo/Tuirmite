@@ -89,7 +89,7 @@ public class SnakeWindow extends Window {
                 movePlayer();
                 gameTimer.reset();
             }
-            drawDecoration(width/8, true, "Score: "+(this.player.size()-START_SIZE), color);
+            drawDecoration(width/8, true, true, "Score: "+(this.player.size()-START_SIZE), color);
         }else {
             setColor(color);
             drawCenteredString(width/2, height/2-3, "Game Over!", color);

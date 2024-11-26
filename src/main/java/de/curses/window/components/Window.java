@@ -63,7 +63,7 @@ public abstract class Window extends Component {
         NativeCurses.instance().drawVerticalLine(x + width, y + 1, y + height);
 
         if(!title.isEmpty()) {
-            drawDecoration(width/2-((title.length()+4)/2), false, title, rendercolor);
+            drawDecoration(width/2-((title.length()+4)/2), false, false, title, rendercolor);
         }
     }
 
@@ -199,5 +199,6 @@ public abstract class Window extends Component {
         if(!components.containsValue(selected) && selected != null) throw new IllegalArgumentException("Button must be registered as Component!");
         if(this.selected != null) this.selected.setSelected(false);
         this.selected = selected;
+        this.selected.setSelected(true);
     }
 }

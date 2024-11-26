@@ -63,7 +63,7 @@ public class TextField extends Component {
             NativeCurses.instance().drawHorizontalLine(y + height, x + 1, x + width);
         } else {
             String render = "" + (char) toggleKey;
-            drawDecoration(width/8-(render.length()/2), true, render, color);
+            drawDecoration(width/8-(render.length()/2), true, false, render, color);
         }
         NativeCurses.instance().drawHorizontalLine(y, x + 1, x + width);
         NativeCurses.instance().drawVerticalLine(x, y + 1, y + height);

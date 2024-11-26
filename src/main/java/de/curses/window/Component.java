@@ -69,12 +69,16 @@ public abstract class Component {
         NativeCurses.instance().drawString(s, x - (s.length() / 2), y, color);
     }
 
-    public void drawDecoration(int x, boolean bottom, String deco, int color) {
+    public void drawDecoration(int x, boolean bottom, boolean parens, String deco, int color) {
         int width = deco.length() + 4;//+4 because of two space characters and two tees
         int correction = deco.length() % 2 == 0 ? 1 : 0;
-        NativeCurses.instance().drawTee(this.x + x + correction, bottom ? this.y + this.height : this.y, 1, color);
-        drawString(x + 1 + correction, bottom ? this.height : 0, " " + deco + " ", color);
-        NativeCurses.instance().drawTee(this.x + x + width - 1 + correction, bottom ? this.y + this.height : this.y, 0, color);
+        if(!parens) {
+            NativeCurses.instance().drawTee(this.x + x + correction, bottom ? this.y + this.height : this.y, 1, color);
+            drawString(x + 1 + correction, bottom ? this.height : 0, " " + deco + " ", color);
+            NativeCurses.instance().drawTee(this.x + x + width - 1 + correction, bottom ? this.y + this.height : this.y, 0, color);
+        }else {
+            drawString(x + 1 + correction, bottom ? this.height : 0, "( " + deco + " )", color);
+        }
     }
 
     public void setColor(int color) {

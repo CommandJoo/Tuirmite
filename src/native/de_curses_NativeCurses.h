@@ -151,6 +151,22 @@ JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getch
 
 /*
  * Class:     de_curses_NativeCurses
+ * Method:    attron
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_attron
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     de_curses_NativeCurses
+ * Method:    attroff
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_attroff
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     de_curses_NativeCurses
  * Method:    getHeight
  * Signature: ()I
  */
