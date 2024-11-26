@@ -107,7 +107,7 @@ public class WindowManager {
                     break;
                 }
                 for(Window window : windows.values()) {
-                    window.draw();
+                    window.handleKey((char)in);
                 }
             }
         }).start();

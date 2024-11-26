@@ -174,7 +174,9 @@ public abstract class Window extends Component {
         });
         return buttons;
     }
-
+    public Component getComponent(int id) {
+        return components.getOrDefault(id, null);
+    }
 
     public Button selected() {
         return selected;

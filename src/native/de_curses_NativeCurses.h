@@ -223,6 +223,15 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawTee
 
 /*
  * Class:     de_curses_NativeCurses
+ * Method:    drawTee
+ * Signature: (III)V
+ */
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawArrow
+  (JNIEnv *, jobject, jint, jint, jint);
+
+
+/*
+ * Class:     de_curses_NativeCurses
  * Method:    refresh
  * Signature: ()V
  */

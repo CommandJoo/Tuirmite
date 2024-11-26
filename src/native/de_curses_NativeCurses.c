@@ -241,6 +241,29 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawTee(JNIEnv *, jobject, ji
 	}
 }
 
+JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawArrow(JNIEnv *, jobject, jint x, jint y, jint type) {
+	switch(type) {
+		case 0:
+			mvaddch(y,x, ACS_LARROW);
+			break;
+		case 1:
+			mvaddch(y,x, ACS_RARROW);
+			break;
+		case 2:
+			mvaddch(y,x, ACS_UARROW);
+			break;
+		case 3:
+			mvaddch(y,x, ACS_DARROW);
+			break;
+		default:
+			break;
+
+
+
+	}
+}
+
+
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_refresh(JNIEnv *, jobject) {
 	refresh();
 }

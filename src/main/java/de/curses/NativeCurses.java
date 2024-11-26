@@ -77,8 +77,22 @@ public class NativeCurses {
     public native void drawCorner(int x, int y, int type);
     private native void drawTee(int x, int y, int type);
     public void drawTee(int x, int y, int type, int color) {
+        //0 RIGHT POINTING
+        //1 LEFT POINTING
+        //2 UP POINTING
+        //3 DOWN POINTING
+        //4 CROSS
         setColor(color);
         drawTee(x,y, type);
+    }
+    private native void drawArrow(int x, int y, int type);
+    public void drawArrow(int x, int y, int type, int color) {
+        //0 RIGHT POINTING
+        //1 LEFT POINTING
+        //2 UP POINTING
+        //3 DOWN POINTING
+        setColor(color);
+        drawArrow(x,y,type);
     }
 
     public native void refresh();
