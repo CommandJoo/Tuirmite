@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to Java-Native-NCurses 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.1-blue.svg?cacheSeconds=2592000" />
 </p>
 <a href="https://www.cprogramming.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="c" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a>
 
@@ -48,7 +48,7 @@ java -jar "build/libs/JavaCurses.jar"
 public static void main(String[] args) {
     int fps = 30;//too high fps will cause flickering
     WindowManager windowManager = new WindowManager(fps);
-    Window window = windowManager.addWindow(0, new MyWindow(), true);//add a window to the screen and make it be the actively rendered one
+    Window window = windowManager.addWindow(0, new MyWindow());//add a window to the screen and make it be the actively rendered one
     
     windowManager.render();//starts the drawing
     windowManager.handleKey();//starts listening for inputs
