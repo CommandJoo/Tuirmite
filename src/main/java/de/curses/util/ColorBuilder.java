@@ -1,18 +1,23 @@
 package de.curses.util;
 
 import de.curses.NativeCurses;
+import de.curses.NativeVariables;
 
 import java.awt.*;
-import java.util.Random;
+import java.util.HashMap;
 
 public class ColorBuilder {
 
-    private static int pairindex, colorindex;
+    private static final HashMap<Integer, Integer> colors = new HashMap<>();
+    private static final HashMap<Pair<Integer, Integer>, Integer> pairs = new HashMap<>();
+
+    private static int pairIndex, colorIndex;
     private int foreground, background;
 
     public ColorBuilder() {
-        this.foreground= NativeCurses.WHITE;
+        this.foreground= NativeVariables.WHITE;
         this.background= 0;
+
     }
 
     public static ColorBuilder create() {
@@ -20,9 +25,14 @@ public class ColorBuilder {
     }
 
     public ColorBuilder defineForeground(Color color) {
-        this.foreground = NativeCurses.instance().defineColor(20+colorindex,
-                color.getRed()/255F, color.getGreen()/255F, color.getBlue()/255F);
-        colorindex++;
+        if(colors.containsKey(color.getRGB())) {
+            this.foreground = colors.get(color.getRGB());
+        }else {
+            this.foreground = colors.getOrDefault(color.getRGB(), NativeCurses.instance().defineColor(20+ colorIndex,
+                    color.getRed()/255F, color.getGreen()/255F, color.getBlue()/255F));
+            colors.put(color.getRGB(), this.foreground);
+            colorIndex++;
+        }
         return this;
     }
     public ColorBuilder defineForeground(String hex) {
@@ -34,9 +44,14 @@ public class ColorBuilder {
     }
 
     public ColorBuilder defineBackground(Color color) {
-        this.foreground = NativeCurses.instance().defineColor(20+colorindex,
-                color.getRed()/255F, color.getGreen()/255F, color.getBlue()/255F);
-        colorindex++;
+        if(colors.containsKey(color.getRGB())) {
+            this.background = colors.get(color.getRGB());
+        }else {
+            this.background = NativeCurses.instance().defineColor(20+ colorIndex,
+                    color.getRed()/255F, color.getGreen()/255F, color.getBlue()/255F);
+            colors.put(color.getRGB(), this.background);
+            colorIndex++;
+        }
         return this;
     }
     public ColorBuilder defineBackground(String hex) {
@@ -48,13 +63,16 @@ public class ColorBuilder {
     }
 
     public int build() {
-        pairindex++;
-        return NativeCurses.instance().defineColorPair(20+pairindex-1, this.foreground, this.background);
+        for(Pair<Integer, Integer> pair : pairs.keySet()) {
+            if(pair.value1() == this.foreground && pair.value2() == this.background) return pairs.get(pair);
+        }
+        pairIndex++;
+        pairs.put(new Pair<>(this.foreground, this.background), 20+ pairIndex -1);
+        return NativeCurses.instance().defineColorPair(20+ pairIndex -1, this.foreground, this.background);
     }
 
-    public int buildReverse() {
-        pairindex++;
-        return NativeCurses.instance().defineColorPair(20+pairindex-1, this.background, this.foreground);
+    public static int size() {
+        return pairs.size();
     }
 
 }

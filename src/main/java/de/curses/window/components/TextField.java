@@ -50,7 +50,7 @@ public class TextField extends Component {
     }
 
     @Override
-    protected void drawBox(int color) {
+    public void drawBox(int color) {
         int rendercolor = color == -1 ? this.color : color;
         NativeCurses.instance().setColor(rendercolor);
 

@@ -32,12 +32,19 @@ public class WindowManager {
             while (running) {
                 if (fpsTimer.check(1000 / fps)) {
                     windows.forEach((id1, window1) -> {
-                        window1.drawWindow();
+                        NativeCurses.instance().clearBox(window1.x,window1.y,window1.width,window1.height);
+                        window1.drawBox(window1.color);
                         windows.forEach((id2, window2) -> {
                             if(window2.x + window2.width == window1.x) {
                                 if(window2.y == window1.y) {
                                     NativeCurses.instance().drawTee(window1.x, window1.y, 3, window1.color);
-                                    NativeCurses.instance().drawTee(window1.x, window1.y+window1.height, 2, window1.color);
+                                    if(window2.height > window1.height) {
+                                        NativeCurses.instance().drawTee(window1.x, window2.y+window1.height, 0, window1.color);
+                                    } else if(window2.height < window1.height) {
+                                        NativeCurses.instance().drawTee(window1.x, window2.y+window2.height, 1, window1.color);
+                                    } else {
+                                        NativeCurses.instance().drawTee(window1.x, window1.y+window1.height, 2, window1.color);
+                                    }
                                 }else if(window2.y < window1.y) {
                                     NativeCurses.instance().drawTee(window1.x, window1.y, 0, window1.color);
                                     NativeCurses.instance().drawTee(window1.x, window2.y+window1.height, 1, window1.color);
@@ -49,7 +56,13 @@ public class WindowManager {
                             else if(window1.x + window1.width == window2.x) {
                                 if(window1.y == window2.y) {
                                     NativeCurses.instance().drawTee(window2.x, window2.y, 3, window2.color);
-                                    NativeCurses.instance().drawTee(window2.x, window2.y+window2.height, 2, window2.color);
+                                    if(window2.height > window1.height) {
+                                        NativeCurses.instance().drawTee(window2.x, window1.y+window1.height, 1, window2.color);
+                                    } else if(window2.height < window1.height) {
+                                        NativeCurses.instance().drawTee(window2.x, window1.y+window2.height, 0, window2.color);
+                                    } else {
+                                        NativeCurses.instance().drawTee(window2.x, window2.y+window2.height, 2, window2.color);
+                                    }
                                 }else if(window1.y < window2.y) {
                                     NativeCurses.instance().drawTee(window2.x, window2.y, 0, window2.color);
                                     NativeCurses.instance().drawTee(window2.x, window1.y+window2.height, 1, window2.color);
@@ -71,7 +84,7 @@ public class WindowManager {
                                 }
 
                             }
-                            if(window1.y + window1.height == window2.y) {
+                            else if(window1.y + window1.height == window2.y) {
                                 if(window1.x == window2.x) {
                                     NativeCurses.instance().drawTee(window2.x, window2.y, 0, window2.color);
                                     NativeCurses.instance().drawTee(window2.x+window2.width, window2.y, 1, window2.color);
@@ -84,6 +97,7 @@ public class WindowManager {
                                 }
                             }
                         });
+                        window1.drawWindow();
                     });
                     NativeCurses.instance().refresh();
                     fpsTimer.reset();

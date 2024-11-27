@@ -107,6 +107,25 @@ JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getch(JNIEnv * env, jobject o
 
 /*
  * Class:     de_curses_NativeCurses
+ * Method:    inch
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_inch(JNIEnv *, jobject) {
+	return inch() & A_CHARTEXT;
+}
+
+/*
+ * Class:     de_curses_NativeCurses
+ * Method:    moveinch
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_moveinch(JNIEnv *, jobject, jint x, jint y) {
+	return mvinch(y, x) & A_CHARTEXT;
+}
+
+
+/*
+ * Class:     de_curses_NativeCurses
  * Method:    attron
  * Signature: (I)V
  */
@@ -120,6 +139,15 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_attron(JNIEnv *, jobject, jin
 			break;
 		case 2:
 			attron(A_ITALIC);
+			break;
+		case 3:
+			attron(A_INVIS);
+			break;
+		case 4:
+			attron(A_BLINK);
+			break;
+		case 5:
+			attron(A_UNDERLINE);
 			break;
 		default:
 			break;
@@ -141,6 +169,15 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_attroff(JNIEnv *, jobject, ji
 			break;
 		case 2:
 			attroff(A_ITALIC);
+			break;
+		case 3:
+			attroff(A_INVIS);
+			break;
+		case 4:
+			attroff(A_BLINK);
+			break;
+		case 5:
+			attroff(A_UNDERLINE);
 			break;
 		default: 
 			break;

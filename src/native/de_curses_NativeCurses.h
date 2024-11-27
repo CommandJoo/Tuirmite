@@ -61,6 +61,12 @@ extern "C" {
 #define de_curses_NativeCurses_LINE_HORIZONTAL 9472L
 #undef de_curses_NativeCurses_LINE_VERTICAL
 #define de_curses_NativeCurses_LINE_VERTICAL 9474L
+#undef de_curses_NativeCurses_ATTRIB_REVERSE
+#define de_curses_NativeCurses_ATTRIB_REVERSE 0L
+#undef de_curses_NativeCurses_ATTRIB_DIM
+#define de_curses_NativeCurses_ATTRIB_DIM 1L
+#undef de_curses_NativeCurses_ATTRIB_ITALIC
+#define de_curses_NativeCurses_ATTRIB_ITALIC 2L
 /*
  * Class:     de_curses_NativeCurses
  * Method:    init
@@ -151,6 +157,22 @@ JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_getch
 
 /*
  * Class:     de_curses_NativeCurses
+ * Method:    inch
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_inch
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     de_curses_NativeCurses
+ * Method:    moveinch
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_de_curses_NativeCurses_moveinch
+  (JNIEnv *, jobject, jint, jint);
+
+/*
+ * Class:     de_curses_NativeCurses
  * Method:    attron
  * Signature: (I)V
  */
@@ -223,12 +245,11 @@ JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawTee
 
 /*
  * Class:     de_curses_NativeCurses
- * Method:    drawTee
+ * Method:    drawArrow
  * Signature: (III)V
  */
 JNIEXPORT void JNICALL Java_de_curses_NativeCurses_drawArrow
   (JNIEnv *, jobject, jint, jint, jint);
-
 
 /*
  * Class:     de_curses_NativeCurses

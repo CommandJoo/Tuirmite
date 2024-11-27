@@ -35,7 +35,6 @@ public class TestWindow extends Window {
             String line = lines.get(i);
             drawString(1, 1 + i, line, color);
         }
-        this.drawComponent(tf);
     }
 
     @Override

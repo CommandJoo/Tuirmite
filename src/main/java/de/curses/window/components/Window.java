@@ -1,6 +1,7 @@
 package de.curses.window.components;
 
 import de.curses.NativeCurses;
+import de.curses.NativeVariables;
 import de.curses.window.Component;
 import de.curses.window.Keys;
 
@@ -14,16 +15,15 @@ import java.util.stream.Stream;
 public abstract class Window extends Component {
 
     protected final String title;
-    public boolean touched = true;
     private Button selected;
 
     private final HashMap<Integer, Component> components;
 
     public Window(Window parent, int x, int y, int width, int height) {
-        this(parent, x, y, width, height, NativeCurses.WHITE);
+        this(parent, x, y, width, height, NativeVariables.WHITE);
     }
     public Window(Window parent, int x, int y, int width, int height, String title) {
-        this(parent, x, y, width, height, NativeCurses.WHITE, title);
+        this(parent, x, y, width, height, NativeVariables.WHITE, title);
     }
     public Window(Window parent, int x, int y, int width, int height, int color) {
         this(parent, x, y, width, height, color, "");
@@ -36,9 +36,6 @@ public abstract class Window extends Component {
     }
 
     public void drawWindow() {
-            NativeCurses.instance().clearBox(x,y,width,height);
-            this.touched = false;
-            this.drawBox(-1);
             for(Component component : this.getComponents()) {
                 drawComponent(component);
             }
@@ -46,7 +43,7 @@ public abstract class Window extends Component {
     }
 
     @Override
-    protected void drawBox(int color) {
+    public void drawBox(int color) {
         int rendercolor = color == -1 ? this.color : color;
         NativeCurses.instance().setColor(rendercolor);
 
@@ -63,23 +60,6 @@ public abstract class Window extends Component {
         if(!title.isEmpty()) {
             drawDecoration(width/2-((title.length()+4)/2), false, false, title, rendercolor);
         }
-    }
-
-    @Override
-    public void drawCenteredString(int x, int y, String s, int color) {
-        super.drawCenteredString(x, y, s, color);
-    }
-    @Override
-    public void drawCenteredStringIndependent(int x, int y, String s, int color) {
-        super.drawCenteredStringIndependent(x, y, s, color);
-    }
-    @Override
-    public void drawString(int x, int y, String s, int color) {
-        super.drawString(x, y, s, color);
-    }
-    @Override
-    public void drawStringIndependent(int x, int y, String s, int color) {
-        super.drawStringIndependent(x, y, s, color);
     }
 
     public void drawComponent(Component comp) {

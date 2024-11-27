@@ -92,9 +92,9 @@ public class SnakeWindow extends Window {
             drawDecoration(width/8, true, true, "Score: "+(this.player.size()-START_SIZE), color);
         }else {
             setColor(color);
-            drawCenteredString(width/2, height/2-3, "Game Over!", color);
+            drawCenteredString(width/2, height/2-3, "$uGame Over!$r", color);
             drawCenteredString(width/2, height/2-1, "You died.", color);
-            drawCenteredString(width/2, height/2+1, "Press <Space> to restart", color);
+            drawCenteredString(width/2, height/2+1, "Press $h$i<Space>$r to restart", color);
         }
     }
 

@@ -1,6 +1,7 @@
 package de.curses.window;
 
 import de.curses.NativeCurses;
+import de.curses.NativeVariables;
 import de.curses.util.ColorBuilder;
 import de.curses.window.components.Window;
 
@@ -14,7 +15,7 @@ public abstract class Component {
     public int color;
 
     public Component(Window parent, int x, int y, int width, int height) {
-        this(parent, x, y, width, height, NativeCurses.WHITE);
+        this(parent, x, y, width, height, NativeVariables.WHITE);
     }
 
     public Component(Window parent, int x, int y, int width, int height, int color) {
@@ -38,7 +39,7 @@ public abstract class Component {
 
     public abstract boolean handleKey(char ch);
 
-    protected void drawBox(int color) {
+    public void drawBox(int color) {
         NativeCurses.instance().setColor(color == -1 ? this.color : color);
 
         NativeCurses.instance().drawCorner(x, y, 2);
@@ -54,19 +55,21 @@ public abstract class Component {
     }
 
     public void drawString(int x, int y, String s, int color) {
-        NativeCurses.instance().drawString(s, this.x + x, this.y + y, color);
+        NativeCurses.drawString(s, this.x + x, this.y + y, color);
     }
 
     public void drawStringIndependent(int x, int y, String s, int color) {
-        NativeCurses.instance().drawString(s, x, y, color);
+        NativeCurses.drawString(s, x, y, color);
     }
 
     public void drawCenteredString(int x, int y, String s, int color) {
-        NativeCurses.instance().drawString(s, this.x + x - (s.length() / 2), this.y + y, color);
+        String stripped =  (s.replaceAll("\\$[a-z]", ""));
+        NativeCurses.drawString(s, this.x + x -(stripped.length() / 2), this.y + y, color);
     }
 
     public void drawCenteredStringIndependent(int x, int y, String s, int color) {
-        NativeCurses.instance().drawString(s, x - (s.length() / 2), y, color);
+        String stripped =  (s.replaceAll("\\$[a-z]", ""));
+        NativeCurses.drawString(s, x - stripped.length() / 2, y, color);
     }
 
     public void drawDecoration(int x, boolean bottom, boolean parens, String deco, int color) {
