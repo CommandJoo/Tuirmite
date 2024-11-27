@@ -20,11 +20,11 @@ public class SnakeWindow extends Window {
     boolean dead = false;
 
 
-    private static final int FOOD_COUNT = 4;
+    private static final int FOOD_COUNT = 10;
     private static final int START_SIZE = 4;
 
     public SnakeWindow(Curses curses) {
-        super(null, curses.getWidth() / 2 - (curses.getWidth() / 3), curses.getHeight() / 2 - (curses.getHeight() / 3), 2 * curses.getWidth() / 3, 2 * curses.getHeight() / 3, ColorBuilder.create().defineForeground("#7731AF").build(), "Snake");
+        super(null, 0, 0, curses.getWidth()-1, curses.getHeight()-1, ColorBuilder.create().defineForeground("#7731AF").build(), "Snake");
         this.foodColor = ColorBuilder.create().defineForeground("#67EB44").build();
     }
 
@@ -47,7 +47,7 @@ public class SnakeWindow extends Window {
     public void draw() {
         if(!dead) {
             for (int i = 0; i < player.size(); i++) {
-                drawString(player.get(i).x, player.get(i).y, i == 0 ? "O" : "o", color);
+                drawString(player.get(i).x, player.get(i).y, i == 0 ? "●" : "·", color);
             }
             for(Point food : this.food) {
                 drawString(food.x, food.y, "@", foodColor);
@@ -89,7 +89,8 @@ public class SnakeWindow extends Window {
                 movePlayer();
                 gameTimer.reset();
             }
-            drawDecoration(width/8, true, true, "Score: "+(this.player.size()-START_SIZE), color);
+            drawDecoration(width/40, true, true, "Score: "+(this.player.size()-START_SIZE), color);
+            drawDecoration(width/7, true, true, "Food Count: "+FOOD_COUNT, color);
         }else {
             setColor(color);
             drawCenteredString(width/2, height/2-3, "$uGame Over!$r", color);
