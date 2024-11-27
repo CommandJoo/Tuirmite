@@ -37,8 +37,8 @@ public class NativeVariables {
     public static final int ATTRIB_DIM               =  NativeCurses.ATTRIB_DIM;
     public static final int ATTRIB_ITALIC            =  NativeCurses.ATTRIB_ITALIC;
     public static final int ATTRIB_INVIS             =  NativeCurses.ATTRIB_INVIS;
-    public static final int ATTRIB_BLINKING          =  NativeCurses.ATTRIB_BLINKING;
-    public static final int ATTRIB_UNDERLINE          =  NativeCurses.ATTRIB_UNDERLINE;
+    public static final int ATTRIB_BLINK             =  NativeCurses.ATTRIB_BLINK;
+    public static final int ATTRIB_UNDERLINE         =  NativeCurses.ATTRIB_UNDERLINE;
 
 
 }

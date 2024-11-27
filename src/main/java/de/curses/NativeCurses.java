@@ -39,13 +39,15 @@ public class NativeCurses {
     static final int ATTRIB_DIM = 1;
     static final int ATTRIB_ITALIC = 2;
     static final int ATTRIB_INVIS = 3;
-    static final int ATTRIB_BLINKING = 4;
+    static final int ATTRIB_BLINK = 4;
     static final int ATTRIB_UNDERLINE = 5;
 
     public native void init();
     public native void destroy();
+    public static void kill() {instance().destroy();}
 
     public native void cls();
+    public static void clear() {instance().cls();}
     public native void setCursor(boolean flag);
     public native void moveCursor(int x, int y);
 
@@ -60,11 +62,16 @@ public class NativeCurses {
     public native void printstr(String str);
 
     public native int getch();
+    public static int getChar() {return instance().getch();}
+    public static int readChar() {return instance().inch();}
     public native int inch();
     public native int moveinch(int x, int y);
+    public static int moveReadChar(int x, int y) {return instance().moveinch(x,y);}
 
     public native void attron(int attr);
     public native void attroff(int attr);
+    public static void attrib_on(int attr) {instance.attron(attr);}
+    public static void attrib_off(int attr) {instance.attroff(attr);}
 
     public native int getHeight();
     public static int height() {
@@ -102,6 +109,12 @@ public class NativeCurses {
         setColor(color);
         drawArrow(x, y, type);
     }
+    public static void clearBox(int x, int y, int width, int height) {
+        String line = " ".repeat(width);
+        for (int i = 0; i < height; i++) {
+            drawString(line, x, y + i);
+        }
+    }
 
     public native void refresh();
 
@@ -118,6 +131,11 @@ public class NativeCurses {
         defineColor(17, 0.4F, 0.4F, 0.4F);
         defineColorPair(17, 17, 0);
     }
+
+
+
+
+
 
     private static boolean checkFormatting(char ch) {
         return switch (ch) {
@@ -138,7 +156,7 @@ public class NativeCurses {
                 yield true;
             }
             case 'b' -> {
-                instance().attron(ATTRIB_BLINKING);
+                instance().attron(ATTRIB_BLINK);
                 yield true;
             }
             case 'u' -> {
@@ -150,14 +168,13 @@ public class NativeCurses {
                 instance().attroff(ATTRIB_DIM);
                 instance().attroff(ATTRIB_ITALIC);
                 instance().attroff(ATTRIB_INVIS);
-                instance().attroff(ATTRIB_BLINKING);
+                instance().attroff(ATTRIB_BLINK);
                 instance().attroff(ATTRIB_UNDERLINE);
                 yield true;
             }
             default -> false;
         };
     }
-
     public static void drawString(String str, int x, int y) {
         String[] formats = str.split("\\$");
         int length = 0;
@@ -185,13 +202,6 @@ public class NativeCurses {
             length+=s.length() - (b ? 1 : 0);
         }
         instance().setColor(WHITE);
-    }
-
-    public static void clearBox(int x, int y, int width, int height) {
-        String line = " ".repeat(width);
-        for (int i = 0; i < height; i++) {
-            drawString(line, x, y + i);
-        }
     }
 
     public static NativeCurses instance() {

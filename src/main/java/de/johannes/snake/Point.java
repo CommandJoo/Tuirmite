@@ -1,5 +1,7 @@
 package de.johannes.snake;
 
+import de.curses.NativeCurses;
+
 public class Point {
 
     public int x,y;
