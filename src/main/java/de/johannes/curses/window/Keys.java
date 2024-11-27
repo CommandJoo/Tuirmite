@@ -1,4 +1,4 @@
-package de.curses.window;
+package de.johannes.curses.window;
 
 public class Keys {
 

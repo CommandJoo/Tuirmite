@@ -1,4 +1,4 @@
-package de.curses.util;
+package de.johannes.curses.util;
 
 public class Pair<T, V> {
 

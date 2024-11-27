@@ -1,16 +1,14 @@
-package de.curses.window.components;
+package de.johannes.curses.window.components;
 
-import de.curses.NativeCurses;
-import de.curses.NativeVariables;
-import de.curses.window.Component;
-import de.curses.window.Keys;
+import de.johannes.curses.Curses;
+import de.johannes.curses.CursesConstants;
+import de.johannes.curses.window.Component;
+import de.johannes.curses.window.Keys;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 public abstract class Window extends Component {
 
@@ -20,10 +18,10 @@ public abstract class Window extends Component {
     private final HashMap<Integer, Component> components;
 
     public Window(Window parent, int x, int y, int width, int height) {
-        this(parent, x, y, width, height, NativeVariables.WHITE);
+        this(parent, x, y, width, height, CursesConstants.WHITE);
     }
     public Window(Window parent, int x, int y, int width, int height, String title) {
-        this(parent, x, y, width, height, NativeVariables.WHITE, title);
+        this(parent, x, y, width, height, CursesConstants.WHITE, title);
     }
     public Window(Window parent, int x, int y, int width, int height, int color) {
         this(parent, x, y, width, height, color, "");
@@ -45,17 +43,17 @@ public abstract class Window extends Component {
     @Override
     public void drawBox(int color) {
         int rendercolor = color == -1 ? this.color : color;
-        NativeCurses.instance().setColor(rendercolor);
+        Curses.instance().setColor(rendercolor);
 
-        NativeCurses.instance().drawCorner(x, y, 2);
-        NativeCurses.instance().drawCorner(x + width, y, 1);
-        NativeCurses.instance().drawCorner(x, y + height, 3);
-        NativeCurses.instance().drawCorner(x + width, y + height, 0);
+        Curses.instance().drawCorner(x, y, 2);
+        Curses.instance().drawCorner(x + width, y, 1);
+        Curses.instance().drawCorner(x, y + height, 3);
+        Curses.instance().drawCorner(x + width, y + height, 0);
 
-        NativeCurses.instance().drawHorizontalLine(y, x + 1, x + width);
-        NativeCurses.instance().drawHorizontalLine(y + height, x + 1, x + width);
-        NativeCurses.instance().drawVerticalLine(x, y + 1, y + height);
-        NativeCurses.instance().drawVerticalLine(x + width, y + 1, y + height);
+        Curses.instance().drawHorizontalLine(y, x + 1, x + width);
+        Curses.instance().drawHorizontalLine(y + height, x + 1, x + width);
+        Curses.instance().drawVerticalLine(x, y + 1, y + height);
+        Curses.instance().drawVerticalLine(x + width, y + 1, y + height);
 
         if(!title.isEmpty()) {
             drawDecoration(width/2-((title.length()+4)/2), false, false, title, rendercolor);

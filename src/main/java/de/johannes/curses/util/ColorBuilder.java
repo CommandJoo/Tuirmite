@@ -1,7 +1,7 @@
-package de.curses.util;
+package de.johannes.curses.util;
 
-import de.curses.NativeCurses;
-import de.curses.NativeVariables;
+import de.johannes.curses.Curses;
+import de.johannes.curses.CursesConstants;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public class ColorBuilder {
     private int foreground, background;
 
     public ColorBuilder() {
-        this.foreground= NativeVariables.WHITE;
+        this.foreground= CursesConstants.WHITE;
         this.background= 0;
 
     }
@@ -28,7 +28,7 @@ public class ColorBuilder {
         if(colors.containsKey(color.getRGB())) {
             this.foreground = colors.get(color.getRGB());
         }else {
-            this.foreground = colors.getOrDefault(color.getRGB(), NativeCurses.instance().defineColor(20+ colorIndex,
+            this.foreground = colors.getOrDefault(color.getRGB(), Curses.instance().defineColor(20+ colorIndex,
                     color.getRed()/255F, color.getGreen()/255F, color.getBlue()/255F));
             colors.put(color.getRGB(), this.foreground);
             colorIndex++;
@@ -47,7 +47,7 @@ public class ColorBuilder {
         if(colors.containsKey(color.getRGB())) {
             this.background = colors.get(color.getRGB());
         }else {
-            this.background = NativeCurses.instance().defineColor(20+ colorIndex,
+            this.background = Curses.instance().defineColor(20+ colorIndex,
                     color.getRed()/255F, color.getGreen()/255F, color.getBlue()/255F);
             colors.put(color.getRGB(), this.background);
             colorIndex++;
@@ -68,7 +68,7 @@ public class ColorBuilder {
         }
         pairIndex++;
         pairs.put(new Pair<>(this.foreground, this.background), 20+ pairIndex -1);
-        return NativeCurses.instance().defineColorPair(20+ pairIndex -1, this.foreground, this.background);
+        return Curses.instance().defineColorPair(20+ pairIndex -1, this.foreground, this.background);
     }
 
     public static int size() {

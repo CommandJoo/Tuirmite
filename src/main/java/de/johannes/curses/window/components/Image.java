@@ -1,9 +1,9 @@
-package de.curses.window.components;
+package de.johannes.curses.window.components;
 
-import de.curses.NativeCurses;
-import de.curses.util.ColorBuilder;
-import de.curses.util.ColorUtil;
-import de.curses.window.Component;
+import de.johannes.curses.Curses;
+import de.johannes.curses.util.ColorBuilder;
+import de.johannes.curses.util.ColorUtil;
+import de.johannes.curses.window.Component;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -80,7 +80,7 @@ public class Image extends Component {
             this.init();
         } else {
             this.error = true;
-            NativeCurses.instance().destroy();
+            Curses.instance().destroy();
             System.exit(0);
         }
     }

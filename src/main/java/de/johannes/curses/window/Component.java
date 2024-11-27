@@ -1,9 +1,9 @@
-package de.curses.window;
+package de.johannes.curses.window;
 
-import de.curses.NativeCurses;
-import de.curses.NativeVariables;
-import de.curses.util.ColorBuilder;
-import de.curses.window.components.Window;
+import de.johannes.curses.Curses;
+import de.johannes.curses.CursesConstants;
+import de.johannes.curses.util.ColorBuilder;
+import de.johannes.curses.window.components.Window;
 
 public abstract class Component {
 
@@ -15,7 +15,7 @@ public abstract class Component {
     public int color;
 
     public Component(Window parent, int x, int y, int width, int height) {
-        this(parent, x, y, width, height, NativeVariables.WHITE);
+        this(parent, x, y, width, height, CursesConstants.WHITE);
     }
 
     public Component(Window parent, int x, int y, int width, int height, int color) {
@@ -40,45 +40,45 @@ public abstract class Component {
     public abstract boolean handleKey(char ch);
 
     public void drawBox(int color) {
-        NativeCurses.instance().setColor(color == -1 ? this.color : color);
+        Curses.instance().setColor(color == -1 ? this.color : color);
 
-        NativeCurses.instance().drawCorner(x, y, 2);
-        NativeCurses.instance().drawCorner(x + width, y, 1);
-        NativeCurses.instance().drawCorner(x, y + height, 3);
-        NativeCurses.instance().drawCorner(x + width, y + height, 0);
+        Curses.instance().drawCorner(x, y, 2);
+        Curses.instance().drawCorner(x + width, y, 1);
+        Curses.instance().drawCorner(x, y + height, 3);
+        Curses.instance().drawCorner(x + width, y + height, 0);
 
-        NativeCurses.instance().drawHorizontalLine(y, x + 1, x + width);
+        Curses.instance().drawHorizontalLine(y, x + 1, x + width);
 
-        NativeCurses.instance().drawHorizontalLine(y + height, x + 1, x + width);
-        NativeCurses.instance().drawVerticalLine(x, y + 1, y + height);
-        NativeCurses.instance().drawVerticalLine(x + width, y + 1, y + height);
+        Curses.instance().drawHorizontalLine(y + height, x + 1, x + width);
+        Curses.instance().drawVerticalLine(x, y + 1, y + height);
+        Curses.instance().drawVerticalLine(x + width, y + 1, y + height);
     }
 
     public void drawString(int x, int y, String s, int color) {
-        NativeCurses.drawString(s, this.x + x, this.y + y, color);
+        Curses.drawString(s, this.x + x, this.y + y, color);
     }
 
     public void drawStringIndependent(int x, int y, String s, int color) {
-        NativeCurses.drawString(s, x, y, color);
+        Curses.drawString(s, x, y, color);
     }
 
     public void drawCenteredString(int x, int y, String s, int color) {
         String stripped =  (s.replaceAll("\\$[a-z]", ""));
-        NativeCurses.drawString(s, this.x + x -(stripped.length() / 2), this.y + y, color);
+        Curses.drawString(s, this.x + x -(stripped.length() / 2), this.y + y, color);
     }
 
     public void drawCenteredStringIndependent(int x, int y, String s, int color) {
         String stripped =  (s.replaceAll("\\$[a-z]", ""));
-        NativeCurses.drawString(s, x - stripped.length() / 2, y, color);
+        Curses.drawString(s, x - stripped.length() / 2, y, color);
     }
 
     public void drawDecoration(int x, boolean bottom, boolean parens, String deco, int color) {
         int width = deco.length() + 4;//+4 because of two space characters and two tees
         int correction = deco.length() % 2 == 0 ? 1 : 0;
         if(!parens) {
-            NativeCurses.instance().drawTee(this.x + x + correction, bottom ? this.y + this.height : this.y, 1, color);
+            Curses.instance().drawTee(this.x + x + correction, bottom ? this.y + this.height : this.y, 1, color);
             drawString(x + 1 + correction, bottom ? this.height : 0, " " + deco + " ", color);
-            NativeCurses.instance().drawTee(this.x + x + width - 1 + correction, bottom ? this.y + this.height : this.y, 0, color);
+            Curses.instance().drawTee(this.x + x + width - 1 + correction, bottom ? this.y + this.height : this.y, 0, color);
         }else {
             drawString(x + 1 + correction, bottom ? this.height : 0, "( " + deco + " )", color);
         }

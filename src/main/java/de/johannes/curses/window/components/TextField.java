@@ -1,9 +1,9 @@
-package de.curses.window.components;
+package de.johannes.curses.window.components;
 
-import de.curses.NativeCurses;
-import de.curses.util.Timer;
-import de.curses.window.Component;
-import de.curses.window.Keys;
+import de.johannes.curses.Curses;
+import de.johannes.curses.util.Timer;
+import de.johannes.curses.window.Component;
+import de.johannes.curses.window.Keys;
 
 public class TextField extends Component {
     protected final String placeholder;
@@ -52,22 +52,22 @@ public class TextField extends Component {
     @Override
     public void drawBox(int color) {
         int rendercolor = color == -1 ? this.color : color;
-        NativeCurses.instance().setColor(rendercolor);
+        Curses.instance().setColor(rendercolor);
 
-        NativeCurses.instance().drawCorner(x, y, 2);
-        NativeCurses.instance().drawCorner(x + width, y, 1);
-        NativeCurses.instance().drawCorner(x, y + height, 3);
-        NativeCurses.instance().drawCorner(x + width, y + height, 0);
+        Curses.instance().drawCorner(x, y, 2);
+        Curses.instance().drawCorner(x + width, y, 1);
+        Curses.instance().drawCorner(x, y + height, 3);
+        Curses.instance().drawCorner(x + width, y + height, 0);
 
         if (toggleKey < 0) {
-            NativeCurses.instance().drawHorizontalLine(y + height, x + 1, x + width);
+            Curses.instance().drawHorizontalLine(y + height, x + 1, x + width);
         } else {
             String render = "" + (char) toggleKey;
             drawDecoration(width/8-(render.length()/2), true, false, render, color);
         }
-        NativeCurses.instance().drawHorizontalLine(y, x + 1, x + width);
-        NativeCurses.instance().drawVerticalLine(x, y + 1, y + height);
-        NativeCurses.instance().drawVerticalLine(x + width, y + 1, y + height);
+        Curses.instance().drawHorizontalLine(y, x + 1, x + width);
+        Curses.instance().drawVerticalLine(x, y + 1, y + height);
+        Curses.instance().drawVerticalLine(x + width, y + 1, y + height);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package de.curses.window.components;
+package de.johannes.curses.window.components;
 
 public class PasswordField extends TextField {
 

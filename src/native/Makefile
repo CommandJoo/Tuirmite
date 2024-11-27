@@ -1,8 +1,7 @@
 all: compile lib
 header:
-	javac ../main/java/de/curses/util/Files.java
-	javac -h . ../main/java/de/curses/NativeCurses.java
+	javac -h . ../main/java/de/johannes/curses/Curses.java
 compile:
-	cc -c -fPIC -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux de_curses_NativeCurses.c -o de_curses_NativeCurses.o
+	cc -c -fPIC -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux de_johannes_curses_Curses.c -o de_johannes_curses_Curses.o
 lib:
-	cc -shared -fPIC -o libcurses.so de_curses_NativeCurses.o -lncurses
+	cc -shared -fPIC -o libcurses.so de_johannes_curses_Curses.o -lncurses

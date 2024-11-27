@@ -1,11 +1,10 @@
 package de.johannes.testmenu;
 
-import de.curses.NativeCurses;
-import de.curses.WindowManager;
-import de.curses.util.ColorBuilder;
-import de.curses.window.components.Button;
-import de.curses.window.components.TextField;
-import de.curses.window.components.Window;
+import de.johannes.curses.Curses;
+import de.johannes.curses.util.ColorBuilder;
+import de.johannes.curses.window.components.Button;
+import de.johannes.curses.window.components.TextField;
+import de.johannes.curses.window.components.Window;
 import de.johannes.Main;
 
 import java.awt.*;
@@ -13,8 +12,8 @@ import java.awt.*;
 public class LoginWindow extends Window {
     public LoginWindow() {
         super(null,
-                NativeCurses.instance().getWidth() / 2 - 30,
-                NativeCurses.instance().getHeight() / 2 - 6,
+                Curses.instance().getWidth() / 2 - 30,
+                Curses.instance().getHeight() / 2 - 6,
                 60,
                 12,
                 ColorBuilder.create().defineForeground(new Color(70, 200, 150)).build(),

@@ -1,8 +1,7 @@
-package de.curses.window.components;
+package de.johannes.curses.window.components;
 
-import de.curses.NativeCurses;
-import de.curses.util.ColorBuilder;
-import de.curses.window.Component;
+import de.johannes.curses.Curses;
+import de.johannes.curses.window.Component;
 
 public class Button extends Component {
 
@@ -25,9 +24,9 @@ public class Button extends Component {
     public void draw() {
         this.drawBox(-1);
         if(selected) {
-            NativeCurses.instance().attron(0);
+            Curses.instance().attron(0);
             this.drawCenteredString(width/2, 1, text, color);
-            NativeCurses.instance().attroff(0);
+            Curses.instance().attroff(0);
         }else {
             this.drawCenteredString(width/2, 1, text, color);
         }

@@ -1,9 +1,9 @@
 package de.johannes.snake;
 
-import de.curses.NativeCurses;
-import de.curses.util.ColorBuilder;
-import de.curses.util.Timer;
-import de.curses.window.components.Window;
+import de.johannes.curses.Curses;
+import de.johannes.curses.util.ColorBuilder;
+import de.johannes.curses.util.Timer;
+import de.johannes.curses.window.components.Window;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -23,7 +23,7 @@ public class SnakeWindow extends Window {
     private static final int FOOD_COUNT = 4;
     private static final int START_SIZE = 4;
 
-    public SnakeWindow(NativeCurses curses) {
+    public SnakeWindow(Curses curses) {
         super(null, curses.getWidth() / 2 - (curses.getWidth() / 3), curses.getHeight() / 2 - (curses.getHeight() / 3), 2 * curses.getWidth() / 3, 2 * curses.getHeight() / 3, ColorBuilder.create().defineForeground("#7731AF").build(), "Snake");
         this.foodColor = ColorBuilder.create().defineForeground("#67EB44").build();
     }

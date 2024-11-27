@@ -1,4 +1,4 @@
-package de.curses.util;
+package de.johannes.curses.util;
 
 import java.io.*;
 import java.net.URLDecoder;

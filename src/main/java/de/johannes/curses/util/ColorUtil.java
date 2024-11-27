@@ -1,6 +1,4 @@
-package de.curses.util;
-
-import de.curses.NativeCurses;
+package de.johannes.curses.util;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

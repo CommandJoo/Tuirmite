@@ -1,7 +1,7 @@
-package de.curses.window.components;
+package de.johannes.curses.window.components;
 
-import de.curses.NativeCurses;
-import de.curses.window.Component;
+import de.johannes.curses.Curses;
+import de.johannes.curses.window.Component;
 
 public class Selector extends Component {
 
@@ -16,8 +16,8 @@ public class Selector extends Component {
     @Override
     public void draw() {
         drawBox(-1);
-        NativeCurses.instance().drawArrow(x+1, y+1, 0, color);
-        NativeCurses.instance().drawArrow(x+width-1, y+1, 1, color);
+        Curses.instance().drawArrow(x+1, y+1, 0, color);
+        Curses.instance().drawArrow(x+width-1, y+1, 1, color);
         drawCenteredString((width/2), 1, current().substring(0, Math.min(current().length(), width-5)), color);
     }
 

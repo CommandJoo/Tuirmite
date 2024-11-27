@@ -1,8 +1,8 @@
-package de.curses;
+package de.johannes.curses;
 
-import de.curses.util.Files;
+import de.johannes.curses.util.Files;
 
-public class NativeCurses {
+public class Curses {
 
     static final int BLACK = 1;
     static final int DARK_GRAY = 2;
@@ -118,8 +118,8 @@ public class NativeCurses {
 
     public native void refresh();
 
-    private static NativeCurses instance;
-    public NativeCurses() {
+    private static Curses instance;
+    public Curses() {
         if (instance != null) {
             throw new RuntimeException("Can only have one instance of NativeCurses running!\nPlease use NativeCurses.instance()");
         }
@@ -204,8 +204,8 @@ public class NativeCurses {
         instance().setColor(WHITE);
     }
 
-    public static NativeCurses instance() {
-        return instance != null ? instance : new NativeCurses();
+    public static Curses instance() {
+        return instance != null ? instance : new Curses();
     }
 
 
