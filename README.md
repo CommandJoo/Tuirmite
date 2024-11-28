@@ -47,7 +47,9 @@ java -jar "build/libs/JavaCurses.jar"
 ...
 public static void main(String[] args) {
     int fps = 30;//too high fps will cause flickering
-    WindowManager windowManager = new WindowManager(fps);
+    int width = 40;//minimum width in characters
+    int width = 10;//minimum height in lines
+    WindowManager windowManager = new WindowManager(fps, width, height);
     Window window = windowManager.addWindow(0, new MyWindow());//add a window to the screen and make it be the actively rendered one
     
     windowManager.render();//starts the drawing
@@ -58,8 +60,8 @@ public static void main(String[] args) {
 public class MyWindow {
     public MyWindow() {
         super(null,
-                NativeCurses.instance().getWidth() / 2 - 30, //x position
-                NativeCurses.instance().getHeight() / 2 - 6, //y position
+                Curses.width() / 2 - 30, //x position
+                Curses.height() / 2 - 6, //y position
                 60, //width in characters
                 12, //height in lines
                 ColorBuilder //create a new color pair

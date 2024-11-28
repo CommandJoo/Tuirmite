@@ -115,6 +115,12 @@ public class Curses {
             drawString(line, x, y + i);
         }
     }
+    public static void clearBox(int x, int y, int width, int height, int color) {
+        String line = " ".repeat(width);
+        for (int i = 0; i < height; i++) {
+            drawString(line, x, y + i, color);
+        }
+    }
 
     public native void refresh();
 
@@ -164,17 +170,22 @@ public class Curses {
                 yield true;
             }
             case 'r' -> {
-                instance().attroff(ATTRIB_REVERSE);
-                instance().attroff(ATTRIB_DIM);
-                instance().attroff(ATTRIB_ITALIC);
-                instance().attroff(ATTRIB_INVIS);
-                instance().attroff(ATTRIB_BLINK);
-                instance().attroff(ATTRIB_UNDERLINE);
+                alloff();
                 yield true;
             }
             default -> false;
         };
     }
+
+    private static void alloff() {
+        instance().attroff(ATTRIB_REVERSE);
+        instance().attroff(ATTRIB_DIM);
+        instance().attroff(ATTRIB_ITALIC);
+        instance().attroff(ATTRIB_INVIS);
+        instance().attroff(ATTRIB_BLINK);
+        instance().attroff(ATTRIB_UNDERLINE);
+    }
+
     public static void drawString(String str, int x, int y) {
         String[] formats = str.split("\\$");
         int length = 0;
@@ -187,6 +198,7 @@ public class Curses {
             instance().printstr(s.substring(b ? 1 : 0));
             length+=s.length() - (b ? 1 : 0);
         }
+        alloff();
     }
     public static void drawString(String str, int x, int y, int color) {
         String[] formats = str.split("\\$");
@@ -202,6 +214,11 @@ public class Curses {
             length+=s.length() - (b ? 1 : 0);
         }
         instance().setColor(WHITE);
+    }
+
+    public static void drawCenteredString(String str, int x, int y, int color) {
+        String stripped =  (str.replaceAll("\\$[a-z]", ""));
+        drawString(str, x - stripped.length() / 2, y, color);
     }
 
     public static Curses instance() {

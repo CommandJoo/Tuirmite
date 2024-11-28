@@ -11,7 +11,7 @@ public class Main {
     public static final int FPS = 60;
 
     public static void main(String[] args) throws InterruptedException {
-        WindowManager winman = new WindowManager(FPS);
+        WindowManager winman = new WindowManager(FPS, 50, 20);
         winman.render();
         winman.handleKey();
 
