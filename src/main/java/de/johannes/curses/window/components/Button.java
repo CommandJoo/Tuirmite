@@ -25,10 +25,10 @@ public class Button extends Component {
         this.drawBox(-1);
         if(selected) {
             Curses.instance().attron(0);
-            this.drawCenteredString(width/2, 1, text, color);
+            this.drawCenteredString(width/2, height/2, text, color);
             Curses.instance().attroff(0);
         }else {
-            this.drawCenteredString(width/2, 1, text, color);
+            this.drawCenteredString(width/2, height/2, text, color);
         }
 
     }

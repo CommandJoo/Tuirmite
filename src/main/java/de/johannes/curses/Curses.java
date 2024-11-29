@@ -1,5 +1,6 @@
 package de.johannes.curses;
 
+import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.util.Files;
 
 public class Curses {
@@ -143,7 +144,10 @@ public class Curses {
 
 
 
-    private static boolean checkFormatting(char ch) {
+    private static boolean checkFormatting(String str, int color) {
+        if(str.isEmpty()) return false;
+
+        char ch = str.charAt(0);
         return switch (ch) {
             case 'h' -> {
                 instance().attron(ATTRIB_REVERSE);
@@ -169,12 +173,34 @@ public class Curses {
                 instance().attron(ATTRIB_UNDERLINE);
                 yield true;
             }
+            case 'c' -> {//replace color
+                if(str.length() > "x{#xxxxxx}".length()) {
+                    instance().setColor(parseColor(str.substring(1, 11)));
+                    yield true;
+                }
+                yield false;
+            }
             case 'r' -> {
                 alloff();
+                if(color != -1) {
+                    instance().setColor(color);
+                }
                 yield true;
             }
+
             default -> false;
         };
+    }
+
+    private static int parseColor(String colorstring) {
+        String hex = colorstring.substring(2, colorstring.length()-1);
+        if(colorstring.charAt(0) == 'f') {
+            return ColorBuilder.create().defineForeground(hex).build();
+        }else if(colorstring.charAt(0) == 'b') {
+            return ColorBuilder.create().defineBackground(hex).build();
+        }else {
+            return 0;
+        }
     }
 
     private static void alloff() {
@@ -193,7 +219,7 @@ public class Curses {
             instance().moveCursor(x+length, y);
             boolean b = false;
             if(!s.isEmpty()) {
-                b = checkFormatting(s.charAt(0));
+                b = checkFormatting(s, -1);
             }
             instance().printstr(s.substring(b ? 1 : 0));
             length+=s.length() - (b ? 1 : 0);
@@ -206,12 +232,12 @@ public class Curses {
         for(String s : formats) {
             instance().moveCursor(x+length, y);
             boolean b = false;
-            if(!s.isEmpty()) {
-                b = checkFormatting(s.charAt(0));
-            }
             instance().setColor(color);
-            instance().printstr(s.substring(b ? 1 : 0));
-            length+=s.length() - (b ? 1 : 0);
+            if(!s.isEmpty()) {
+                b = checkFormatting(s, color);
+            }
+            instance().printstr(b ? s.charAt(0) == 'c' ? s.substring(11) : s.substring(1) : s);
+            length+=s.length() - (b ? s.charAt(0) == 'c' ? 11 : 1 : 0);
         }
         instance().setColor(WHITE);
     }

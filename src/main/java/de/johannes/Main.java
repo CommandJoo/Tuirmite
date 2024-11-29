@@ -3,6 +3,7 @@ package de.johannes;
 import de.johannes.curses.Curses;
 import de.johannes.curses.WindowManager;
 import de.johannes.curses.window.components.Window;
+import de.johannes.example.Example;
 import de.johannes.snake.SnakeWindow;
 
 public class Main {
@@ -15,7 +16,7 @@ public class Main {
         winman.render();
         winman.handleKey();
 
-        Window game = winman.addWindow(2, new SnakeWindow(Curses.instance()));
+        Window example = winman.addWindow(0, new Example());
     }
 
 

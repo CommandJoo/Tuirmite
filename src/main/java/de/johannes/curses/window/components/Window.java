@@ -20,12 +20,15 @@ public abstract class Window extends Component {
     public Window(Window parent, int x, int y, int width, int height) {
         this(parent, x, y, width, height, CursesConstants.WHITE);
     }
+
     public Window(Window parent, int x, int y, int width, int height, String title) {
         this(parent, x, y, width, height, CursesConstants.WHITE, title);
     }
+
     public Window(Window parent, int x, int y, int width, int height, int color) {
         this(parent, x, y, width, height, color, "");
     }
+
     public Window(Window parent, int x, int y, int width, int height, int color, String title) {
         super(parent, x, y, width, height, color);
         this.components = new HashMap<>();
@@ -34,10 +37,10 @@ public abstract class Window extends Component {
     }
 
     public void drawWindow() {
-            for(Component component : this.getComponents()) {
-                drawComponent(component);
-            }
-            this.draw();
+        for (Component component : this.getComponents()) {
+            drawComponent(component);
+        }
+        this.draw();
     }
 
     @Override
@@ -55,15 +58,15 @@ public abstract class Window extends Component {
         Curses.instance().drawVerticalLine(x, y + 1, y + height);
         Curses.instance().drawVerticalLine(x + width, y + 1, y + height);
 
-        if(!title.isEmpty()) {
-            drawDecoration(width/2-((title.length()+4)/2), false, false, title, rendercolor);
+        if (!title.isEmpty()) {
+            drawDecoration(width / 2 - ((title.length() + 4) / 2), false, false, title, rendercolor);
         }
     }
 
     public void drawComponent(Component comp) {
         if (comp != null) {
-            if(comp instanceof Window) {
-                Window window = ((Window) comp);
+            if (comp instanceof Window window) {
+                window.drawBox(window.color);
                 window.drawWindow();
             } else {
                 comp.draw();
@@ -73,36 +76,36 @@ public abstract class Window extends Component {
 
     public boolean handleButtonKeys(char ch) {
         List<Button> btns = buttons();
-        if(ch >= 258 && ch <= 261) {
-            if(this.selected == null || !btns.contains(selected)) this.selected = btns.getFirst();
+        if (ch >= 258 && ch <= 261) {
+            if (this.selected == null || !btns.contains(selected)) this.selected = btns.getFirst();
             int index = btns.indexOf(selected);
-            if((int) ch == 258) {//down
-                for(int i = index; i < btns.size(); i++) {
-                    if(btns.get(i).y > selected.y) {
+            if ((int) ch == 258) {//down
+                for (int i = index; i < btns.size(); i++) {
+                    if (btns.get(i).y > selected.y) {
                         selected.setSelected(false);
                         this.selected = btns.get(i);
                         return true;
                     }
                 }
-            }else if((int)ch == 259) {//up
-                for(int i = index; i >= 0; i--) {
-                    if(btns.get(i).y < selected.y) {
+            } else if ((int) ch == 259) {//up
+                for (int i = index; i >= 0; i--) {
+                    if (btns.get(i).y < selected.y) {
                         selected.setSelected(false);
                         this.selected = btns.get(i);
                         return true;
                     }
                 }
-            }else if((int)ch == 260) {//left
-                for(int i = index; i >= 0; i--) {
-                    if(btns.get(i).x < selected.x) {
+            } else if ((int) ch == 260) {//left
+                for (int i = index; i >= 0; i--) {
+                    if (btns.get(i).x < selected.x) {
                         selected.setSelected(false);
                         this.selected = btns.get(i);
                         return true;
                     }
                 }
-            }else if((int)ch == 261) {//right
-                for(int i = index; i < btns.size(); i++) {
-                    if(btns.get(i).x > selected.x) {
+            } else if ((int) ch == 261) {//right
+                for (int i = index; i < btns.size(); i++) {
+                    if (btns.get(i).x > selected.x) {
                         selected.setSelected(false);
                         this.selected = btns.get(i);
                         return true;
@@ -110,7 +113,7 @@ public abstract class Window extends Component {
                 }
             }
         }
-        if(ch == Keys.ESCAPE && selected != null) {
+        if (ch == Keys.ESCAPE && selected != null) {
             this.selected().setSelected(false);
             this.selected = null;
         }
@@ -127,31 +130,35 @@ public abstract class Window extends Component {
         this.components.put(id, component);
         return component;
     }
+
     public List<Component> getComponents() {
         return List.copyOf(this.components.values());
     }
+
     @SuppressWarnings("unchecked")
-    public <T extends Component>List<T> getComponents(Class<T> clazz) {
+    public <T extends Component> List<T> getComponents(Class<T> clazz) {
         List<Component> components = getComponents();
         List<T> elements = new ArrayList<>();
         components.forEach(comp -> {
-            if(comp.getClass().isAssignableFrom(clazz)) elements.add((T) comp);
+            if (comp.getClass().isAssignableFrom(clazz)) elements.add((T) comp);
         });
         return elements;
     }
+
     private List<Button> buttons() {
         List<Button> buttons = getComponents(Button.class);
         buttons.sort(new Comparator<Button>() {
             @Override
             public int compare(Button o1, Button o2) {
-                if(o1.y-o2.y == 0) {
-                    return o1.x-o2.x;
+                if (o1.y - o2.y == 0) {
+                    return o1.x - o2.x;
                 }
-                return o1.y-o2.y;
+                return o1.y - o2.y;
             }
         });
         return buttons;
     }
+
     public Component getComponent(int id) {
         return components.getOrDefault(id, null);
     }
@@ -161,8 +168,9 @@ public abstract class Window extends Component {
     }
 
     public void setSelected(Button selected) {
-        if(!components.containsValue(selected) && selected != null) throw new IllegalArgumentException("Button must be registered as Component!");
-        if(this.selected != null) this.selected.setSelected(false);
+        if (!components.containsValue(selected) && selected != null)
+            throw new IllegalArgumentException("Button must be registered as Component!");
+        if (this.selected != null) this.selected.setSelected(false);
         this.selected = selected;
         this.selected.setSelected(true);
     }

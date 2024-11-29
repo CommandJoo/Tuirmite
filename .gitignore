@@ -42,3 +42,5 @@ bin/
 .DS_Store
 
 path
+
+src/main/java/de/johannes/PrivateVariables.java

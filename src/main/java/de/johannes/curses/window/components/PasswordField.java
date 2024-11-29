@@ -16,6 +16,7 @@ public class PasswordField extends TextField {
 
     @Override
     public void draw() {
+        this.drawBox(-1);
         if(input != null) {
             String text = !input.isEmpty() ? "*".repeat(input.length()) : placeholder;
             String cursor = !input.isEmpty() ? blinker.check(500) ? " " : "█" : "";
