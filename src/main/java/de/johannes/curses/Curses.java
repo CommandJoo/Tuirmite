@@ -227,17 +227,23 @@ public class Curses {
         alloff();
     }
     public static void drawString(String str, int x, int y, int color) {
-        String[] formats = str.split("\\$");
-        int length = 0;
-        for(String s : formats) {
-            instance().moveCursor(x+length, y);
-            boolean b = false;
-            instance().setColor(color);
-            if(!s.isEmpty()) {
-                b = checkFormatting(s, color);
+        if(str.contains("$")) {
+            String[] formats = str.split("\\$");
+            int length = 0;
+            for(String s : formats) {
+                instance().moveCursor(x+length, y);
+                boolean b = false;
+                instance().setColor(color);
+                if(!s.isEmpty()) {
+                    b = checkFormatting(s, color);
+                }
+                instance().printstr(b ? s.charAt(0) == 'c' ? s.substring(11) : s.substring(1) : s);
+                length+=s.length() - (b ? s.charAt(0) == 'c' ? 11 : 1 : 0);
             }
-            instance().printstr(b ? s.charAt(0) == 'c' ? s.substring(11) : s.substring(1) : s);
-            length+=s.length() - (b ? s.charAt(0) == 'c' ? 11 : 1 : 0);
+        }else {
+            instance().moveCursor(x,y);
+            instance().setColor(color);
+            instance().printstr(str);
         }
         instance().setColor(WHITE);
     }
