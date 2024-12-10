@@ -44,12 +44,19 @@ public abstract class Window extends Component {
     @Override
     public void drawBox(int color) {
         int rendercolor = color == -1 ? this.color : color;
-        Curses.instance().setColor(rendercolor);
 
-        Curses.instance().drawCorner(x, y, 2);
-        Curses.instance().drawCorner(x + width, y, 1);
-        Curses.instance().drawCorner(x, y + height, 3);
-        Curses.instance().drawCorner(x + width, y + height, 0);
+        Curses.instance().setColor(rendercolor);
+        if(!rounded) {
+            Curses.instance().drawCorner(x, y, 2);
+            Curses.instance().drawCorner(x + width, y, 1);
+            Curses.instance().drawCorner(x, y + height, 3);
+            Curses.instance().drawCorner(x + width, y + height, 0);
+        }else {
+            Curses.instance().drawRoundedCorner(x, y, 2);
+            Curses.instance().drawRoundedCorner(x + width, y, 1);
+            Curses.instance().drawRoundedCorner(x, y + height, 3);
+            Curses.instance().drawRoundedCorner(x + width, y + height, 0);
+        }
 
         Curses.instance().drawHorizontalLine(y, x + 1, x + width);
         Curses.instance().drawHorizontalLine(y + height, x + 1, x + width);

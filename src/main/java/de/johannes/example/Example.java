@@ -16,7 +16,8 @@ public class Example extends Window {
                 2*Curses.width()/6,
                 Curses.height()/2,
                 ColorBuilder.create().defineForeground("#DDBB66").build(),
-                "Example");
+                "Example",
+                true);
     }
 
     @Override

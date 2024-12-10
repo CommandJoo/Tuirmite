@@ -69,7 +69,9 @@ public class MyWindow {
                         .defineForeground(new Color(70, 200, 150)) //Java Colors and Hex are supported
                         .defineBackground(1) //default black -> NativeCurses.BLACK
                         .build(), //get the color pair id
-                "MyWindow"); //title
+                        "MyWindow", //title
+                        true //rounded corners
+            ); 
     }
     
     public void init() {
@@ -81,9 +83,6 @@ public class MyWindow {
     }
     
     public boolean handleKey(char ch) {
-        boolean buttons = this.handleButtonKeys(ch);
-        if(buttons) return true;//returns true if a key has been handled
-        
         return this.handleKeysForSub(someComponent, ch);//returns if a key has been handled by a component
         
     }
