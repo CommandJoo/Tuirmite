@@ -11,16 +11,16 @@ public class TextField extends Component {
     private final int toggleKey;
     protected boolean focused;
 
-    public TextField(Window parent, int x, int y, int width) {
-        this(parent, x, y, width, "");
+    public TextField(Window parent, int x, int y, int width, boolean rounded) {
+        this(parent, x, y, width, "", rounded);
     }
 
-    public TextField(Window parent, int x, int y, int width, String placeholder) {
-        this(parent, x, y, width, placeholder, -1);
+    public TextField(Window parent, int x, int y, int width, String placeholder, boolean rounded) {
+        this(parent, x, y, width, placeholder, -1,rounded);
     }
 
-    public TextField(Window parent, int x, int y, int width, String placeholder, int toggleKey) {
-        super(parent, x, y, width, 2);
+    public TextField(Window parent, int x, int y, int width, String placeholder, int toggleKey, boolean rounded) {
+        super(parent, x, y, width, 2, rounded);
         this.input = new StringBuilder();
         this.blinker = new Timer();
         this.placeholder = placeholder;

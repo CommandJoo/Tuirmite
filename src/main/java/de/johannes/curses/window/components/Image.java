@@ -18,7 +18,7 @@ public class Image extends Component {
     private boolean error;
 
     public Image(Window parent, int x, int y, int width, File image) {
-        super(parent, x, y, width, 0);
+        super(parent, x, y, width, 0, false);
         setImage(image);
     }
 

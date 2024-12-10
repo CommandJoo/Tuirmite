@@ -13,12 +13,13 @@ public abstract class Component {
     public final int width;
     public final int height;
     public int color;
+    public boolean rounded;
 
-    public Component(Window parent, int x, int y, int width, int height) {
-        this(parent, x, y, width, height, CursesConstants.WHITE);
+    public Component(Window parent, int x, int y, int width, int height, boolean rounded) {
+        this(parent, x, y, width, height, CursesConstants.WHITE, rounded);
     }
 
-    public Component(Window parent, int x, int y, int width, int height, int color) {
+    public Component(Window parent, int x, int y, int width, int height, int color, boolean rounded) {
         this.parent = parent;
         if (this.parent == null) {
             this.x = x;
@@ -30,25 +31,23 @@ public abstract class Component {
         this.width = width;
         this.height = height;
         this.color = color;
+        this.rounded = rounded;
     }
 
     public void init() {
     }
-
     public abstract void draw();
-
     public abstract boolean handleKey(char ch);
 
     public void drawBox(int color) {
-        Curses.instance().setColor(color == -1 ? this.color : color);
+        int drawColor = color == -1 ? this.color : color;
+        Curses.instance().drawCorner(x, y, 2, drawColor, rounded);
+        Curses.instance().drawCorner(x + width, y, 1, drawColor, rounded);
+        Curses.instance().drawCorner(x, y + height, 3, drawColor, rounded);
+        Curses.instance().drawCorner(x + width, y + height, 0, drawColor, rounded);
 
-        Curses.instance().drawCorner(x, y, 2);
-        Curses.instance().drawCorner(x + width, y, 1);
-        Curses.instance().drawCorner(x, y + height, 3);
-        Curses.instance().drawCorner(x + width, y + height, 0);
-
+        Curses.instance().setColor(drawColor);
         Curses.instance().drawHorizontalLine(y, x + 1, x + width);
-
         Curses.instance().drawHorizontalLine(y + height, x + 1, x + width);
         Curses.instance().drawVerticalLine(x, y + 1, y + height);
         Curses.instance().drawVerticalLine(x + width, y + 1, y + height);
@@ -57,16 +56,13 @@ public abstract class Component {
     public void drawString(int x, int y, String s, int color) {
         Curses.drawString(s, this.x + x, this.y + y, color);
     }
-
     public void drawStringIndependent(int x, int y, String s, int color) {
         Curses.drawString(s, x, y, color);
     }
-
     public void drawCenteredString(int x, int y, String s, int color) {
         String stripped =  (s.replaceAll("\\$[a-z]", ""));
         Curses.drawString(s, this.x + x -(stripped.length() / 2), this.y + y, color);
     }
-
     public void drawCenteredStringIndependent(int x, int y, String s, int color) {
         String stripped =  (s.replaceAll("\\$[a-z]", ""));
         Curses.drawString(s, x - stripped.length() / 2, y, color);
@@ -87,7 +83,6 @@ public abstract class Component {
     public void setColor(int color) {
         this.color = color;
     }
-
     public void setColor(String hex) {
         this.color = new ColorBuilder().defineForeground(hex).build();
     }

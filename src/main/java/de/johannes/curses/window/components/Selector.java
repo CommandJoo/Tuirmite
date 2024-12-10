@@ -8,8 +8,8 @@ public class Selector extends Component {
     private String[] values;
     private int index;
 
-    public Selector(Window parent, int x, int y, int width, int color, String... values) {
-        super(parent, x, y, width, 2, color);
+    public Selector(Window parent, int x, int y, int width, int color, boolean rounded, String... values) {
+        super(parent, x, y, width, 2, color, rounded);
         this.values = values;
     }
 

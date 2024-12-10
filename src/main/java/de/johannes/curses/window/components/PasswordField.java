@@ -2,16 +2,16 @@ package de.johannes.curses.window.components;
 
 public class PasswordField extends TextField {
 
-    public PasswordField(Window parent, int x, int y, int width) {
-        super(parent, x, y, width);
+    public PasswordField(Window parent, int x, int y, int width, boolean rounded) {
+        super(parent, x, y, width, rounded);
     }
 
-    public PasswordField(Window parent, int x, int y, int width, String placeholder) {
-        super(parent, x, y, width, placeholder);
+    public PasswordField(Window parent, int x, int y, int width, String placeholder, boolean rounded) {
+        super(parent, x, y, width, placeholder, rounded);
     }
 
-    public PasswordField(Window parent, int x, int y, int width, String placeholder, int toggleKey) {
-        super(parent, x, y, width, placeholder, toggleKey);
+    public PasswordField(Window parent, int x, int y, int width, String placeholder, int toggleKey, boolean rounded) {
+        super(parent, x, y, width, placeholder, toggleKey, rounded);
     }
 
     @Override

@@ -3,6 +3,7 @@ package de.johannes.example;
 import de.johannes.PrivateVariables;
 import de.johannes.curses.Curses;
 import de.johannes.curses.util.ColorBuilder;
+import de.johannes.curses.window.Component;
 import de.johannes.curses.window.components.*;
 
 import java.io.File;
@@ -20,11 +21,11 @@ public class Example extends Window {
 
     @Override
     public void init() {
-        addComponent(0, new Button(this, 1, 1, width/2,3,"Button"));
-//        addComponent(1, new Image(this, 1, 1, 30, new File(PrivateVariables.PROJECT_HOME +"/build/libs/image.png")));
-        addComponent(2, new PasswordField(this, 1, 5, width/2, "Password: "));
-        addComponent(3, new Selector(this, 1, 8, width/2, color, "Selector", "Apple", "Banana", "Orange", "Cherry", "Melon"));
-        addComponent(4, new TextField(this, 1, 11, width/2, "Text: "));
+        addComponent(0, new Button(this, 1, 1, width/2,3,"Button", true));
+        addComponent(2, new PasswordField(this, 1, 5, width/2, "Password: ", false));
+        addComponent(3, new Selector(this, 1, 8, width/2, color, true,"Selector", "Apple", "Banana", "Orange", "Cherry", "Melon"));
+        addComponent(4, new TextField(this, 1, 11, width/2, "Textfield: ", true));
+        addComponent(6, new TextInput(this, 1, 13, width/2, "Textinput: "));
         addComponent(5, new Window(this, width/2+2, 1, width/2-3, height-2, color, "Sub Window") {
             @Override
             public void draw() {
@@ -50,6 +51,9 @@ public class Example extends Window {
 
     @Override
     public boolean handleKey(char ch) {
+        for(Component comp : getComponents()) {
+            this.handleKeyForSub(comp, ch);
+        }
         return false;
     }
 }

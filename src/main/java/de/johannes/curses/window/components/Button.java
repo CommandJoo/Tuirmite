@@ -8,14 +8,14 @@ public class Button extends Component {
     private final String text;
     private boolean selected;
 
-    public Button(Window parent, int x, int y, int width, int height, String text) {
-        super(parent, x, y, width, height, parent.color);
+    public Button(Window parent, int x, int y, int width, int height, String text, boolean rounded) {
+        super(parent, x, y, width, height, parent.color, rounded);
         this.text = text;
         this.color = parent.color;
     }
 
-    public Button(Window parent, int x, int y, int width, int height, int color, String text) {
-        super(parent, x, y, width, height);
+    public Button(Window parent, int x, int y, int width, int height, int color, String text, boolean rounded) {
+        super(parent, x, y, width, height, rounded);
         this.text = text;
         this.color = color;
     }

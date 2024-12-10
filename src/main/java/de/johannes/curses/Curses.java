@@ -26,6 +26,10 @@ public class Curses {
     static final char CORNER_UPPER_RIGHT = '┐';
     static final char CORNER_LOWER_LEFT = '└';
     static final char CORNER_LOWER_RIGHT = '┘';
+    static final char CORNER_ROUNDED_UPPER_LEFT = '╭';
+    static final char CORNER_ROUNDED_UPPER_RIGHT = '╮';
+    static final char CORNER_ROUNDED_LOWER_LEFT = '╰';
+    static final char CORNER_ROUNDED_LOWER_RIGHT = '╯';
 
     static final char TEE_DOWN_POINTING = '┬';
     static final char TEE_UP_POINTING = '┴';
@@ -87,10 +91,36 @@ public class Curses {
     public native void drawHorizontalLine(int y, int x1, int x2);
     public native void drawVerticalLine(int x, int y1, int y2);
     public native void drawCorner(int x, int y, int type);
+    public void drawRoundedCorner(int x, int y, int type) {
+            switch (type) {
+                case 0:
+                    drawString(CORNER_ROUNDED_LOWER_RIGHT, x,y);
+                    break;
+                case 1:
+                    drawString(CORNER_ROUNDED_UPPER_RIGHT, x,y);
+                    break;
+                case 2:
+                    drawString(CORNER_ROUNDED_UPPER_LEFT, x,y);
+                    break;
+                case 3:
+                    drawString(CORNER_ROUNDED_LOWER_LEFT, x,y);
+                    break;
+                default: break;
+        }
+    }
     public void drawCorner(int x, int y, int type, int color) {
         setColor(color);
         drawCorner(x, y, type);
     }
+    public void drawCorner(int x, int y, int type, int color, boolean rounded) {
+        setColor(color);
+        if(!rounded) {
+            drawCorner(x, y, type);
+        }else {
+            drawRoundedCorner(x,y,type);
+        }
+    }
+
     private native void drawTee(int x, int y, int type);
     public void drawTee(int x, int y, int type, int color) {
         //0 RIGHT POINTING
@@ -212,23 +242,28 @@ public class Curses {
         instance().attroff(ATTRIB_UNDERLINE);
     }
 
-    public static void drawString(String str, int x, int y) {
-        String[] formats = str.split("\\$");
-        int length = 0;
-        for(String s : formats) {
-            instance().moveCursor(x+length, y);
-            boolean b = false;
-            if(!s.isEmpty()) {
-                b = checkFormatting(s, -1);
+    public static void drawString(Object str, int x, int y) {
+        if(str.toString().contains("$")) {
+            String[] formats = str.toString().split("\\$");
+            int length = 0;
+            for(String s : formats) {
+                instance().moveCursor(x+length, y);
+                boolean b = false;
+                if(!s.isEmpty()) {
+                    b = checkFormatting(s, -1);
+                }
+                instance().printstr(s.substring(b ? 1 : 0));
+                length+=s.length() - (b ? 1 : 0);
             }
-            instance().printstr(s.substring(b ? 1 : 0));
-            length+=s.length() - (b ? 1 : 0);
+            alloff();
+        }else {
+            instance().moveCursor(x,y);
+            instance().printstr(str.toString());
         }
-        alloff();
     }
-    public static void drawString(String str, int x, int y, int color) {
-        if(str.contains("$")) {
-            String[] formats = str.split("\\$");
+    public static void drawString(Object str, int x, int y, int color) {
+        if(str.toString().contains("$")) {
+            String[] formats = str.toString().split("\\$");
             int length = 0;
             for(String s : formats) {
                 instance().moveCursor(x+length, y);
@@ -243,7 +278,7 @@ public class Curses {
         }else {
             instance().moveCursor(x,y);
             instance().setColor(color);
-            instance().printstr(str);
+            instance().printstr(str.toString());
         }
         instance().setColor(WHITE);
     }

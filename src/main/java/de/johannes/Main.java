@@ -17,6 +17,12 @@ public class Main {
         winman.handleKey();
 
         Window example = winman.addWindow(0, new Example());
+        winman.addKeyHandler((ch, key) -> {
+            if(ch=='q') {
+                winman.removeWindow(0);
+                Curses.clear();
+            }
+        });
     }
 
 
