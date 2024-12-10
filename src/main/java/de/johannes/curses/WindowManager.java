@@ -97,6 +97,7 @@ public class WindowManager {
 
 
     public void kill() {
+        running = false;
         Curses.instance().destroy();
     }
 
