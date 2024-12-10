@@ -4,7 +4,11 @@ import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.util.Timer;
 import de.johannes.curses.window.components.Window;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class WindowManager {
 
@@ -16,6 +20,8 @@ public class WindowManager {
     public final int fps;
     private final int minWidth, minHeight;
     private final Timer fpsTimer;
+
+    private final List<BiConsumer<Character, Integer>> keyHandlers;
 
     public WindowManager(final int fps, int minWidth, int minHeight) {
         if (instance != null) throw new IllegalStateException("Only one WindowManager is allowed per Runtime!");
@@ -29,6 +35,7 @@ public class WindowManager {
 
         this.fpsTimer = new Timer();
 
+        this.keyHandlers = new ArrayList<>();
         Curses.instance();
         this.running = true;
     }
@@ -48,73 +55,10 @@ public class WindowManager {
                         Curses.drawCenteredString("$uPlease use", Curses.width()/2, Curses.height()/2, ColorBuilder.create().defineBackground("#222233").defineForeground("#9999AA").build());
                         Curses.drawCenteredString("Minimum (width: $i"+minWidth+"$r), (height: $i"+minHeight+"$r)", Curses.width()/2, Curses.height()/2+2, ColorBuilder.create().defineBackground("#222233").defineForeground("#66DD66").build());
                     }else {
-                        windows.forEach((id1, window1) -> {
-                            Curses.clearBox(window1.x,window1.y,window1.width,window1.height);
-                            window1.drawBox(window1.color);
-                            windows.forEach((id2, window2) -> {
-                                if(window2.x + window2.width == window1.x) {
-                                    if(window2.y == window1.y) {
-                                        Curses.instance().drawTee(window1.x, window1.y, 3, window1.color);
-                                        if(window2.height > window1.height) {
-                                            Curses.instance().drawTee(window1.x, window2.y+window1.height, 0, window1.color);
-                                        } else if(window2.height < window1.height) {
-                                            Curses.instance().drawTee(window1.x, window2.y+window2.height, 1, window1.color);
-                                        } else {
-                                            Curses.instance().drawTee(window1.x, window1.y+window1.height, 2, window1.color);
-                                        }
-                                    }else if(window2.y < window1.y) {
-                                        Curses.instance().drawTee(window1.x, window1.y, 0, window1.color);
-                                        Curses.instance().drawTee(window1.x, window2.y+window1.height, 1, window1.color);
-                                    }else if(window2.y < window1.y+window1.height) {
-                                        Curses.instance().drawTee(window1.x, window2.y, 1, window1.color);
-                                        Curses.instance().drawTee(window1.x, window1.y+window2.height, 0, window1.color);
-                                    }
-                                }
-                                else if(window1.x + window1.width == window2.x) {
-                                    if(window1.y == window2.y) {
-                                        Curses.instance().drawTee(window2.x, window2.y, 3, window2.color);
-                                        if(window2.height > window1.height) {
-                                            Curses.instance().drawTee(window2.x, window1.y+window1.height, 1, window2.color);
-                                        } else if(window2.height < window1.height) {
-                                            Curses.instance().drawTee(window2.x, window1.y+window2.height, 0, window2.color);
-                                        } else {
-                                            Curses.instance().drawTee(window2.x, window2.y+window2.height, 2, window2.color);
-                                        }
-                                    }else if(window1.y < window2.y) {
-                                        Curses.instance().drawTee(window2.x, window2.y, 0, window2.color);
-                                        Curses.instance().drawTee(window2.x, window1.y+window2.height, 1, window2.color);
-                                    }else if(window1.y < window2.y+window2.height) {
-                                        Curses.instance().drawTee(window2.x, window1.y, 1, window2.color);
-                                        Curses.instance().drawTee(window2.x, window2.y+window1.height, 0, window2.color);
-                                    }
-                                }
-                                if(window2.y + window2.height == window1.y) {
-                                    if(window2.x == window1.x) {
-                                        Curses.instance().drawTee(window1.x, window1.y, 0, window1.color);
-                                        Curses.instance().drawTee(window1.x+window1.width, window1.y, 1, window1.color);
-                                    }else if(window2.x < window1.x) {
-                                        Curses.instance().drawTee(window1.x, window1.y, 3, window2.color);
-                                        Curses.instance().drawTee(window2.x+window1.width, window1.y, 2, window2.color);
-                                    }else if(window2.x < window1.x+window1.width) {
-                                        Curses.instance().drawTee(window2.x, window1.y, 2, window2.color);
-                                        Curses.instance().drawTee(window1.x+window2.width, window1.y, 3, window2.color);
-                                    }
-
-                                }
-                                else if(window1.y + window1.height == window2.y) {
-                                    if(window1.x == window2.x) {
-                                        Curses.instance().drawTee(window2.x, window2.y, 0, window2.color);
-                                        Curses.instance().drawTee(window2.x+window2.width, window2.y, 1, window2.color);
-                                    }else if(window1.x < window2.x) {
-                                        Curses.instance().drawTee(window2.x, window2.y, 3, window1.color);
-                                        Curses.instance().drawTee(window1.x+window2.width, window2.y, 2, window1.color);
-                                    }else if(window1.x < window2.x+window2.width) {
-                                        Curses.instance().drawTee(window1.x, window2.y, 2, window1.color);
-                                        Curses.instance().drawTee(window2.x+window1.width, window2.y, 3, window1.color);
-                                    }
-                                }
-                            });
-                            window1.drawWindow();
+                        windows.forEach((id1, window) -> {
+                            Curses.clearBox(window.x,window.y,window.width,window.height);
+                            window.drawBox(window.color);
+                            window.drawWindow();
                         });
                     }
                     Curses.instance().refresh();
@@ -141,9 +85,16 @@ public class WindowManager {
                 for(Window window : windows.values()) {
                     window.handleKey((char)in);
                 }
+                for(BiConsumer<Character, Integer> cons : this.keyHandlers) {
+                    cons.accept((char)in, in);
+                }
             }
         }).start();
     }
+    public void addKeyHandler(BiConsumer<Character, Integer> handler) {
+        this.keyHandlers.add(handler);
+    }
+
 
     public void kill() {
         Curses.instance().destroy();
@@ -152,14 +103,18 @@ public class WindowManager {
 
     public Window addWindow(int id, Window window) {
         if (this.windows.containsKey(id))
-            throw new IllegalArgumentException("Window with ID: " + id + " already registered");
+            throw new IllegalArgumentException("Window with ID: " + id + " already registered!");
         this.windows.put(id, window);
         return window;
     }
-
+    public void removeWindow(int id) {
+        if(!this.windows.containsKey(id)) throw new IllegalArgumentException("Window with ID: "+id+" doesn't exist!");
+        this.windows.remove(id);
+    }
     public Window getWindow(int id) {
         return this.windows.getOrDefault(id, null);
     }
+
 
     public static WindowManager instance() {
         if (instance == null) return new WindowManager(30);
