@@ -88,7 +88,7 @@ public class MyWindow {
     }
 }
 ```
-A working example of a simple login and chat interface can be found in [ExampleProject](src/main/java/de/johannes/example/Example.java)
+A working example of all the basic components and formatting can be found in [ExampleProject](src/main/java/de/johannes/example/Example.java)
 <br> A Simple Snake-Game can also be found here: [Snake](src/main/java/de/johannes/snake/SnakeWindow.java)
 ***
 ## Author
