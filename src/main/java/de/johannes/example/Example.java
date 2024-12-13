@@ -2,6 +2,7 @@ package de.johannes.example;
 
 import de.johannes.PrivateVariables;
 import de.johannes.curses.Curses;
+import de.johannes.curses.NerdFontIcons;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.window.Component;
 import de.johannes.curses.window.components.*;
@@ -36,6 +37,7 @@ public class Example extends Window {
                 drawCenteredString(width/2,4,  "Centered $iFormatted$r String", color);
                 drawString(1,5,  "Colored Example String", ColorBuilder.create().defineForeground("#FAAAFF").build());//add color formatting
                 drawString(1,6,  "Colored $cf{#FFAAAA}Formatted String", ColorBuilder.create().defineForeground("#FAAAFF").build());
+                drawString(1,7,  "Nerdfont-Icon: "+ NerdFontIcons.NF_WEATHER_MOON_ALT_WAXING_CRESCENT_1, ColorBuilder.create().defineForeground("#FAAAFF").build());
             }
 
             @Override

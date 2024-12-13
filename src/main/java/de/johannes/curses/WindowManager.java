@@ -1,12 +1,15 @@
 package de.johannes.curses;
 
 import de.johannes.curses.util.ColorBuilder;
+import de.johannes.curses.util.Pair;
 import de.johannes.curses.util.Timer;
 import de.johannes.curses.window.components.Window;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.LinkedTransferQueue;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -15,6 +18,7 @@ public class WindowManager {
     private static WindowManager instance;
     private boolean running;
 
+    private HashMap<Integer, Window> addQueue;
     private final HashMap<Integer, Window> windows;
 
     public final int fps;
@@ -27,6 +31,7 @@ public class WindowManager {
         if (instance != null) throw new IllegalStateException("Only one WindowManager is allowed per Runtime!");
         instance = this;
 
+        this.addQueue = new HashMap<>();
         this.windows = new HashMap<>();
 
         this.fps = fps;
@@ -48,6 +53,12 @@ public class WindowManager {
         new Thread(() -> {
             while (running) {
                 if (fpsTimer.check(1000 / fps)) {
+                    if(!addQueue.isEmpty()) {
+                        for(Integer key : this.addQueue.keySet()) {
+                            this.windows.put(key, this.addQueue.get(key));
+                        }
+                        this.addQueue = new HashMap<>();
+                    }
                     if(Curses.width() < minWidth || Curses.height() < minHeight) {
                         Curses.clearBox(0, 0, Curses.width(), Curses.height(), ColorBuilder.create().defineForeground("#222233").defineBackground("#222233").build());
                         Curses.drawCenteredString("$uWindow too small", Curses.width()/2, Curses.height()/2-4, ColorBuilder.create().defineBackground("#222233").defineForeground("#9999AA").build());
@@ -74,21 +85,23 @@ public class WindowManager {
                 int in = Curses.instance().getch();
                 if (in == 3) {
                     try {
-                        running = false;
-                        Thread.sleep((long) (1000/(fps*0.75)));
                         kill();
-                        System.exit(0);
                     } catch(Exception _) {
                     }
                     break;
                 }
-                for(Window window : windows.values()) {
-                    window.handleKey((char)in);
+                if(addQueue.isEmpty()) {
+                    for(Window window : windows.values()) {
+                        window.handleKey((char)in);
+                    }
                 }
                 for(BiConsumer<Character, Integer> cons : this.keyHandlers) {
                     cons.accept((char)in, in);
                 }
             }
+            Curses.clear();
+            Curses.kill();
+            System.exit(0);
         }).start();
     }
     public void addKeyHandler(BiConsumer<Character, Integer> handler) {
@@ -98,14 +111,22 @@ public class WindowManager {
 
     public void kill() {
         running = false;
-        Curses.instance().destroy();
+        new Thread(() -> {
+            try {
+                Thread.sleep((long) (1000/(fps*0.75)));
+                Curses.clear();
+                Curses.instance().destroy();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
 
     public Window addWindow(int id, Window window) {
         if (this.windows.containsKey(id))
             throw new IllegalArgumentException("Window with ID: " + id + " already registered!");
-        this.windows.put(id, window);
+        this.addQueue.put(id, window);
         return window;
     }
     public void removeWindow(int id) {
