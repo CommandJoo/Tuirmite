@@ -1,6 +1,7 @@
 package de.johannes.snake;
 
 import de.johannes.curses.Curses;
+import de.johannes.curses.nerdfont.NFFontAwesome;
 import de.johannes.curses.nerdfont.NFMaterialDesign;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.util.Timer;
@@ -50,7 +51,7 @@ public class SnakeWindow extends Window {
     public void draw() {
         if(!dead) {
             for (int i = 0; i < player.size(); i++) {
-                drawString(player.get(i).x, player.get(i).y, i == 0 ? NFMaterialDesign.NF_FA_CIRCLE_STOP : "●", color);
+                drawString(player.get(i).x, player.get(i).y, i == 0 ? NFFontAwesome.CIRCLESTOP : "●", color);
             }
             for(Point food : this.food) {
                 drawString(food.x, food.y, "@", foodColor);
