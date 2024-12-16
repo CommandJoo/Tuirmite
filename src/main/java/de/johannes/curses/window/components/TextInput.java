@@ -1,9 +1,8 @@
 package de.johannes.curses.window.components;
 
-import de.johannes.curses.Curses;
 import de.johannes.curses.util.Timer;
 import de.johannes.curses.window.Component;
-import de.johannes.curses.window.Keys;
+import de.johannes.curses.Keys;
 
 public class TextInput extends Component {
     protected final String placeholder;

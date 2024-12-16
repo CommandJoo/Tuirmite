@@ -1,6 +1,7 @@
 package de.johannes.snake;
 
 import de.johannes.curses.Curses;
+import de.johannes.curses.NerdFontIcons;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.util.Timer;
 import de.johannes.curses.window.components.Window;
@@ -43,11 +44,13 @@ public class SnakeWindow extends Window {
         }
     }
 
+    String head = new StringBuilder().appendCodePoint(0xdb82).appendCodePoint(0xdfaf).toString();
+
     @Override
     public void draw() {
         if(!dead) {
             for (int i = 0; i < player.size(); i++) {
-                drawString(player.get(i).x, player.get(i).y, i == 0 ? "●" : "·", color);
+                drawString(player.get(i).x, player.get(i).y, i == 0 ? NerdFontIcons.NF_FA_CIRCLE_STOP : "●", color);
             }
             for(Point food : this.food) {
                 drawString(food.x, food.y, "@", foodColor);

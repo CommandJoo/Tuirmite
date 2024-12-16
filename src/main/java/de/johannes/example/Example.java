@@ -1,13 +1,16 @@
 package de.johannes.example;
 
+import de.johannes.Main;
 import de.johannes.PrivateVariables;
 import de.johannes.curses.Curses;
+import de.johannes.curses.Mouse;
 import de.johannes.curses.NerdFontIcons;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.window.Component;
 import de.johannes.curses.window.components.*;
 
 import java.io.File;
+import java.util.Random;
 
 public class Example extends Window {
     public Example() {
@@ -59,4 +62,5 @@ public class Example extends Window {
         }
         return false;
     }
+
 }

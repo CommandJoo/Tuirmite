@@ -1,7 +1,7 @@
 package de.johannes;
 
 import de.johannes.curses.Curses;
-import de.johannes.curses.WindowManager;
+import de.johannes.curses.window.WindowManager;
 import de.johannes.curses.window.components.Window;
 import de.johannes.example.Example;
 import de.johannes.snake.SnakeWindow;
@@ -20,6 +20,7 @@ public class Main {
         winman.addKeyHandler((ch, key) -> {
             if(ch=='q') {
                 winman.removeWindow(0);
+                winman.addWindow(1, new SnakeWindow(Curses.instance()));
                 Curses.clear();
             }
         });

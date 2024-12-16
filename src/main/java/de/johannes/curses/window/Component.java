@@ -2,6 +2,7 @@ package de.johannes.curses.window;
 
 import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
+import de.johannes.curses.Mouse;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.window.components.Window;
 
@@ -38,6 +39,7 @@ public abstract class Component {
     }
     public abstract void draw();
     public abstract boolean handleKey(char ch);
+    public boolean handleClick(Mouse mouse) {return false;}
 
     public void drawBox(int color) {
         int drawColor = color == -1 ? this.color : color;

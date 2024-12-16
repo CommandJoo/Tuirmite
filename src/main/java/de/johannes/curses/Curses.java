@@ -67,6 +67,7 @@ public class Curses {
     public native void printstr(String str);
 
     public native int getch();
+    public native Mouse getMouseEvent();
     public static int getChar() {return instance().getch();}
     public static int readChar() {return instance().inch();}
     public native int inch();

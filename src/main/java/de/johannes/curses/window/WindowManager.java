@@ -1,17 +1,16 @@
-package de.johannes.curses;
+package de.johannes.curses.window;
 
+import de.johannes.curses.Curses;
+import de.johannes.curses.Keys;
+import de.johannes.curses.Mouse;
 import de.johannes.curses.util.ColorBuilder;
-import de.johannes.curses.util.Pair;
 import de.johannes.curses.util.Timer;
 import de.johannes.curses.window.components.Window;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.LinkedTransferQueue;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class WindowManager {
 
@@ -91,8 +90,15 @@ public class WindowManager {
                     break;
                 }
                 if(addQueue.isEmpty()) {
-                    for(Window window : windows.values()) {
-                        window.handleKey((char)in);
+                    if(in != Keys.KEY_MOUSE) {
+                        for(Window window : windows.values()) {
+                            window.handleKey((char)in);
+                        }
+                    }else {
+                        Mouse event = Curses.instance().getMouseEvent();
+                        for(Window window : windows.values()) {
+                            window.handleClick(event);
+                        }
                     }
                 }
                 for(BiConsumer<Character, Integer> cons : this.keyHandlers) {
@@ -101,7 +107,6 @@ public class WindowManager {
             }
             Curses.clear();
             Curses.kill();
-            System.exit(0);
         }).start();
     }
     public void addKeyHandler(BiConsumer<Character, Integer> handler) {
