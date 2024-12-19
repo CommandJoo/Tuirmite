@@ -125,7 +125,7 @@ JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_printstr(JNIEnv *env,
 
 JNIEXPORT jint JNICALL Java_de_johannes_curses_Curses_getch(JNIEnv *env,
                                                             jobject obj) {
-  return getch();
+  return getchar();
 }
 
 JNIEXPORT jobject JNICALL
