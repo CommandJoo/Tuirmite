@@ -2,6 +2,7 @@ package de.johannes.curses.window.components;
 
 import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
+import de.johannes.curses.Mouse;
 import de.johannes.curses.window.Component;
 
 import java.util.ArrayList;
@@ -66,6 +67,20 @@ public abstract class Window extends Component {
             drawDecoration(width / 2 - ((title.length() + 4) / 2), false, false, title, rendercolor);
         }
     }
+
+    @Override
+    public boolean handleClick(Mouse mouse) {
+        for(Component comp : this.components.values()) {
+            if(
+                    comp.x <= mouse.x && comp.x+width >= mouse.x &&
+                            comp.y <= mouse.y && comp.y+comp.height >= mouse.y
+            ) {
+                return comp.handleClick(mouse);
+            }
+        }
+        return super.handleClick(mouse);
+    }
+
     public void drawComponent(Component comp) {
         if (comp != null) {
             if (comp instanceof Window window) {

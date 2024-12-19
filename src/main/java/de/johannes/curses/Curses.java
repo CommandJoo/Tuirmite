@@ -142,16 +142,16 @@ public class Curses {
         drawArrow(x, y, type);
     }
     public static void clearBox(int x, int y, int width, int height) {
-        String line = " ".repeat(width);
-        for (int i = 0; i < height; i++) {
-            drawString(line, x, y + i);
-        }
+        clearBox(x,y,width,height, WHITE);
     }
     public static void clearBox(int x, int y, int width, int height, int color) {
         String line = " ".repeat(width);
         for (int i = 0; i < height; i++) {
-            drawString(line, x, y + i, color);
+            instance().moveCursor(x,y+i);
+            instance().setColor(color);
+            instance().printstr(line);
         }
+        instance().setColor(WHITE);
     }
 
     public native void refresh();

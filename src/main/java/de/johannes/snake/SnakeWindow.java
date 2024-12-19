@@ -45,8 +45,6 @@ public class SnakeWindow extends Window {
         }
     }
 
-    String head = new StringBuilder().appendCodePoint(0xdb82).appendCodePoint(0xdfaf).toString();
-
     @Override
     public void draw() {
         if(!dead) {
