@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+WINDOW* keywin;
+
 // init()
 JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_init(JNIEnv *env,
                                                            jobject obj) {
@@ -16,9 +18,10 @@ JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_init(JNIEnv *env,
   // initialize standard curses features
   initscr();
   // cbreak();
+  keywin = newwin(0, 0, 0, 0);
   raw(); // accept ctrl-c as getch() args
   noecho();
-  keypad(stdscr, TRUE);
+  keypad(keywin, TRUE);
   mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, NULL);
   curs_set(0);
   set_escdelay(0);
@@ -125,7 +128,7 @@ JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_printstr(JNIEnv *env,
 
 JNIEXPORT jint JNICALL Java_de_johannes_curses_Curses_getch(JNIEnv *env,
                                                             jobject obj) {
-  return getchar();
+  return wgetch(keywin);
 }
 
 JNIEXPORT jobject JNICALL

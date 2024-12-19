@@ -24,6 +24,7 @@ public class TextInput extends Component {
     protected final StringBuilder input;
     protected final Timer blinker;
 
+
     @Override
     public void draw() {
         if (input != null) {
@@ -32,7 +33,7 @@ public class TextInput extends Component {
             drawString(1, 1, text + cursor, color);
             if (blinker.check(1000)) blinker.reset();
 
-            if (false) {
+            if (true) {
                 if (!input.isEmpty())
                     drawString(1, 2, String.valueOf((int) input.charAt(input.length() - 1)), color);
             }
