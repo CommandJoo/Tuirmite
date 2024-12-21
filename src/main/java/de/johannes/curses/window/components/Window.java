@@ -72,8 +72,11 @@ public abstract class Window extends Component {
     public boolean handleClick(Mouse mouse) {
         for(Component comp : this.components.values()) {
             if(
-                    comp.x <= mouse.x && comp.x+width >= mouse.x &&
-                            comp.y <= mouse.y && comp.y+comp.height >= mouse.y
+                    mouse.x >= comp.x &&
+                    mouse.x <= comp.x+comp.width &&
+                    mouse.y >= comp.y &&
+                    mouse.y <= comp.y+comp.height
+
             ) {
                 return comp.handleClick(mouse);
             }

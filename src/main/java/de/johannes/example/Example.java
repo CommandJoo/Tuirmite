@@ -43,6 +43,10 @@ public class Example extends Window {
                 return false;
             }
         });
+        addComponent(10, new Button(this, -40+1, 1, 10,3,"Button", true));
+        addComponent(11, new Button(this, -40+13, 1, 10,3,"Button", true));
+        addComponent(12, new Button(this, -40+1, 5, 10,3,"Button", true));
+        addComponent(13, new Button(this, -40+13, 5, 10,3,"Button", true));
     }
 
     @Override
