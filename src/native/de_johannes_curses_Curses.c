@@ -147,20 +147,10 @@ Java_de_johannes_curses_Curses_getMouseEvent(JNIEnv* env, jobject obj) {
   MEVENT event;
 
   if (getmouse(&event) == OK) {
-	  int state = 10;
-	  if(event.bstate & BUTTON1_CLICKED) state = 1;
-	  if(event.bstate & BUTTON1_DOUBLE_CLICKED) state = 2;
-	  if(event.bstate & BUTTON2_CLICKED) state = 3;
-	  if(event.bstate & BUTTON2_DOUBLE_CLICKED) state = 4;
-	  if(event.bstate & BUTTON3_CLICKED) state = 5;
-	  if(event.bstate & BUTTON3_DOUBLE_CLICKED) state = 6;
-	  if(event.bstate & BUTTON4_CLICKED) state = 7;
-	  if(event.bstate & BUTTON4_DOUBLE_CLICKED) state = 8;
-
-    (*env)->SetShortField(env, newMouse, deviceField, event.id);
+	  /* (*env)->SetShortField(env, newMouse, deviceField, event.id);*/
     (*env)->SetIntField(env, newMouse, xField, event.x);
     (*env)->SetIntField(env, newMouse, yField, event.y);
-    (*env)->SetIntField(env, newMouse, stateField, state);
+    (*env)->SetIntField(env, newMouse, stateField, event.bstate);
 
     return newMouse;
   }
@@ -173,6 +163,7 @@ Java_de_johannes_curses_Curses_getMouseEvent(JNIEnv* env, jobject obj) {
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_de_johannes_curses_Curses_inch(JNIEnv *, jobject) {
+
   return inch() & A_CHARTEXT;
 }
 

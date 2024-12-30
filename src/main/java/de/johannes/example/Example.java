@@ -1,6 +1,7 @@
 package de.johannes.example;
 
 import de.johannes.curses.Curses;
+import de.johannes.curses.Mouse;
 import de.johannes.curses.nerdfont.NFMaterialDesign;
 import de.johannes.curses.nerdfont.NFWeatherIcons;
 import de.johannes.curses.util.ColorBuilder;
@@ -46,11 +47,13 @@ public class Example extends Window {
                 return false;
             }
         });
-        addComponent(7, new Image(this, -50, 1, 50, new File(Files.getJarPath().getParent(), "image.png")));
+//        addComponent(7, new Image(this, -50, 1, 50, new File(Files.getJarPath().getParent(), "image.png")));
+        addComponent(8, new Link(this, 1, 16, "GitHub", "https://github.com/CommandJoo/Java-Native-NCurses", color));
     }
 
     @Override
     public void draw() {
+        Curses.instance().inch();
     }
 
     @Override
@@ -61,4 +64,8 @@ public class Example extends Window {
         return false;
     }
 
+    @Override
+    public boolean handleClick(Mouse mouse) {
+        return super.handleClick(mouse);
+    }
 }

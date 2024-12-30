@@ -42,7 +42,7 @@ public class Button extends Component {
 
     @Override
     public boolean handleClick(Mouse mouse) {
-        if(mouse.state == Mouse.BUTTON_1_CLICKED) {
+        if(mouse.check(Mouse.BUTTON1_CLICKED)) {
             setSelected(!selected);
         }
         return true;
