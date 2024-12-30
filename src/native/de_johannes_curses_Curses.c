@@ -1,8 +1,10 @@
+#define NCURSES_WIDECHAR 1
+#define COLORS
 #include "de_johannes_curses_Curses.h"
-#include "stdio.h"
-#include "string.h"
-#include "time.h"
-#include <curses.h>
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+#include <ncurses.h>
 #include <locale.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,8 +15,7 @@ WINDOW* keywin;
 JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_init(JNIEnv *env,
                                                            jobject obj) {
   setlocale(LC_CTYPE, "");
-
-  srand(time(NULL));
+  
   // initialize standard curses features
   initscr();
   // cbreak();
@@ -27,14 +28,16 @@ JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_init(JNIEnv *env,
   set_escdelay(0);
   // set pre-definied colors
   start_color();
-  init_pair(de_johannes_curses_Curses_BLACK, COLOR_BLACK, COLOR_BLACK);
-  init_pair(de_johannes_curses_Curses_LIGHT_GRAY, COLOR_WHITE, COLOR_BLACK);
-  init_pair(de_johannes_curses_Curses_DARK_RED, COLOR_RED, COLOR_BLACK);
-  init_pair(de_johannes_curses_Curses_DARK_GREEN, COLOR_GREEN, COLOR_BLACK);
-  init_pair(de_johannes_curses_Curses_DARK_BLUE, COLOR_BLUE, COLOR_BLACK);
-  init_pair(de_johannes_curses_Curses_DARK_CYAN, COLOR_CYAN, COLOR_BLACK);
-  init_pair(de_johannes_curses_Curses_DARK_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
-  init_pair(de_johannes_curses_Curses_DARK_YELLOW, COLOR_YELLOW, COLOR_BLACK);
+  use_default_colors();
+  
+  init_extended_pair(de_johannes_curses_Curses_BLACK, COLOR_BLACK, COLOR_BLACK);
+  init_extended_pair(de_johannes_curses_Curses_LIGHT_GRAY, COLOR_WHITE, COLOR_BLACK);
+  init_extended_pair(de_johannes_curses_Curses_DARK_RED, COLOR_RED, COLOR_BLACK);
+  init_extended_pair(de_johannes_curses_Curses_DARK_GREEN, COLOR_GREEN, COLOR_BLACK);
+  init_extended_pair(de_johannes_curses_Curses_DARK_BLUE, COLOR_BLUE, COLOR_BLACK);
+  init_extended_pair(de_johannes_curses_Curses_DARK_CYAN, COLOR_CYAN, COLOR_BLACK);
+  init_extended_pair(de_johannes_curses_Curses_DARK_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
+  init_extended_pair(de_johannes_curses_Curses_DARK_YELLOW, COLOR_YELLOW, COLOR_BLACK);
 }
 
 JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_destroy(JNIEnv *,
@@ -99,13 +102,13 @@ JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_setColor(JNIEnv *env,
 
 JNIEXPORT jint JNICALL Java_de_johannes_curses_Curses_defineColor(
     JNIEnv *, jobject, jint color, jfloat r, jfloat g, jfloat b) {
-  init_color(color, r * 1000, g * 1000, b * 1000);
+  init_extended_color(color, r * 1000, g * 1000, b * 1000);
   return color;
 }
 
 JNIEXPORT jint JNICALL Java_de_johannes_curses_Curses_defineColorPair(
     JNIEnv *, jobject, jint pair, jint foreground, jint background) {
-  init_pair(pair, foreground, background);
+  init_extended_pair(pair, foreground, background);
   return pair;
 }
 

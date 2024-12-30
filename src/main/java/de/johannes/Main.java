@@ -3,6 +3,7 @@ package de.johannes;
 import de.johannes.curses.Curses;
 import de.johannes.curses.window.WindowManager;
 import de.johannes.curses.window.components.Window;
+import de.johannes.example.ColorTest;
 import de.johannes.example.Example;
 import de.johannes.snake.SnakeWindow;
 

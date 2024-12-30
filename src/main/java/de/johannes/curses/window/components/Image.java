@@ -3,13 +3,17 @@ package de.johannes.curses.window.components;
 import de.johannes.curses.Curses;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.util.ColorUtil;
+import de.johannes.curses.util.Files;
 import de.johannes.curses.window.Component;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 @Deprecated
 public class Image extends Component {
@@ -27,16 +31,13 @@ public class Image extends Component {
     @Override
     public void init() {
         this.lines = new HashMap<>();
-        int height = (int) (this.width * ((float) this.image.getWidth() / this.image.getHeight()) / 2);
-        int stepX = this.image.getWidth() / width;
-        int stepY = this.image.getHeight() / height;
 
-        for (int j = 0; j < height; j++) {
+        for (int j = 0; j < this.image.getHeight()/2; j++) {
             List<Integer> color = new ArrayList<>();
-            for (int i = 0; i < width; i++) {
+            for (int i = 0; i < this.image.getWidth(); i++) {
                 try {
-                    Color background = ColorUtil.averageColor(this.image, stepX * i, (stepY / 2) + stepY * j, stepX, stepY / 2);
-                    Color foreground = ColorUtil.averageColor(this.image, stepX * i, stepY * j, stepX, stepY / 2);
+                    Color background = ColorUtil.averageColor(this.image,  i, 2*j, 1, 1);
+                    Color foreground = ColorUtil.averageColor(this.image, i, 2*j, 1, 1);
                     color.add(
                             ColorBuilder
                                     .create()
@@ -50,8 +51,8 @@ public class Image extends Component {
             }
             lines.put(j, color);
         }
-    }
 
+    }
 
     @Override
     public void draw() {
@@ -62,7 +63,7 @@ public class Image extends Component {
                 List<Integer> color = lines.get(y);
                 for (int x = 0; x < color.size(); x++) {
                     Integer col = color.get(x);
-                    drawString(x, y, "█", col);//█▄
+                    drawString(x, y, "▄", col);//█▄
                 }
             }
         }
@@ -74,15 +75,18 @@ public class Image extends Component {
     }
 
     public void setImage(File image) {
-        BufferedImage img = ColorUtil.readImage(image);
-        if (img != null) {
-            this.image = img;
+        BufferedImage original = ColorUtil.readImage(image);
+        if(original == null) {
+            this.error = true;
+            return;
+        }
+        try {
+            this.image = ColorUtil.resizeImage(original, width, (int) (width*((float) original.getHeight() /original.getWidth())));
             this.error = false;
             this.init();
-        } else {
+
+        } catch(Exception ex) {
             this.error = true;
-            Curses.instance().destroy();
-            System.exit(0);
         }
     }
 }

@@ -71,6 +71,11 @@ public class ColorBuilder {
         return Curses.instance().defineColorPair(20+ pairIndex -1, this.foreground, this.background);
     }
 
+    public int rebuild(int i) {
+        pairs.put(new Pair<>(this.foreground, this.background),i);
+        return Curses.instance().defineColorPair(i, this.foreground, this.background);
+    }
+
     public static int size() {
         return pairs.size();
     }

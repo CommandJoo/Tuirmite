@@ -4,8 +4,11 @@ import de.johannes.curses.Curses;
 import de.johannes.curses.nerdfont.NFMaterialDesign;
 import de.johannes.curses.nerdfont.NFWeatherIcons;
 import de.johannes.curses.util.ColorBuilder;
+import de.johannes.curses.util.Files;
 import de.johannes.curses.window.Component;
 import de.johannes.curses.window.components.*;
+
+import java.io.File;
 
 public class Example extends Window {
     public Example() {
@@ -43,15 +46,11 @@ public class Example extends Window {
                 return false;
             }
         });
-        addComponent(10, new Button(this, -40+1, 1, 10,3,"Button", true));
-        addComponent(11, new Button(this, -40+13, 1, 10,3,"Button", true));
-        addComponent(12, new Button(this, -40+1, 5, 10,3,"Button", true));
-        addComponent(13, new Button(this, -40+13, 5, 10,3,"Button", true));
+        addComponent(7, new Image(this, -50, 1, 50, new File(Files.getJarPath().getParent(), "image.png")));
     }
 
     @Override
     public void draw() {
-
     }
 
     @Override
