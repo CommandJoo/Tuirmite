@@ -22,11 +22,12 @@ public class WindowManager {
 
     public final int fps;
     private final int minWidth, minHeight;
-    private final Timer fpsTimer;
+    private final boolean roundColors;
 
+    private final Timer fpsTimer;
     private final List<BiConsumer<Character, Integer>> keyHandlers;
 
-    public WindowManager(final int fps, int minWidth, int minHeight) {
+    public WindowManager(int fps, int minWidth, int minHeight, boolean roundColors) {
         if (instance != null) throw new IllegalStateException("Only one WindowManager is allowed per Runtime!");
         instance = this;
 
@@ -36,6 +37,7 @@ public class WindowManager {
         this.fps = fps;
         this.minWidth = minWidth;
         this.minHeight = minHeight;
+        this.roundColors = roundColors;
 
         this.fpsTimer = new Timer();
 
@@ -45,7 +47,7 @@ public class WindowManager {
     }
 
     public WindowManager(final int fps) {
-        this(fps, -1, -1);
+        this(fps, -1, -1, false);
     }
 
     public void render() {
@@ -148,4 +150,7 @@ public class WindowManager {
         return instance;
     }
 
+    public boolean roundColors() {
+        return roundColors;
+    }
 }

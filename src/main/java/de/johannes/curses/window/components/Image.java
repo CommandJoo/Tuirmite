@@ -1,6 +1,7 @@
 package de.johannes.curses.window.components;
 
 import de.johannes.curses.Curses;
+import de.johannes.curses.Mouse;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.util.ColorUtil;
 import de.johannes.curses.util.Files;
@@ -70,9 +71,10 @@ public class Image extends Component {
     }
 
     @Override
-    public boolean handleKey(char ch) {
-        return false;
-    }
+    public boolean handleKey(char ch) {return false;}
+
+    @Override
+    public boolean handleClick(Mouse mouse) {return false;}
 
     public void setImage(File image) {
         BufferedImage original = ColorUtil.readImage(image);

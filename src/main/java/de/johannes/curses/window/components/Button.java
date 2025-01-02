@@ -23,6 +23,9 @@ public class Button extends Component {
     }
 
     @Override
+    public void init() {}
+
+    @Override
     public void draw() {
         this.drawBox(-1);
         if(selected) {
@@ -39,19 +42,14 @@ public class Button extends Component {
     public boolean handleKey(char ch) {
         return false;
     }
-
     @Override
     public boolean handleClick(Mouse mouse) {
-        if(mouse.check(Mouse.BUTTON1_CLICKED)) {
-            setSelected(!selected);
-        }
-        return true;
+        return false;
     }
 
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
-
     public boolean selected() {
         return selected;
     }

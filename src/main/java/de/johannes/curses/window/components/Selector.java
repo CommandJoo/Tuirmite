@@ -1,6 +1,8 @@
 package de.johannes.curses.window.components;
 
 import de.johannes.curses.Curses;
+import de.johannes.curses.Keys;
+import de.johannes.curses.Mouse;
 import de.johannes.curses.window.Component;
 
 public class Selector extends Component {
@@ -12,6 +14,9 @@ public class Selector extends Component {
         super(parent, x, y, width, 2, color, rounded);
         this.values = values;
     }
+
+    @Override
+    public void init() {}
 
     @Override
     public void draw() {
@@ -27,14 +32,19 @@ public class Selector extends Component {
 
     @Override
     public boolean handleKey(char ch) {
-        if(ch == 260) {
+        if(ch == Keys.KEY_LEFT) {
             if(index-1 <= 0) index=values.length;
             index--;
             return true;
-        }else if(ch==261) {
+        }else if(ch==Keys.KEY_RIGHT) {
             index++;
             return true;
         }
+        return false;
+    }
+
+    @Override
+    public boolean handleClick(Mouse mouse) {
         return false;
     }
 }

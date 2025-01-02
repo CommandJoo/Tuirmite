@@ -1,5 +1,6 @@
 package de.johannes.curses.window.components;
 
+import de.johannes.curses.Mouse;
 import de.johannes.curses.util.Timer;
 import de.johannes.curses.window.Component;
 import de.johannes.curses.Keys;
@@ -26,15 +27,15 @@ public class TextInput extends Component {
 
 
     @Override
+    public void init() {}
+
+    @Override
     public void draw() {
         if (input != null) {
             String text = !input.isEmpty() ? input.toString() : placeholder;
             String cursor = !input.isEmpty() ? blinker.check(500) ? " " : "█" : "";
             drawString(1, 1, text + cursor, color);
             if (blinker.check(1000)) blinker.reset();
-
-//                if (!input.isEmpty())
-//                    drawString(1, 2, String.valueOf((int) input.charAt(input.length() - 1)), color);
         }
     }
 
@@ -54,10 +55,12 @@ public class TextInput extends Component {
         return false;
     }
 
+    @Override
+    public boolean handleClick(Mouse mouse) {return false;}
+
     public String input() {
         return input.toString();
     }
-
     public void clear() {
         this.input.setLength(0);
     }

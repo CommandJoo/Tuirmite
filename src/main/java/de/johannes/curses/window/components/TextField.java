@@ -1,6 +1,7 @@
 package de.johannes.curses.window.components;
 
 import de.johannes.curses.Curses;
+import de.johannes.curses.Mouse;
 import de.johannes.curses.util.Timer;
 import de.johannes.curses.window.Component;
 import de.johannes.curses.Keys;
@@ -32,6 +33,9 @@ public class TextField extends Component {
 
     protected final StringBuilder input;
     protected final Timer blinker;
+
+    @Override
+    public void init() {}
 
     @Override
     public void draw() {
@@ -91,18 +95,18 @@ public class TextField extends Component {
         return false;
     }
 
+    @Override
+    public boolean handleClick(Mouse mouse) {return false;}
+
     public String input() {
         return input.toString();
     }
-
     public void clear() {
         this.input.setLength(0);
     }
-
     public boolean isFocused() {
         return focused;
     }
-
     public void setFocused(boolean b) {
         this.focused = b;
     }

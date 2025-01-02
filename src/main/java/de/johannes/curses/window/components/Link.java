@@ -19,28 +19,26 @@ public class Link extends Component {
     }
 
     @Override
+    public void init() {
+
+    }
+
+    public void open() {
+        try {
+            Desktop.getDesktop().browse(new URI(this.url));
+        } catch(Exception ex) {
+            color = new ColorBuilder().defineForeground("#FF0000").build();
+        }
+    }
+
+    @Override
     public void draw() {
         drawString(1,1,"$u"+this.display+"$r", color);
     }
 
     @Override
-    public boolean handleKey(char ch) {
-        if((int) ch == Keys.ENTER) {
-            try {
-                Desktop.getDesktop().browse(new URI(this.url));
-                return true;
-            } catch(Exception ex) {
-                color = new ColorBuilder().defineForeground("#FF0000").build();
-            }
-        }
-        return false;
-    }
+    public boolean handleKey(char ch) {return false;}
 
     @Override
-    public boolean handleClick(Mouse mouse) {
-        if(mouse.check(Mouse.BUTTON3_PRESSED)) {
-            return handleKey('\n');
-        }
-        return false;
-    }
+    public boolean handleClick(Mouse mouse) {return false;}
 }

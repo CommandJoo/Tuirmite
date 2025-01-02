@@ -9,10 +9,10 @@ import de.johannes.curses.window.components.Window;
 public abstract class Component {
 
     public final Window parent;
-    public final int x;
-    public final int y;
-    public final int width;
-    public final int height;
+    public int x;
+    public int y;
+    public int width;
+    public int height;
     public int color;
     public boolean rounded;
 
@@ -35,14 +35,14 @@ public abstract class Component {
         this.rounded = rounded;
     }
 
-    public void init() {
-    }
+    public abstract void init();
     public abstract void draw();
     public abstract boolean handleKey(char ch);
-    public boolean handleClick(Mouse mouse) {return false;}
+    public abstract boolean handleClick(Mouse mouse);
 
     public void drawBox(int color) {
         int drawColor = color == -1 ? this.color : color;
+
         Curses.instance().drawCorner(x, y, 2, drawColor, rounded);
         Curses.instance().drawCorner(x + width, y, 1, drawColor, rounded);
         Curses.instance().drawCorner(x, y + height, 3, drawColor, rounded);
@@ -62,12 +62,10 @@ public abstract class Component {
         Curses.drawString(s, x, y, color);
     }
     public void drawCenteredString(int x, int y, String s, int color) {
-        String stripped =  (s.replaceAll("\\$[a-z]", ""));
-        Curses.drawString(s, this.x + x -(stripped.length() / 2), this.y + y, color);
+        Curses.drawCenteredString(s, this.x + x, this.y + y, color);
     }
     public void drawCenteredStringIndependent(int x, int y, String s, int color) {
-        String stripped =  (s.replaceAll("\\$[a-z]", ""));
-        Curses.drawString(s, x - stripped.length() / 2, y, color);
+        Curses.drawCenteredString(s, x, y, color);
     }
 
     public void drawDecoration(int x, boolean bottom, boolean parens, String deco, int color) {
@@ -80,6 +78,42 @@ public abstract class Component {
         }else {
             drawString(x + 1 + correction, bottom ? this.height : 0, "( " + deco + " )", color);
         }
+    }
+
+    public Window parent() {
+        return parent;
+    }
+
+    public int x() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = this.parent == null ? x : this.parent.x+x;
+    }
+
+    public int y() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = this.parent == null ? y : this.parent.y+y;
+    }
+
+    public int width() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int height() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public void setColor(int color) {

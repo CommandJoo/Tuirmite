@@ -13,12 +13,9 @@ public class ColorTest extends Window {
 
     @Override
     public void draw() {
-        for (int i = 0; i < Curses.width() - 2; i++) {
-            float hue = (1F / (Curses.width() - 2)) * i;
-
-            drawString(1 + i, 1, " ", new ColorBuilder().defineBackground(Color.getHSBColor(hue, 1, 1)).build());
-//            drawString(1 + i, 2, " ", new ColorBuilder().defineBackground(Color.getHSBColor(hue, 0.9F, 1)).build());
-//            drawString(1 + i, 3, " ", new ColorBuilder().defineBackground(Color.getHSBColor(hue, 0.8F, 1)).build());
+        for (int i = 0; i < Curses.width()-2; i++) {
+            float hue = (1F / (Curses.width()-2)) * i;
+                drawString(1 + i, 1, " ", new ColorBuilder().defineBackground(Color.getHSBColor(hue, 1, 1)).build());
         }
     }
 

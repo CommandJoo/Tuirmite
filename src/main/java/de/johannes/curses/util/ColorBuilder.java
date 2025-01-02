@@ -2,6 +2,7 @@ package de.johannes.curses.util;
 
 import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
+import de.johannes.curses.window.WindowManager;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -25,6 +26,11 @@ public class ColorBuilder {
     }
 
     public ColorBuilder defineForeground(Color color) {
+        if(WindowManager.instance().roundColors()) {
+            String hex = String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+            String rounded = roundColor(hex);
+            color = Color.decode(rounded);
+        }
         if(colors.containsKey(color.getRGB())) {
             this.foreground = colors.get(color.getRGB());
         }else {
@@ -36,7 +42,7 @@ public class ColorBuilder {
         return this;
     }
     public ColorBuilder defineForeground(String hex) {
-        return this.defineForeground(Color.decode(hex));
+        return this.defineForeground(Color.decode(roundColor(hex)));
     }
     public ColorBuilder defineForeground(int color) {
         foreground = color;
@@ -44,6 +50,11 @@ public class ColorBuilder {
     }
 
     public ColorBuilder defineBackground(Color color) {
+        if(WindowManager.instance().roundColors()) {
+            String hex = String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+            String rounded = roundColor(hex);
+            color = Color.decode(rounded);
+        }
         if(colors.containsKey(color.getRGB())) {
             this.background = colors.get(color.getRGB());
         }else {
@@ -55,7 +66,7 @@ public class ColorBuilder {
         return this;
     }
     public ColorBuilder defineBackground(String hex) {
-        return this.defineBackground(Color.decode(hex));
+        return this.defineBackground(Color.decode(roundColor(hex)));
     }
     public ColorBuilder defineBackground(int color) {
         background = color;
@@ -70,7 +81,6 @@ public class ColorBuilder {
         pairs.put(new Pair<>(this.foreground, this.background), 20+ pairIndex -1);
         return Curses.instance().defineColorPair(20+ pairIndex -1, this.foreground, this.background);
     }
-
     public int rebuild(int i) {
         pairs.put(new Pair<>(this.foreground, this.background),i);
         return Curses.instance().defineColorPair(i, this.foreground, this.background);
@@ -78,6 +88,18 @@ public class ColorBuilder {
 
     public static int size() {
         return pairs.size();
+    }
+
+    private String roundColor(String hex) {
+        String hexCodes = "0123456789ABCDEF";
+        for(int i = 1; i < hex.length(); i++) {
+            char ch = hex.toUpperCase().charAt(i);
+            int value = hexCodes.indexOf(ch);
+            if(value%2!=0) {
+                hex = hex.toUpperCase().replace(ch, hexCodes.charAt(value-1));
+            }
+        }
+        return hex;
     }
 
 }

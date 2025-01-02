@@ -71,17 +71,12 @@ public abstract class Window extends Component {
     @Override
     public boolean handleClick(Mouse mouse) {
         for(Component comp : this.components.values()) {
-            if(
-                    mouse.x >= comp.x &&
-                    mouse.x <= comp.x+comp.width &&
-                    mouse.y >= comp.y &&
-                    mouse.y <= comp.y+comp.height
-
-            ) {
+            if(mouse.x >= comp.x && mouse.x <= comp.x+comp.width &&
+               mouse.y >= comp.y && mouse.y <= comp.y+comp.height) {
                 return comp.handleClick(mouse);
             }
         }
-        return super.handleClick(mouse);
+        return false;
     }
 
     public void drawComponent(Component comp) {
@@ -93,10 +88,6 @@ public abstract class Window extends Component {
                 comp.draw();
             }
         }
-    }
-
-    public boolean handleKeyForSub(Component component, char ch) {
-        return component.handleKey(ch);
     }
 
     public Component addComponent(int id, Component component) {
@@ -117,7 +108,7 @@ public abstract class Window extends Component {
         return components.getOrDefault(id, null);
     }
     @SuppressWarnings("unchecked")
-    public <T extends Component> List<T> getComponents(Class<T> clazz) {
+    public <T extends Component>List<T> getComponents(Class<T> clazz) {
         List<Component> components = getComponents();
         List<T> elements = new ArrayList<>();
         components.forEach(comp -> {
