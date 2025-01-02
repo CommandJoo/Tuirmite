@@ -2,10 +2,9 @@ package de.johannes.snake;
 
 import de.johannes.curses.Curses;
 import de.johannes.curses.nerdfont.NFFontAwesome;
-import de.johannes.curses.nerdfont.NFMaterialDesign;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.util.Timer;
-import de.johannes.curses.window.components.Window;
+import de.johannes.curses.ui.components.Window;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -1,11 +1,11 @@
-package de.johannes.curses.window;
+package de.johannes.curses.ui;
 
 import de.johannes.curses.Curses;
 import de.johannes.curses.Keys;
 import de.johannes.curses.Mouse;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.util.Timer;
-import de.johannes.curses.window.components.Window;
+import de.johannes.curses.ui.components.Window;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,10 +62,10 @@ public class WindowManager {
                     }
                     if(Curses.width() < minWidth || Curses.height() < minHeight) {
                         Curses.clearBox(0, 0, Curses.width(), Curses.height(), ColorBuilder.create().defineForeground("#222233").defineBackground("#222233").build());
-                        Curses.drawCenteredString("$uWindow too small", Curses.width()/2, Curses.height()/2-4, ColorBuilder.create().defineBackground("#222233").defineForeground("#9999AA").build());
-                        Curses.drawCenteredString("Current (width: $i"+Curses.width()+"$r), (height: $i"+Curses.height()+"$r)", Curses.width()/2, Curses.height()/2-2, ColorBuilder.create().defineBackground("#222233").defineForeground("#DD6666").build());
-                        Curses.drawCenteredString("$uPlease use", Curses.width()/2, Curses.height()/2, ColorBuilder.create().defineBackground("#222233").defineForeground("#9999AA").build());
-                        Curses.drawCenteredString("Minimum (width: $i"+minWidth+"$r), (height: $i"+minHeight+"$r)", Curses.width()/2, Curses.height()/2+2, ColorBuilder.create().defineBackground("#222233").defineForeground("#66DD66").build());
+                        UI.drawCenteredString("$uWindow too small", Curses.width()/2, Curses.height()/2-4, ColorBuilder.create().defineBackground("#222233").defineForeground("#9999AA").build());
+                        UI.drawCenteredString("Current (width: $i"+Curses.width()+"$r), (height: $i"+Curses.height()+"$r)", Curses.width()/2, Curses.height()/2-2, ColorBuilder.create().defineBackground("#222233").defineForeground("#DD6666").build());
+                        UI.drawCenteredString("$uPlease use", Curses.width()/2, Curses.height()/2, ColorBuilder.create().defineBackground("#222233").defineForeground("#9999AA").build());
+                        UI.drawCenteredString("Minimum (width: $i"+minWidth+"$r), (height: $i"+minHeight+"$r)", Curses.width()/2, Curses.height()/2+2, ColorBuilder.create().defineBackground("#222233").defineForeground("#66DD66").build());
                     }else {
                         windows.forEach((id, window) -> {
                             Curses.clearBox(window.x+1,window.y+1,window.width-1,window.height-1, window.color);

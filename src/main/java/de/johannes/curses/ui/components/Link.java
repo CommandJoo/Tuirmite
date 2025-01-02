@@ -1,9 +1,8 @@
-package de.johannes.curses.window.components;
+package de.johannes.curses.ui.components;
 
-import de.johannes.curses.Keys;
 import de.johannes.curses.Mouse;
 import de.johannes.curses.util.ColorBuilder;
-import de.johannes.curses.window.Component;
+import de.johannes.curses.ui.Component;
 
 import java.awt.*;
 import java.net.URI;

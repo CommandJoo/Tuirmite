@@ -1,10 +1,10 @@
-package de.johannes.curses.window;
+package de.johannes.curses.ui;
 
 import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
 import de.johannes.curses.Mouse;
 import de.johannes.curses.util.ColorBuilder;
-import de.johannes.curses.window.components.Window;
+import de.johannes.curses.ui.components.Window;
 
 public abstract class Component {
 
@@ -56,16 +56,16 @@ public abstract class Component {
     }
 
     public void drawString(int x, int y, String s, int color) {
-        Curses.drawString(s, this.x + x, this.y + y, color);
+        UI.drawString(s, this.x + x, this.y + y, color);
     }
     public void drawStringIndependent(int x, int y, String s, int color) {
-        Curses.drawString(s, x, y, color);
+        UI.drawString(s, x, y, color);
     }
     public void drawCenteredString(int x, int y, String s, int color) {
-        Curses.drawCenteredString(s, this.x + x, this.y + y, color);
+        UI.drawCenteredString(s, this.x + x, this.y + y, color);
     }
     public void drawCenteredStringIndependent(int x, int y, String s, int color) {
-        Curses.drawCenteredString(s, x, y, color);
+        UI.drawCenteredString(s, x, y, color);
     }
 
     public void drawDecoration(int x, boolean bottom, boolean parens, String deco, int color) {

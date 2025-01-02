@@ -2,13 +2,18 @@ package de.johannes.example;
 
 import de.johannes.curses.Curses;
 import de.johannes.curses.util.ColorBuilder;
-import de.johannes.curses.window.components.Window;
+import de.johannes.curses.ui.components.Window;
 
 import java.awt.*;
 
 public class ColorTest extends Window {
     public ColorTest() {
         super(null, 0, 0, Curses.width() - 1, Curses.height() - 1);
+    }
+
+    @Override
+    public void init() {
+
     }
 
     @Override

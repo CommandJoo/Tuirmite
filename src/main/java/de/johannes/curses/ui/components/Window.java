@@ -1,9 +1,9 @@
-package de.johannes.curses.window.components;
+package de.johannes.curses.ui.components;
 
 import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
 import de.johannes.curses.Mouse;
-import de.johannes.curses.window.Component;
+import de.johannes.curses.ui.Component;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -47,15 +47,15 @@ public abstract class Window extends Component {
 
         Curses.instance().setColor(rendercolor);
         if(!rounded) {
-            Curses.instance().drawCorner(x, y, 2);
-            Curses.instance().drawCorner(x + width, y, 1);
-            Curses.instance().drawCorner(x, y + height, 3);
-            Curses.instance().drawCorner(x + width, y + height, 0);
+            Curses.instance().drawCorner(x, y, 2, rendercolor);
+            Curses.instance().drawCorner(x + width, y, 1, rendercolor);
+            Curses.instance().drawCorner(x, y + height, 3, rendercolor);
+            Curses.instance().drawCorner(x + width, y + height, 0, rendercolor);
         }else {
-            Curses.instance().drawRoundedCorner(x, y, 2);
-            Curses.instance().drawRoundedCorner(x + width, y, 1);
-            Curses.instance().drawRoundedCorner(x, y + height, 3);
-            Curses.instance().drawRoundedCorner(x + width, y + height, 0);
+            Curses.instance().drawRoundedCorner(x, y, 2, rendercolor);
+            Curses.instance().drawRoundedCorner(x + width, y, 1, rendercolor);
+            Curses.instance().drawRoundedCorner(x, y + height, 3, rendercolor);
+            Curses.instance().drawRoundedCorner(x + width, y + height, 0, rendercolor);
         }
 
         Curses.instance().drawHorizontalLine(y, x + 1, x + width);

@@ -1,8 +1,8 @@
-package de.johannes.curses.window.components;
+package de.johannes.curses.ui.components;
 
 import de.johannes.curses.Mouse;
 import de.johannes.curses.util.Timer;
-import de.johannes.curses.window.Component;
+import de.johannes.curses.ui.Component;
 import de.johannes.curses.Keys;
 
 public class TextInput extends Component {

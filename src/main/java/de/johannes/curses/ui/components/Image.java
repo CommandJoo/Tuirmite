@@ -1,20 +1,16 @@
-package de.johannes.curses.window.components;
+package de.johannes.curses.ui.components;
 
-import de.johannes.curses.Curses;
 import de.johannes.curses.Mouse;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.util.ColorUtil;
-import de.johannes.curses.util.Files;
-import de.johannes.curses.window.Component;
+import de.johannes.curses.ui.Component;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 @Deprecated
 public class Image extends Component {

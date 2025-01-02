@@ -2,7 +2,7 @@ package de.johannes.curses.util;
 
 import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
-import de.johannes.curses.window.WindowManager;
+import de.johannes.curses.ui.WindowManager;
 
 import java.awt.*;
 import java.util.HashMap;

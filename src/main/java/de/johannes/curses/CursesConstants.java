@@ -38,6 +38,7 @@ public class CursesConstants {
     public static final char LINE_VERTICAL                   =  Curses.LINE_VERTICAL;
 
     public static final int ATTRIB_REVERSE                   =  Curses.ATTRIB_REVERSE;
+    public static final int ATTRIB_DIM                       =  Curses.ATTRIB_DIM;
     public static final int ATTRIB_ITALIC                    =  Curses.ATTRIB_ITALIC;
     public static final int ATTRIB_INVIS                     =  Curses.ATTRIB_INVIS;
     public static final int ATTRIB_BLINK                     =  Curses.ATTRIB_BLINK;

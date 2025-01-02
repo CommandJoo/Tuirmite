@@ -1,13 +1,13 @@
 package de.johannes.example;
 
 import de.johannes.curses.Curses;
+import de.johannes.curses.CursesConstants;
 import de.johannes.curses.Mouse;
-import de.johannes.curses.nerdfont.NFMaterialDesign;
 import de.johannes.curses.nerdfont.NFWeatherIcons;
 import de.johannes.curses.util.ColorBuilder;
+import de.johannes.curses.ui.Component;
+import de.johannes.curses.ui.components.*;
 import de.johannes.curses.util.Files;
-import de.johannes.curses.window.Component;
-import de.johannes.curses.window.components.*;
 
 import java.io.File;
 
@@ -32,6 +32,11 @@ public class Example extends Window {
         addComponent(6, new TextInput(this, 1, 13, width/2, "Textinput: "));
         addComponent(5, new Window(this, width/2+2, 1, width/2-3, height-2, color, "Sub Window") {
             @Override
+            public void init() {
+
+            }
+
+            @Override
             public void draw() {
                 drawString(1,1,  "Example String", color);
                 drawCenteredString(width/2,2,  "Centered Example String", color);
@@ -40,6 +45,9 @@ public class Example extends Window {
                 drawString(1,5,  "Colored Example String", ColorBuilder.create().defineForeground("#FAAAFF").build());//add color formatting
                 drawString(1,6,  "Colored $cf{#FFAAAA}Formatted String", ColorBuilder.create().defineForeground("#FAAAFF").build());
                 drawString(1,7,  "Nerdfont-Icon: "+ NFWeatherIcons.MOON_ALT_WAXING_CRESCENT_1, ColorBuilder.create().defineForeground("#FAAAFF").build());
+                Text.of("This is Text.of()").format(color)
+                        .append(Text.of("And this is appended").format(ColorBuilder.create().defineForeground("#55FA99").build()).attrib(CursesConstants.ATTRIB_BLINK))
+                        .draw(this, 1,8);
             }
 
             @Override
@@ -47,7 +55,7 @@ public class Example extends Window {
                 return false;
             }
         });
-//        addComponent(7, new Image(this, -50, 1, 50, new File(Files.getJarPath().getParent(), "image.png")));
+        addComponent(7, new Image(this, -50, 1, 30, new File(Files.getJarPath().getParent(), "image.png")));
         addComponent(8, new Link(this, 1, 16, "GitHub", "https://github.com/CommandJoo/Java-Native-NCurses", color));
     }
 
@@ -59,7 +67,7 @@ public class Example extends Window {
     @Override
     public boolean handleKey(char ch) {
         for(Component comp : getComponents()) {
-            this.handleKeyForSub(comp, ch);
+            comp.handleKey(ch);
         }
         return false;
     }

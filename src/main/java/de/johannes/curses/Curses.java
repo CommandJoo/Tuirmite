@@ -92,33 +92,47 @@ public class Curses {
     public native void drawHorizontalLine(int y, int x1, int x2);
     public native void drawVerticalLine(int x, int y1, int y2);
     public native void drawCorner(int x, int y, int type);
-    public void drawRoundedCorner(int x, int y, int type) {
+
+    public void drawString(Object s, int x, int y) {
+        moveCursor(x,y);
+        printstr(s.toString());
+    }
+
+    public void drawString(Object s, int x, int y, int color) {
+        moveCursor(x,y);
+        setColor(color);
+        printstr(s.toString());
+    }
+
+    public void drawRoundedCorner(int x, int y, int type, int color) {
             switch (type) {
                 case 0:
-                    drawString(CORNER_ROUNDED_LOWER_RIGHT, x,y);
+                    drawString(CursesConstants.CORNER_ROUNDED_LOWER_RIGHT, x,y, color);
                     break;
                 case 1:
-                    drawString(CORNER_ROUNDED_UPPER_RIGHT, x,y);
+                    drawString(CursesConstants.CORNER_ROUNDED_UPPER_RIGHT, x,y, color);
                     break;
                 case 2:
-                    drawString(CORNER_ROUNDED_UPPER_LEFT, x,y);
+                    drawString(CursesConstants.CORNER_ROUNDED_UPPER_LEFT, x,y, color);
                     break;
                 case 3:
-                    drawString(CORNER_ROUNDED_LOWER_LEFT, x,y);
+                    drawString(CursesConstants.CORNER_ROUNDED_LOWER_LEFT, x,y, color);
                     break;
                 default: break;
         }
     }
     public void drawCorner(int x, int y, int type, int color) {
+        moveCursor(x,y);
         setColor(color);
         drawCorner(x, y, type);
     }
     public void drawCorner(int x, int y, int type, int color, boolean rounded) {
+        moveCursor(x,y);
         setColor(color);
         if(!rounded) {
             drawCorner(x, y, type);
         }else {
-            drawRoundedCorner(x,y,type);
+            drawRoundedCorner(x,y,type, color);
         }
     }
 
@@ -129,6 +143,7 @@ public class Curses {
         //2 UP POINTING
         //3 DOWN POINTING
         //4 CROSS
+        moveCursor(x,y);
         setColor(color);
         drawTee(x, y, type);
     }
@@ -138,6 +153,7 @@ public class Curses {
         //1 LEFT POINTING
         //2 UP POINTING
         //3 DOWN POINTING
+        moveCursor(x,y);
         setColor(color);
         drawArrow(x, y, type);
     }
@@ -170,128 +186,8 @@ public class Curses {
         defineColorPair(17, 17, 0);
     }
 
-
-
-
-
-
-    private static boolean checkFormatting(String str, int color) {
-        if(str.isEmpty()) return false;
-
-        char ch = str.charAt(0);
-        return switch (ch) {
-            case 'h' -> {
-                instance().attron(ATTRIB_REVERSE);
-                yield true;
-            }
-            case 'd' -> {
-                instance().attron(ATTRIB_DIM);
-                yield true;
-            }
-            case 'i' -> {
-                instance().attron(ATTRIB_ITALIC);
-                yield true;
-            }
-            case 'v' -> {
-                instance().attron(ATTRIB_INVIS);
-                yield true;
-            }
-            case 'b' -> {
-                instance().attron(ATTRIB_BLINK);
-                yield true;
-            }
-            case 'u' -> {
-                instance().attron(ATTRIB_UNDERLINE);
-                yield true;
-            }
-            case 'c' -> {//replace color
-                if(str.length() > "x{#xxxxxx}".length()) {
-                    instance().setColor(parseColor(str.substring(1, 11)));
-                    yield true;
-                }
-                yield false;
-            }
-            case 'r' -> {
-                alloff();
-                if(color != -1) {
-                    instance().setColor(color);
-                }
-                yield true;
-            }
-
-            default -> false;
-        };
-    }
-
-    private static int parseColor(String colorstring) {
-        String hex = colorstring.substring(2, colorstring.length()-1);
-        if(colorstring.charAt(0) == 'f') {
-            return ColorBuilder.create().defineForeground(hex).build();
-        }else if(colorstring.charAt(0) == 'b') {
-            return ColorBuilder.create().defineBackground(hex).build();
-        }else {
-            return 0;
-        }
-    }
-
-    private static void alloff() {
-        instance().attroff(ATTRIB_REVERSE);
-        instance().attroff(ATTRIB_DIM);
-        instance().attroff(ATTRIB_ITALIC);
-        instance().attroff(ATTRIB_INVIS);
-        instance().attroff(ATTRIB_BLINK);
-        instance().attroff(ATTRIB_UNDERLINE);
-    }
-
-    public static void drawString(Object str, int x, int y) {
-        if(str.toString().contains("$")) {
-            String[] formats = str.toString().split("\\$");
-            int length = 0;
-            for(String s : formats) {
-                instance().moveCursor(x+length, y);
-                boolean b = false;
-                if(!s.isEmpty()) {
-                    b = checkFormatting(s, -1);
-                }
-                instance().printstr(s.substring(b ? 1 : 0));
-                length+=s.length() - (b ? 1 : 0);
-            }
-            alloff();
-        }else {
-            instance().moveCursor(x,y);
-            instance().printstr(str.toString());
-        }
-    }
-    public static void drawString(Object str, int x, int y, int color) {
-        if(str.toString().contains("$")) {
-            String[] formats = str.toString().split("\\$");
-            int length = 0;
-            for(String s : formats) {
-                instance().moveCursor(x+length, y);
-                boolean b = false;
-                instance().setColor(color);
-                if(!s.isEmpty()) {
-                    b = checkFormatting(s, color);
-                }
-                instance().printstr(b ? s.charAt(0) == 'c' ? s.substring(11) : s.substring(1) : s);
-                length+=s.length() - (b ? s.charAt(0) == 'c' ? 11 : 1 : 0);
-            }
-        }else {
-            instance().moveCursor(x,y);
-            instance().setColor(color);
-            instance().printstr(str.toString());
-        }
-        instance().setColor(WHITE);
-    }
-
-    public static void drawCenteredString(String str, int x, int y, int color) {
-        String stripped =  (str.replaceAll("\\$[a-z]", ""));
-        drawString(str, x - stripped.length() / 2, y, color);
-    }
-
     public static Curses instance() {
         return instance != null ? instance : new Curses();
     }
-
 
 }

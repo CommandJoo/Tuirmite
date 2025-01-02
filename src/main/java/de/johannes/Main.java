@@ -1,8 +1,8 @@
 package de.johannes;
 
 import de.johannes.curses.Curses;
-import de.johannes.curses.window.WindowManager;
-import de.johannes.curses.window.components.Window;
+import de.johannes.curses.ui.WindowManager;
+import de.johannes.curses.ui.components.Window;
 import de.johannes.example.Example;
 import de.johannes.snake.SnakeWindow;
 
@@ -24,6 +24,5 @@ public class Main {
                 Curses.clear();
             }
         });
-
     }
 }
