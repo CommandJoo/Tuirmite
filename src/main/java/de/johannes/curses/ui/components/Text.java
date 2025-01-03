@@ -2,25 +2,22 @@ package de.johannes.curses.ui.components;
 
 import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
+import de.johannes.curses.Mouse;
 import de.johannes.curses.ui.Component;
 import de.johannes.curses.util.ColorBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Text {
+public class Text extends Component {
 
     private String text;
-    private int x, y;
-    private int color;
     private List<Integer> attributes;
     private List<Text> chain;
 
     public Text(String text) {
+        super(null,Integer.MIN_VALUE, Integer.MIN_VALUE, 0, 0, -1, false);
         this.text = text;
-        this.x = Integer.MIN_VALUE;
-        this.y = Integer.MIN_VALUE;
-        this.color = CursesConstants.WHITE;
         this.attributes = new ArrayList<>();
         this.chain = new ArrayList<>();
     }
@@ -50,17 +47,34 @@ public class Text {
         return this;
     }
 
+    public Text parent(Window parent) {
+        this.parent = parent;
+        return this;
+    }
+
     public Text append(Text text) {
         this.chain.add(text);
         return this;
     }
 
 
+    @Override
+    public void init() {}
+
     public void draw() {
-        if(this.x != Integer.MIN_VALUE && this.y != Integer.MIN_VALUE) {
-            Curses.instance().moveCursor(this.x,this.y);
+        int x = this.x;
+        int y = this.y;
+        if(this.parent != null) {
+            x = this.x + this.parent.x;
+            y = this.y + this.parent.y;
         }
-        Curses.instance().setColor(color);
+        if(x != Integer.MIN_VALUE && y != Integer.MIN_VALUE) {
+            Curses.instance().moveCursor(x,y);
+        }
+        if(color != -1) {
+            Curses.instance().setColor(color);
+        }
+
         for(int i : attributes) {
             Curses.instance().attron(i);
         }
@@ -68,31 +82,30 @@ public class Text {
 
         int xPos = text.length();
         for(Text txt : this.chain) {
-            if(this.x != Integer.MIN_VALUE && this.y != Integer.MIN_VALUE) {
-                Curses.instance().moveCursor(this.x+xPos,this.y);
+            if(x != Integer.MIN_VALUE && y != Integer.MIN_VALUE) {
+                Curses.instance().moveCursor(x+xPos,y);
             }
-            txt.draw();
+            if(txt.color != -1) {
+                Curses.instance().setColor(txt.color);
+            }
+
+            for(int i : txt.attributes) {
+                Curses.instance().attron(i);
+            }
+            Curses.instance().printstr(txt.text);
             xPos+=txt.text.length();
         }
 
     }
 
-    public void draw(int x, int y) {
-        Curses.instance().moveCursor(x,y);
-        for(int i : attributes) {
-            Curses.instance().attron(i);
-        }
-        Curses.instance().drawString(text, x,y,color);
-
-        int xPos = text.length();
-        for(Text txt : this.chain) {
-            txt.draw(x+xPos,y);
-            xPos+=txt.text.length();
-        }
+    @Override
+    public boolean handleKey(char ch) {
+        return false;
     }
 
-    public void draw(Component parent, int x, int y) {
-        draw(x+parent.x,y+parent.y);
+    @Override
+    public boolean handleClick(Mouse mouse) {
+        return false;
     }
 
 }

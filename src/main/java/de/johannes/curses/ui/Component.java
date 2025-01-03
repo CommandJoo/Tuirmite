@@ -8,13 +8,17 @@ import de.johannes.curses.ui.components.Window;
 
 public abstract class Component {
 
-    public final Window parent;
+    public Window parent;
     public int x;
     public int y;
     public int width;
     public int height;
     public int color;
     public boolean rounded;
+
+    public Component() {
+
+    }
 
     public Component(Window parent, int x, int y, int width, int height, boolean rounded) {
         this(parent, x, y, width, height, CursesConstants.WHITE, rounded);

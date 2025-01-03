@@ -7,9 +7,6 @@ import de.johannes.curses.nerdfont.NFWeatherIcons;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.ui.Component;
 import de.johannes.curses.ui.components.*;
-import de.johannes.curses.util.Files;
-
-import java.io.File;
 
 public class Example extends Window {
     public Example() {
@@ -47,7 +44,9 @@ public class Example extends Window {
                 drawString(1,7,  "Nerdfont-Icon: "+ NFWeatherIcons.MOON_ALT_WAXING_CRESCENT_1, ColorBuilder.create().defineForeground("#FAAAFF").build());
                 Text.of("This is Text.of()").format(color)
                         .append(Text.of("And this is appended").format(ColorBuilder.create().defineForeground("#55FA99").build()).attrib(CursesConstants.ATTRIB_BLINK))
-                        .draw(this, 1,8);
+                        .at(1,8)
+                        .parent(this)
+                        .draw();
             }
 
             @Override
@@ -55,7 +54,7 @@ public class Example extends Window {
                 return false;
             }
         });
-        addComponent(7, new Image(this, -50, 1, 30, new File(Files.getJarPath().getParent(), "image.png")));
+//        addComponent(7, new Image(this, -50, 1, 30, new File(Files.getJarPath().getParent(), "image.png")));
         addComponent(8, new Link(this, 1, 16, "GitHub", "https://github.com/CommandJoo/Java-Native-NCurses", color));
     }
 

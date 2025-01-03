@@ -7,7 +7,7 @@ import de.johannes.curses.ui.Component;
 
 public class Button extends Component {
 
-    private final String text;
+    private String text;
     private boolean selected;
 
     public Button(Window parent, int x, int y, int width, int height, String text, boolean rounded) {
@@ -20,6 +20,10 @@ public class Button extends Component {
         super(parent, x, y, width, height, rounded);
         this.text = text;
         this.color = color;
+    }
+
+    public Button() {
+
     }
 
     @Override

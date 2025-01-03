@@ -102,4 +102,29 @@ public class ColorBuilder {
         return hex;
     }
 
+
+    public static ColorBuilder fromForeground(String hex) {
+        return ColorBuilder.create().defineForeground(hex);
+    }
+
+    public static ColorBuilder fromForeground(Color color) {
+        return ColorBuilder.create().defineForeground(color);
+    }
+
+    public static ColorBuilder fromBackground(String hex) {
+        return ColorBuilder.create().defineBackground(hex);
+    }
+
+    public static ColorBuilder fromBackground(Color color) {
+        return ColorBuilder.create().defineBackground(color);
+    }
+
+    public static int of(String hex) {
+        return ColorBuilder.create().defineForeground(hex).build();
+    }
+
+    public static int of(Color color) {
+        return ColorBuilder.create().defineForeground(color).build();
+    }
+
 }
