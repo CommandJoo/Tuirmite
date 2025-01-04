@@ -25,7 +25,7 @@ public class SnakeWindow extends Window {
     private static final int START_SIZE = 4;
 
     public SnakeWindow(Curses curses) {
-        super(null, 0, 0, curses.getWidth()-1, curses.getHeight()-1, ColorBuilder.create().defineForeground("#7731AF").build(), "Snake");
+//        super(null, 0, 0, curses.getWidth()-1, curses.getHeight()-1, ColorBuilder.create().defineForeground("#7731AF").build(), "Snake");
         this.foodColor = ColorBuilder.create().defineForeground("#67EB44").build();
     }
 
@@ -93,7 +93,7 @@ public class SnakeWindow extends Window {
             drawDecoration(width/40, true, true, "Score: "+(this.player.size()-START_SIZE), color);
             drawDecoration(width/7, true, true, "Food Count: "+FOOD_COUNT, color);
         }else {
-            setColor(color);
+//            setColor(color);
             drawCenteredString(width/2, height/2-3, "$uGame Over!$r", color);
             drawCenteredString(width/2, height/2-1, "You died.", color);
             drawCenteredString(width/2, height/2+1, "Press $h$i<Space>$r to restart", color);

@@ -3,16 +3,16 @@ package de.johannes.curses.ui.components;
 import de.johannes.curses.Curses;
 import de.johannes.curses.Keys;
 import de.johannes.curses.Mouse;
-import de.johannes.curses.ui.Component;
+import de.johannes.curses.ui.base.BoxComponent;
 
-public class Selector extends Component {
+public class Selector extends BoxComponent {
 
     private String[] values;
     private int index;
 
-    public Selector(Window parent, int x, int y, int width, int color, boolean rounded, String... values) {
-        super(parent, x, y, width, 2, color, rounded);
+    public Selector values(String... values) {
         this.values = values;
+        return this;
     }
 
     @Override
@@ -20,10 +20,10 @@ public class Selector extends Component {
 
     @Override
     public void draw() {
-        drawBox(-1);
-        Curses.instance().drawArrow(x+1, y+1, 0, color);
-        Curses.instance().drawArrow(x+width-1, y+1, 1, color);
-        drawCenteredString((width/2), 1, current().substring(0, Math.min(current().length(), width-5)), color);
+        drawBox();
+        Curses.instance().drawArrow(x()+1, y()+1, 0, color);
+        Curses.instance().drawArrow(x()+width()-1, y()+1, 1, color);
+        drawCenteredString((width()/2), 1, current().substring(0, Math.min(current().length(), width()-5)), color);
     }
 
     public String current() {

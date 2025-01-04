@@ -93,6 +93,18 @@ public class Curses {
     public native void drawVerticalLine(int x, int y1, int y2);
     public native void drawCorner(int x, int y, int type);
 
+    public void drawHorizontalLine(int y, int x1, int x2, int color) {
+        moveCursor(x1,y);
+        setColor(color);
+        drawHorizontalLine(y,x1,x2);
+    }
+
+    public void drawVerticalLine(int x, int y1, int y2, int color) {
+        moveCursor(x,y1);
+        setColor(color);
+        drawVerticalLine(x,y1,y2);
+    }
+
     public void drawString(Object s, int x, int y) {
         moveCursor(x,y);
         printstr(s.toString());

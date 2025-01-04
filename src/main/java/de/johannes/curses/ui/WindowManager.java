@@ -68,8 +68,7 @@ public class WindowManager {
                         UI.drawCenteredString("Minimum (width: $i"+minWidth+"$r), (height: $i"+minHeight+"$r)", Curses.width()/2, Curses.height()/2+2, ColorBuilder.create().defineBackground("#222233").defineForeground("#66DD66").build());
                     }else {
                         windows.forEach((id, window) -> {
-                            Curses.clearBox(window.x+1,window.y+1,window.width-1,window.height-1, window.color);
-                            window.drawBox(window.color);
+                            Curses.clearBox(window.x(),window.y(),window.width(),window.height(), window.color());
                             window.drawWindow();
                         });
                     }

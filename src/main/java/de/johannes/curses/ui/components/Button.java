@@ -3,35 +3,22 @@ package de.johannes.curses.ui.components;
 import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
 import de.johannes.curses.Mouse;
-import de.johannes.curses.ui.Component;
+import de.johannes.curses.ui.base.BoxComponent;
+import de.johannes.curses.ui.base.Component;
 
-public class Button extends Component {
+public class Button extends BoxComponent {
 
     private String text;
     private boolean selected;
 
-    public Button(Window parent, int x, int y, int width, int height, String text, boolean rounded) {
-        super(parent, x, y, width, height, parent.color, rounded);
-        this.text = text;
-        this.color = parent.color;
-    }
-
-    public Button(Window parent, int x, int y, int width, int height, int color, String text, boolean rounded) {
-        super(parent, x, y, width, height, rounded);
-        this.text = text;
-        this.color = color;
-    }
-
-    public Button() {
-
-    }
+    public Button() {}
 
     @Override
     public void init() {}
 
     @Override
     public void draw() {
-        this.drawBox(-1);
+        this.drawBox();
         if(selected) {
             Curses.instance().attron(CursesConstants.ATTRIB_REVERSE);
             this.drawCenteredString(width/2, height/2, text, color);
@@ -46,9 +33,15 @@ public class Button extends Component {
     public boolean handleKey(char ch) {
         return false;
     }
+
     @Override
     public boolean handleClick(Mouse mouse) {
         return false;
+    }
+
+    public Button setText(String text) {
+        this.text = text;
+        return this;
     }
 
     public void setSelected(boolean selected) {

@@ -1,40 +1,33 @@
 package de.johannes.curses.ui.components;
 
 import de.johannes.curses.Mouse;
+import de.johannes.curses.ui.base.Component;
 import de.johannes.curses.util.Timer;
-import de.johannes.curses.ui.Component;
 import de.johannes.curses.Keys;
 
 public class TextInput extends Component {
-    protected final String placeholder;
-    protected final Window parent;
+    protected String placeholder;
 
-    public TextInput(Window parent, int x, int y, int width) {
-        this(parent, x, y, width, "");
-    }
-
-    public TextInput(Window parent, int x, int y, int width, String placeholder) {
-        super(parent, x, y, width, 2, false);
-        this.input = new StringBuilder();
-        this.blinker = new Timer();
-        this.placeholder = placeholder;
-        this.parent = parent;
-        this.color = parent.color;
-    }
-
-    protected final StringBuilder input;
-    protected final Timer blinker;
-
+    protected StringBuilder input;
+    protected Timer blinker;
 
     @Override
-    public void init() {}
+    public void init() {
+        input = new StringBuilder();
+        blinker = new Timer();
+    }
+
+    public TextInput placeholder(String placeholder) {
+        this.placeholder = placeholder;
+        return this;
+    }
 
     @Override
     public void draw() {
         if (input != null) {
             String text = !input.isEmpty() ? input.toString() : placeholder;
             String cursor = !input.isEmpty() ? blinker.check(500) ? " " : "█" : "";
-            drawString(1, 1, text + cursor, color);
+            drawString(0, 0, text + cursor, color);
             if (blinker.check(1000)) blinker.reset();
         }
     }

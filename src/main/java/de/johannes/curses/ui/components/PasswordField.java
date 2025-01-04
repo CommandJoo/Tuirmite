@@ -2,21 +2,9 @@ package de.johannes.curses.ui.components;
 
 public class PasswordField extends TextField {
 
-    public PasswordField(Window parent, int x, int y, int width, boolean rounded) {
-        super(parent, x, y, width, rounded);
-    }
-
-    public PasswordField(Window parent, int x, int y, int width, String placeholder, boolean rounded) {
-        super(parent, x, y, width, placeholder, rounded);
-    }
-
-    public PasswordField(Window parent, int x, int y, int width, String placeholder, int toggleKey, boolean rounded) {
-        super(parent, x, y, width, placeholder, toggleKey, rounded);
-    }
-
     @Override
     public void draw() {
-        this.drawBox(-1);
+        this.drawBox();
         if(input != null) {
             String text = !input.isEmpty() ? "*".repeat(input.length()) : placeholder;
             String cursor = !input.isEmpty() ? blinker.check(500) ? " " : "█" : "";

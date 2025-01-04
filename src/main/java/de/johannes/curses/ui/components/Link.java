@@ -1,26 +1,25 @@
 package de.johannes.curses.ui.components;
 
 import de.johannes.curses.Mouse;
+import de.johannes.curses.ui.base.Component;
 import de.johannes.curses.util.ColorBuilder;
-import de.johannes.curses.ui.Component;
 
 import java.awt.*;
 import java.net.URI;
 
+
 public class Link extends Component {
 
-    private final String display, url;
+    private String display, url;
 
-    public Link(Window parent, int x, int y, String display, String url, int color) {
-        super(parent, x, y, display.length(), 1, color, false);
+    public Link display(String display, String url) {
         this.display = display;
         this.url = url;
+        return this;
     }
 
     @Override
-    public void init() {
-
-    }
+    public void init() {}
 
     public void open() {
         try {
@@ -32,7 +31,7 @@ public class Link extends Component {
 
     @Override
     public void draw() {
-        drawString(1,1,"$u"+this.display+"$r", color);
+        drawString(0,0,"$u"+this.display+"$r", color);
     }
 
     @Override

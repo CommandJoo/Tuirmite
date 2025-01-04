@@ -2,85 +2,61 @@ package de.johannes.curses.ui.components;
 
 import de.johannes.curses.Curses;
 import de.johannes.curses.Mouse;
+import de.johannes.curses.ui.base.BoxComponent;
+import de.johannes.curses.ui.base.Component;
 import de.johannes.curses.util.Timer;
-import de.johannes.curses.ui.Component;
 import de.johannes.curses.Keys;
 
-public class TextField extends Component {
-    protected final String placeholder;
-    protected final Window parent;
-    private final int toggleKey;
-    protected boolean focused;
+public class TextField extends BoxComponent {
+    protected String placeholder;
+    protected boolean focused = true;
 
-    public TextField(Window parent, int x, int y, int width, boolean rounded) {
-        this(parent, x, y, width, "", rounded);
-    }
-
-    public TextField(Window parent, int x, int y, int width, String placeholder, boolean rounded) {
-        this(parent, x, y, width, placeholder, -1,rounded);
-    }
-
-    public TextField(Window parent, int x, int y, int width, String placeholder, int toggleKey, boolean rounded) {
-        super(parent, x, y, width, 2, rounded);
-        this.input = new StringBuilder();
-        this.blinker = new Timer();
-        this.placeholder = placeholder;
-        this.parent = parent;
-        this.color = parent.color;
-        this.toggleKey = toggleKey;
-        this.focused = false;
-    }
-
-    protected final StringBuilder input;
-    protected final Timer blinker;
+    protected StringBuilder input;
+    protected Timer blinker;
 
     @Override
-    public void init() {}
+    public void init() {
+        input = new StringBuilder();
+        blinker = new Timer();
+    }
+
+    public TextField placeholder(String placeholder) {
+        this.placeholder = placeholder;
+        return this;
+    }
 
     @Override
     public void draw() {
-        this.drawBox((focused || toggleKey == -1) ? -1 : 17);
+        this.drawBox();
         if (input != null) {
             String text = !input.isEmpty() ? input.toString() : placeholder;
             String cursor = !input.isEmpty() ? blinker.check(500) ? " " : "█" : "";
-            drawString(1, 1, text + cursor, (focused || toggleKey == -1) ? color : 17);
+            drawString(1, 1, text + cursor, color);
             if (blinker.check(1000)) blinker.reset();
 
             if (false) {
                 if (!input.isEmpty())
-                    drawString(1, 2, String.valueOf((int) input.charAt(input.length() - 1)), (focused || toggleKey == -1) ? color : 17);
+                    drawString(1, 2, String.valueOf((int) input.charAt(input.length() - 1)), color);
             }
         }
     }
 
     @Override
-    public void drawBox(int color) {
-        int rendercolor = color == -1 ? this.color : color;
-        Curses.instance().setColor(rendercolor);
+    public void drawBox() {
+        Curses.instance().drawCorner(x(), y(), 2, color);
+        Curses.instance().drawCorner(x() + width(), y(), 1, color);
+        Curses.instance().drawCorner(x(), y() + height(), 3, color);
+        Curses.instance().drawCorner(x() + width(), y() + height(), 0, color);
 
-        Curses.instance().drawCorner(x, y, 2);
-        Curses.instance().drawCorner(x + width, y, 1);
-        Curses.instance().drawCorner(x, y + height, 3);
-        Curses.instance().drawCorner(x + width, y + height, 0);
-
-        if (toggleKey < 0) {
-            Curses.instance().drawHorizontalLine(y + height, x + 1, x + width);
-        } else {
-            String render = "" + (char) toggleKey;
-            drawDecoration(width/8-(render.length()/2), true, false, render, color);
-        }
-        Curses.instance().drawHorizontalLine(y, x + 1, x + width);
-        Curses.instance().drawVerticalLine(x, y + 1, y + height);
-        Curses.instance().drawVerticalLine(x + width, y + 1, y + height);
+        Curses.instance().drawHorizontalLine(y(), x() + 1, x() + width(), color);
+        Curses.instance().drawHorizontalLine(y()+height(), x() + 1, x() + width(), color);
+        Curses.instance().drawVerticalLine(x(), y() + 1, y() + height(), color);
+        Curses.instance().drawVerticalLine(x() + width(), y() + 1, y() + height(), color);
     }
 
     @Override
     public boolean handleKey(char ch) {
-        if (ch == (char) toggleKey && !focused) {
-            this.setFocused(true);
-            return true;
-        }
-        if (ch != 0 && (focused || toggleKey == -1)) {
+        if (ch != 0) {
             if (ch == Keys.BACK_SPACE) {
                 input.setLength(Math.max(input.length() - 1, 0));
                 return true;

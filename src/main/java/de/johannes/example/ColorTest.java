@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class ColorTest extends Window {
     public ColorTest() {
-        super(null, 0, 0, Curses.width() - 1, Curses.height() - 1);
+//        super(null, 0, 0, Curses.width() - 1, Curses.height() - 1);
     }
 
     @Override

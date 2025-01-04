@@ -1,9 +1,8 @@
 package de.johannes.curses.ui.components;
 
 import de.johannes.curses.Curses;
-import de.johannes.curses.CursesConstants;
 import de.johannes.curses.Mouse;
-import de.johannes.curses.ui.Component;
+import de.johannes.curses.ui.base.Component;
 import de.johannes.curses.util.ColorBuilder;
 
 import java.util.ArrayList;
@@ -15,15 +14,15 @@ public class Text extends Component {
     private List<Integer> attributes;
     private List<Text> chain;
 
-    public Text(String text) {
-        super(null,Integer.MIN_VALUE, Integer.MIN_VALUE, 0, 0, -1, false);
-        this.text = text;
+    public Text() {
         this.attributes = new ArrayList<>();
         this.chain = new ArrayList<>();
     }
 
     public static Text of(String text) {
-        return new Text(text);
+        Text txt = new Text();
+        txt.text = text;
+        return txt;
     }
 
     public Text format(int color) {
@@ -62,14 +61,8 @@ public class Text extends Component {
     public void init() {}
 
     public void draw() {
-        int x = this.x;
-        int y = this.y;
-        if(this.parent != null) {
-            x = this.x + this.parent.x;
-            y = this.y + this.parent.y;
-        }
-        if(x != Integer.MIN_VALUE && y != Integer.MIN_VALUE) {
-            Curses.instance().moveCursor(x,y);
+        if(x() != Integer.MIN_VALUE && y() != Integer.MIN_VALUE) {
+            Curses.instance().moveCursor(x(),y());
         }
         if(color != -1) {
             Curses.instance().setColor(color);
@@ -82,8 +75,8 @@ public class Text extends Component {
 
         int xPos = text.length();
         for(Text txt : this.chain) {
-            if(x != Integer.MIN_VALUE && y != Integer.MIN_VALUE) {
-                Curses.instance().moveCursor(x+xPos,y);
+            if(x() != Integer.MIN_VALUE && y() != Integer.MIN_VALUE) {
+                Curses.instance().moveCursor(x()+xPos,y());
             }
             if(txt.color != -1) {
                 Curses.instance().setColor(txt.color);
