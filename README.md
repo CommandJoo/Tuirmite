@@ -1,15 +1,15 @@
-<h1 align="center">Welcome to Java-Native-NCurses 👋</h1>
+<h1 align="center">Welcome to Tuirmite 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.5-blue.svg?cacheSeconds=2592000" />
 </p>
 <a href="https://www.cprogramming.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="c" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a>
 
-> Java NativeCurses is an NCurses wrapper written in Java, it provides direct access to many NCurses methods, and also provides an API for directly creating GUIs using Windows Buttons and Text fields
+> Tuirmite is an NCurses wrapper written in Java, it provides direct access to many NCurses methods, and also provides an API for directly creating GUIs using Windows Buttons and Text fields
 
 ***
 ## Quickstart
 Download
-[The latest version](https://github.com/CommandJoo/Java-Native-NCurses/releases/latest)
+[The latest version](https://github.com/CommandJoo/Tuirmite/releases/latest)
 and add it as a Library to your Project
 
 Alternatively
@@ -37,12 +37,12 @@ make
 
 Running the Jar
 ```sh
-java -jar "build/libs/JavaCurses.jar"
+java -jar "build/libs/Tuirmite.jar"
 #or
 ./run
 ```
 
-### Creating a GUI in Java NativeCurses
+### Creating a GUI in Tuirmite
 ```java
 ...
 public static void main(String[] args) {
