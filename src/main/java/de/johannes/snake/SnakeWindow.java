@@ -1,6 +1,7 @@
 package de.johannes.snake;
 
 import de.johannes.curses.Curses;
+import de.johannes.curses.CursesConstants;
 import de.johannes.curses.nerdfont.NFFontAwesome;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.util.Timer;
@@ -24,9 +25,18 @@ public class SnakeWindow extends Window {
     private static final int FOOD_COUNT = 10;
     private static final int START_SIZE = 4;
 
-    public SnakeWindow(Curses curses) {
-//        super(null, 0, 0, curses.getWidth()-1, curses.getHeight()-1, ColorBuilder.create().defineForeground("#7731AF").build(), "Snake");
-        this.foodColor = ColorBuilder.create().defineForeground("#67EB44").build();
+    public SnakeWindow(Window parent, String title, int x, int y, int width, int height, int color) {
+        super(parent, title, x, y, width, height, color);
+        this.gameTimer = new Timer();
+        this.player = new ArrayList<>();
+        this.food = new ArrayList<>();
+        this.direction = 0;
+        this.foodColor = CursesConstants.DARK_RED;
+        this.dead = false;
+        this.init();
+    }
+
+    public SnakeWindow() {
     }
 
     @Override

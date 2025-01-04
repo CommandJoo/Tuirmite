@@ -23,7 +23,7 @@ public class Main {
         winman.addKeyHandler((ch, key) -> {
             if(ch=='q') {
                 winman.removeWindow(0);
-                winman.addWindow(1, new SnakeWindow(Curses.instance()));
+                winman.addWindow(1, new SnakeWindow(null, "Snake", 0, 0, Curses.width()-1, Curses.height()-1, CursesConstants.DARK_CYAN));
                 Curses.clear();
             }
         });
