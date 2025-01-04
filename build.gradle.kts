@@ -29,7 +29,7 @@ tasks.withType<Jar> {
     manifest {
         attributes["Main-Class"] = "de.johannes.Main"
     }
-    archiveFileName = "JavaCurses.jar"
+    archiveFileName = "Tuirmite.jar"
 }
 
 tasks.test {

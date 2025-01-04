@@ -1,2 +1,2 @@
-rootProject.name = "NativeTUI"
+rootProject.name = "Tuirmite"
 

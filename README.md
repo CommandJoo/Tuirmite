@@ -15,7 +15,7 @@ and add it as a Library to your Project
 Alternatively
 Clone the Repository
 ```shell
-git clone https://github.com/CommandJoo/Java-Native-NCurses
+git clone https://github.com/CommandJoo/Tuirmite
 ```
 
 ***
