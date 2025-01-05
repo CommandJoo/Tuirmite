@@ -1,8 +1,8 @@
 package de.johannes.curses.ui.components;
 
 import de.johannes.curses.Curses;
+import de.johannes.curses.CursesConstants;
 import de.johannes.curses.Mouse;
-import de.johannes.curses.ui.base.Component;
 import de.johannes.curses.ui.base.TextComponent;
 import de.johannes.curses.util.ColorBuilder;
 
@@ -29,6 +29,10 @@ public class Text extends TextComponent {
     public Text format(int color) {
         this.color = color;
         return this;
+    }
+
+    public Text format(String hex) {
+        return this.format(new ColorBuilder().defineForeground(hex).build());
     }
 
     public Text format(ColorBuilder color) {
@@ -59,37 +63,37 @@ public class Text extends TextComponent {
 
 
     @Override
-    public void init() {}
+    public void init() {
+    }
 
     public void draw() {
-        if(x() != Integer.MIN_VALUE && y() != Integer.MIN_VALUE) {
-            Curses.instance().moveCursor(x(),y());
+        drawText();
+    }
+
+    private int drawText() {
+        int result = text.length();
+
+        if (x() != Integer.MIN_VALUE && y() != Integer.MIN_VALUE) {
+            Curses.instance().moveCursor(x(), y());
         }
-        if(color != -1) {
+        if (color != -1) {
             Curses.instance().setColor(color);
         }
 
-        for(int i : attributes) {
+        for (int i : attributes) {
             Curses.instance().attron(i);
         }
         Curses.instance().printstr(text);
 
-        int xPos = text.length();
-        for(Text txt : this.chain) {
-            if(x() != Integer.MIN_VALUE && y() != Integer.MIN_VALUE) {
-                Curses.instance().moveCursor(x()+xPos,y());
-            }
-            if(txt.color != -1) {
-                Curses.instance().setColor(txt.color);
-            }
+        alloff();
 
-            for(int i : txt.attributes) {
-                Curses.instance().attron(i);
-            }
-            Curses.instance().printstr(txt.text);
-            xPos+=txt.text.length();
+        for(Text txt : this.chain) {
+            txt.at(x()+result, y());
+            txt.drawText();
+            result += txt.text.length();
         }
 
+        return result;
     }
 
     @Override
@@ -100,6 +104,16 @@ public class Text extends TextComponent {
     @Override
     public boolean handleClick(Mouse mouse) {
         return false;
+    }
+
+    private static void alloff() {
+        Curses curses = Curses.instance();
+        curses.attroff(CursesConstants.ATTRIB_REVERSE);
+        curses.attroff(CursesConstants.ATTRIB_DIM);
+        curses.attroff(CursesConstants.ATTRIB_ITALIC);
+        curses.attroff(CursesConstants.ATTRIB_INVIS);
+        curses.attroff(CursesConstants.ATTRIB_BLINK);
+        curses.attroff(CursesConstants.ATTRIB_UNDERLINE);
     }
 
 }

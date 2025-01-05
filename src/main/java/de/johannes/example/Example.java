@@ -68,7 +68,8 @@ public class Example extends Window {
         Text text = Text.of("Example Text")
                 .at(1,15)
                 .parent(this)
-                .format(color);
+                .format(color)
+                .append(Text.of(" + Appended Text").format("#77AF99").attrib(CursesConstants.ATTRIB_ITALIC));
         addComponent(6, text);
 
         Window sub = new Window(this, "Sub Window", width/2, 1, width/2-1,height-2 ,color) {
