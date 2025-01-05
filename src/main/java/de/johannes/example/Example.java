@@ -1,9 +1,12 @@
 package de.johannes.example;
 
 import de.johannes.curses.CursesConstants;
+import de.johannes.curses.Keys;
 import de.johannes.curses.Mouse;
 import de.johannes.curses.ui.base.*;
 import de.johannes.curses.ui.components.*;
+
+import java.util.List;
 
 public class Example extends Window {
     public Example() {
@@ -83,6 +86,16 @@ public class Example extends Window {
                         .build(Button::new)
                         .setText("Another One");
                 addComponent(0, btn);
+
+                Listable list = new BoxComponentBuilder<Listable>()
+                        .at(1,4)
+                        .bounds(8, 20)
+                        .parent(this)
+                        .color(color())
+                        .build(Listable::new)
+                        .content("1", "2", "3", "4", "5", "ABCDEFGHIJKLMNOP");
+
+                addComponent(1, list);
             }
 
             @Override
@@ -91,6 +104,32 @@ public class Example extends Window {
 
             @Override
             public boolean handleKey(char ch) {
+                if(ch == Keys.KEY_RIGHT) {
+                    Listable list = ((Listable) getComponent(1));
+                    list.content("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K");
+                    return true;
+                }
+                for(Component comp : getComponents()) {
+                    comp.handleKey(ch);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean handleClick(Mouse mouse) {
+                for(Component comp : this.getComponents()) {
+                    if((comp instanceof BoxComponent)) {
+                        if(mouse.x >= comp.x() && mouse.x <= comp.x()+((BoxComponent) comp).width() &&
+                                mouse.y >= comp.y() && mouse.y <= comp.y()+((BoxComponent) comp).height()) {
+                            if(comp instanceof Button) {
+                                ((Button) comp).setSelected(!((Button) comp).selected());
+                            }
+                            if(comp instanceof Link) {
+                                comp.setColor(comp.color() == color() ? CursesConstants.LIGHT_RED : color());
+                            }
+                        }
+                    }
+                }
                 return false;
             }
         };

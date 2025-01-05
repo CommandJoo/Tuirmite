@@ -3,7 +3,6 @@ package de.johannes;
 import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
 import de.johannes.curses.ui.WindowManager;
-import de.johannes.curses.ui.base.BoxComponentBuilder;
 import de.johannes.curses.ui.base.WindowBuilder;
 import de.johannes.example.Example;
 import de.johannes.snake.SnakeWindow;
