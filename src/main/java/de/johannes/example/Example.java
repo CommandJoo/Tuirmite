@@ -38,12 +38,13 @@ public class Example extends Window {
                 .placeholder("Password Here: ");
         addComponent(2, passwordField);
 
-        TextInput textInput = new ComponentBuilder<TextInput>()
+        TextInput textInput = new TextComponentBuilder<TextInput>()
                 .at(1,10)
                 .parent(this)
                 .color(color())
+                .text("Input:")
                 .build(TextInput::new)
-                .placeholder("Input: ");
+                .placeholder("Input:");
         addComponent(3, textInput);
 
         Selector selector = new BoxComponentBuilder<Selector>()
@@ -55,10 +56,11 @@ public class Example extends Window {
                 .values("Apple", "Banana", "Mango", "Strawberry", "Cherry", "Blueberry");
         addComponent(4, selector);
 
-        Link link = new ComponentBuilder<Link>()
+        Link link = new TextComponentBuilder<Link>()
                 .at(1,14)
                 .parent(this)
                 .color(color())
+                .text("GitHub")
                 .build(Link::new)
                 .display("GitHub", "https://github.com/CommandJoo/Java-Native-NCurses");
         addComponent(5, link);
@@ -114,6 +116,9 @@ public class Example extends Window {
                         mouse.y >= comp.y() && mouse.y <= comp.y()+((BoxComponent) comp).height()) {
                     if(comp instanceof Button) {
                         ((Button) comp).setSelected(!((Button) comp).selected());
+                    }
+                    if(comp instanceof Link) {
+                        comp.setColor(comp.color() == color() ? CursesConstants.LIGHT_RED : color());
                     }
                 }
             }

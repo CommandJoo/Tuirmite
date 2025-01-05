@@ -6,11 +6,18 @@ import java.util.function.Supplier;
 
 public class BoxComponentBuilder<T extends BoxComponent> extends ComponentBuilder<T> {
 
+    protected boolean rounded;
     protected int width, height;
 
     public BoxComponentBuilder<T> parent(Window parent) {
         BoxComponentBuilder<T> builder = createBuilder();
         builder.parent = parent;
+        return builder;
+    }
+
+    public BoxComponentBuilder<T> rounded(boolean rounded) {
+        BoxComponentBuilder<T> builder = createBuilder();
+        builder.rounded = rounded;
         return builder;
     }
 
@@ -42,6 +49,7 @@ public class BoxComponentBuilder<T extends BoxComponent> extends ComponentBuilde
         obj.width = width;
         obj.height = height;
         obj.color = color;
+        obj.rounded = rounded;
         obj.init();
         return obj;
     }
@@ -55,6 +63,7 @@ public class BoxComponentBuilder<T extends BoxComponent> extends ComponentBuilde
         builder.height = height;
         builder.parent = parent;
         builder.color = color;
+        builder.rounded = rounded;
         return builder;
     }
 }

@@ -13,7 +13,6 @@ import java.util.List;
 public abstract class Window extends BoxComponent {
 
     public String title = "";
-    protected boolean rounded;
     private final HashMap<Integer, Component> components;
 
     public Window(Window parent, String title, int x, int y, int width, int height, int color) {
@@ -42,39 +41,29 @@ public abstract class Window extends BoxComponent {
 
     @Override
     public void drawBox() {
-        int rendercolor = this.color;
+        Curses.instance().setColor(color());
+        Curses.instance().drawCorner(x(), y(), 2, color(), rounded);
+        Curses.instance().drawCorner(x() + width(), y(), 1, color(), rounded);
+        Curses.instance().drawCorner(x(), y() + height(), 3, color(), rounded);
+        Curses.instance().drawCorner(x() + width(), y() + height(), 0, color(), rounded);
 
-        boolean rounded = false;
 
-        Curses.instance().setColor(rendercolor);
-        if(!rounded) {
-            Curses.instance().drawCorner(x(), y(), 2, rendercolor);
-            Curses.instance().drawCorner(x() + width(), y(), 1, rendercolor);
-            Curses.instance().drawCorner(x(), y() + height(), 3, rendercolor);
-            Curses.instance().drawCorner(x() + width(), y() + height(), 0, rendercolor);
-        }else {
-            Curses.instance().drawRoundedCorner(x(), y(), 2, rendercolor);
-            Curses.instance().drawRoundedCorner(x() + width(), y(), 1, rendercolor);
-            Curses.instance().drawRoundedCorner(x(), y() + height(), 3, rendercolor);
-            Curses.instance().drawRoundedCorner(x() + width(), y() + height(), 0, rendercolor);
-        }
-
-        Curses.instance().drawHorizontalLine(y(), x() + 1, x() + width(), rendercolor);
-        Curses.instance().drawHorizontalLine(y() + height(), x() + 1, x() + width(), rendercolor);
-        Curses.instance().drawVerticalLine(x(), y() + 1, y() + height(), rendercolor);
-        Curses.instance().drawVerticalLine(x() + width(), y() + 1, y() + height(), rendercolor);
+        Curses.instance().drawHorizontalLine(y(), x() + 1, x() + width(), color());
+        Curses.instance().drawHorizontalLine(y() + height(), x() + 1, x() + width(), color());
+        Curses.instance().drawVerticalLine(x(), y() + 1, y() + height(), color());
+        Curses.instance().drawVerticalLine(x() + width(), y() + 1, y() + height(), color());
 
         if (!title.isEmpty()) {
-            drawDecoration(width() / 2 - ((title.length() + 4) / 2), false, false, title, rendercolor);
+            drawDecoration(width() / 2 - ((title.length() + 4) / 2), false, false, title, color());
         }
     }
 
     @Override
     public boolean handleClick(Mouse mouse) {
-        for(Component comp : this.components.values()) {
-            if((comp instanceof BoxComponent)) {
-                if(mouse.x >= comp.x() && mouse.x <= comp.x()+((BoxComponent) comp).width() &&
-                        mouse.y >= comp.y() && mouse.y <= comp.y()+((BoxComponent) comp).height()) {
+        for (Component comp : this.components.values()) {
+            if ((comp instanceof BoxComponent)) {
+                if (mouse.x >= comp.x() && mouse.x <= comp.x() + ((BoxComponent) comp).width() &&
+                        mouse.y >= comp.y() && mouse.y <= comp.y() + ((BoxComponent) comp).height()) {
                     return comp.handleClick(mouse);
                 }
             }
@@ -98,19 +87,23 @@ public abstract class Window extends BoxComponent {
         this.components.put(id, component);
         return component;
     }
+
     public void removeComponent(int id) {
-        if(!this.components.containsKey(id))
-            throw new IllegalArgumentException("Component with ID: "+ id+" doesn't exist!");
+        if (!this.components.containsKey(id))
+            throw new IllegalArgumentException("Component with ID: " + id + " doesn't exist!");
         this.components.remove(id);
     }
+
     public List<Component> getComponents() {
         return List.copyOf(this.components.values());
     }
+
     public Component getComponent(int id) {
         return components.getOrDefault(id, null);
     }
+
     @SuppressWarnings("unchecked")
-    public <T extends Component>List<T> getComponents(Class<T> clazz) {
+    public <T extends Component> List<T> getComponents(Class<T> clazz) {
         List<Component> components = getComponents();
         List<T> elements = new ArrayList<>();
         components.forEach(comp -> {
@@ -118,6 +111,7 @@ public abstract class Window extends BoxComponent {
         });
         return elements;
     }
+
     private List<Button> buttons() {
         List<Button> buttons = getComponents(Button.class);
         buttons.sort(new Comparator<Button>() {

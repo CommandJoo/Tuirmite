@@ -5,11 +5,13 @@ import de.johannes.curses.Curses;
 public abstract class BoxComponent extends Component {
 
     protected int width, height;
+    protected boolean rounded;
 
     public BoxComponent() {
         super();
         this.width = 0;
         this.height = 0;
+        this.rounded = false;
     }
 
     public int width() {
@@ -27,10 +29,10 @@ public abstract class BoxComponent extends Component {
         Curses.instance().drawVerticalLine(x(), y(), y()+height(), color);
         Curses.instance().drawVerticalLine(x()+width(), y(), y()+height(), color);
 
-        Curses.instance().drawCorner(x(), y(), 2, color);
-        Curses.instance().drawCorner(x()+width(), y(), 1, color);
-        Curses.instance().drawCorner(x(), y()+height(), 3, color);
-        Curses.instance().drawCorner(x()+width(), y()+height(), 0, color);
+        Curses.instance().drawCorner(x(), y(), 2, color, rounded);
+        Curses.instance().drawCorner(x()+width(), y(), 1, color, rounded);
+        Curses.instance().drawCorner(x(), y()+height(), 3, color, rounded);
+        Curses.instance().drawCorner(x()+width(), y()+height(), 0, color, rounded);
     }
 
     public void drawDecoration(int x, boolean bottom, boolean parens, String deco, int color) {

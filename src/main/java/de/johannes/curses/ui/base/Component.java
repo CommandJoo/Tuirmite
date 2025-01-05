@@ -4,6 +4,7 @@ import de.johannes.curses.CursesConstants;
 import de.johannes.curses.Mouse;
 import de.johannes.curses.ui.UI;
 import de.johannes.curses.ui.components.Window;
+import de.johannes.curses.util.ColorBuilder;
 
 public abstract class Component {
 
@@ -52,4 +53,13 @@ public abstract class Component {
         UI.drawCenteredString(s, x, y, color);
     }
 
+    public Component setColor(int color) {
+        this.color = color;
+        return this;
+    }
+
+    public Component setColor(String hex) {
+        this.color = new ColorBuilder().defineForeground(hex).build();
+        return this;
+    }
 }

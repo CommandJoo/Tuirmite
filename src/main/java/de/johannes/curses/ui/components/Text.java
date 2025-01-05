@@ -3,12 +3,13 @@ package de.johannes.curses.ui.components;
 import de.johannes.curses.Curses;
 import de.johannes.curses.Mouse;
 import de.johannes.curses.ui.base.Component;
+import de.johannes.curses.ui.base.TextComponent;
 import de.johannes.curses.util.ColorBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Text extends Component {
+public class Text extends TextComponent {
 
     private String text;
     private List<Integer> attributes;

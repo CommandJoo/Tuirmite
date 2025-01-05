@@ -2,10 +2,11 @@ package de.johannes.curses.ui.components;
 
 import de.johannes.curses.Mouse;
 import de.johannes.curses.ui.base.Component;
+import de.johannes.curses.ui.base.TextComponent;
 import de.johannes.curses.util.Timer;
 import de.johannes.curses.Keys;
 
-public class TextInput extends Component {
+public class TextInput extends TextComponent {
     protected String placeholder;
 
     protected StringBuilder input;

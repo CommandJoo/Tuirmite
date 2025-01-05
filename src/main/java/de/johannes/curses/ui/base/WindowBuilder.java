@@ -14,6 +14,12 @@ public class WindowBuilder<T extends Window> extends BoxComponentBuilder<T> {
         return builder;
     }
 
+    public WindowBuilder<T> rounded(boolean rounded) {
+        WindowBuilder<T> builder = createBuilder();
+        builder.rounded = rounded;
+        return builder;
+    }
+
     public WindowBuilder<T> parent(Window parent) {
         WindowBuilder<T> builder = createBuilder();
         builder.parent = parent;
@@ -49,6 +55,7 @@ public class WindowBuilder<T extends Window> extends BoxComponentBuilder<T> {
         obj.width = width;
         obj.height = height;
         obj.color = color;
+        obj.rounded = rounded;
         obj.init();
         return obj;
     }
@@ -61,6 +68,7 @@ public class WindowBuilder<T extends Window> extends BoxComponentBuilder<T> {
         builder.width = width;
         builder.height = height;
         builder.title = title;
+        builder.rounded = rounded;
         builder.parent = parent;
         builder.color = color;
         return builder;

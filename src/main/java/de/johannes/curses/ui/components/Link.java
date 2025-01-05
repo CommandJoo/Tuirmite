@@ -2,13 +2,14 @@ package de.johannes.curses.ui.components;
 
 import de.johannes.curses.Mouse;
 import de.johannes.curses.ui.base.Component;
+import de.johannes.curses.ui.base.TextComponent;
 import de.johannes.curses.util.ColorBuilder;
 
 import java.awt.*;
 import java.net.URI;
 
 
-public class Link extends Component {
+public class Link extends TextComponent {
 
     private String display, url;
 
@@ -38,5 +39,8 @@ public class Link extends Component {
     public boolean handleKey(char ch) {return false;}
 
     @Override
-    public boolean handleClick(Mouse mouse) {return false;}
+    public boolean handleClick(Mouse mouse) {
+        System.exit(-1);
+        return false;
+    }
 }
