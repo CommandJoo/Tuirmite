@@ -41,7 +41,11 @@ public class TextComponentBuilder<T extends TextComponent> extends ComponentBuil
         obj.text = text;
         obj.width = text != null ? text.length() : 0;
         obj.height = 1;
-        obj.color = color;
+        if(color == -1) {
+            obj.color = parent.color;
+        }else {
+            obj.color = color;
+        }
         obj.init();
         return obj;
     }

@@ -9,23 +9,35 @@ public class Listable extends BoxComponent {
 
     private String[] content;
     private int index;
+    private boolean adjust = true;
+
+    private int maxHeight;
+
+    public Listable() {
+    }
 
     public Listable content(String... content) {
         this.content = content;
         this.index = 0;
-        this.height = 1+content.length;
         return this;
     }
 
     @Override
-    public void init() {
-
-    }
+    public void init() {}
 
     @Override
     public void draw() {
+        if(adjust) {
+            this.height = 1+content.length;
+        }else {
+            this.height = maxHeight;
+        }
+        if(content == null) {
+            return;
+        }
         for(int i = 0; i < content.length; i++) {
             String line = content[i];
+            if(line == null) continue;
             if(i == index) {
                 int remainder = (width-1)-(line.length());
                 String render = line.substring(0, Math.min(line.length(), width-1));
@@ -66,6 +78,12 @@ public class Listable extends BoxComponent {
 
     public String value() {
         return content[index];
+    }
+
+    public Listable adjustable(boolean b, int height) {
+        this.maxHeight = height;
+        this.adjust = b;
+        return this;
     }
 
     @Override

@@ -54,7 +54,11 @@ public class WindowBuilder<T extends Window> extends BoxComponentBuilder<T> {
         obj.title = title;
         obj.width = width;
         obj.height = height;
-        obj.color = color;
+        if(color == -1) {
+            obj.color = parent.color;
+        }else {
+            obj.color = color;
+        }
         obj.rounded = rounded;
         obj.init();
         return obj;

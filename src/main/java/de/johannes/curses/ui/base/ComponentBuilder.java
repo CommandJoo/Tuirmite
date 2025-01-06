@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 public class ComponentBuilder<T extends Component> {
 
     protected Window parent;
-    protected int x,y, color;
+    protected int x,y, color = -1;
 
     public static <T extends Component> ComponentBuilder<T> create(Class<T> clazz) {
         return new ComponentBuilder<T>();
@@ -52,7 +52,11 @@ public class ComponentBuilder<T extends Component> {
         obj.parent = parent;
         obj.x = x;
         obj.y = y;
-        obj.color = color;
+        if(color == -1) {
+            obj.color = parent.color;
+        }else {
+            obj.color = color;
+        }
         obj.init();
         return obj;
     }

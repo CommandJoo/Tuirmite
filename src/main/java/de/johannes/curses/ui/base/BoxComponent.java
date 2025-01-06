@@ -1,6 +1,7 @@
 package de.johannes.curses.ui.base;
 
 import de.johannes.curses.Curses;
+import de.johannes.curses.ui.UI;
 
 public abstract class BoxComponent extends Component {
 
@@ -20,6 +21,17 @@ public abstract class BoxComponent extends Component {
 
     public int height() {
         return height;
+    }
+
+    public void drawString(int x, int y, String s, int color) {
+        int remainder = (width()-1)-(x+s.length());
+        if(remainder < 0) {
+            s = s.substring(0, s.length()+remainder);
+        }
+        UI.drawString(s, this.x() + x, this.y() + y, color);
+    }
+    public void drawCenteredString(int x, int y, String s, int color) {
+        UI.drawCenteredString(s, this.x() + x, this.y() + y, color);
     }
 
     public void drawBox() {

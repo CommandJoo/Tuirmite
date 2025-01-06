@@ -89,13 +89,23 @@ public class Example extends Window {
 
                 Listable list = new BoxComponentBuilder<Listable>()
                         .at(1,4)
-                        .bounds(8, 20)
+                        .bounds(10, 20)
                         .parent(this)
                         .color(color())
                         .build(Listable::new)
                         .content("1", "2", "3", "4", "5", "ABCDEFGHIJKLMNOP");
 
                 addComponent(1, list);
+
+                Dropdown dropdown = new BoxComponentBuilder<Dropdown>()
+                        .at(12,4)
+                        .bounds(9, 0)
+                        .parent(this)
+                        .color(color())
+                        .build(Dropdown::new)
+                        .values("1", "2", "3", "4", "E", "F", "G");
+
+                addComponent(2, dropdown);
             }
 
             @Override
@@ -107,7 +117,6 @@ public class Example extends Window {
                 if(ch == Keys.KEY_RIGHT) {
                     Listable list = ((Listable) getComponent(1));
                     list.content("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K");
-                    return true;
                 }
                 for(Component comp : getComponents()) {
                     comp.handleKey(ch);
@@ -123,9 +132,10 @@ public class Example extends Window {
                                 mouse.y >= comp.y() && mouse.y <= comp.y()+((BoxComponent) comp).height()) {
                             if(comp instanceof Button) {
                                 ((Button) comp).setSelected(!((Button) comp).selected());
-                            }
-                            if(comp instanceof Link) {
+                            }else if(comp instanceof Link) {
                                 comp.setColor(comp.color() == color() ? CursesConstants.LIGHT_RED : color());
+                            }else {
+                                comp.handleClick(mouse);
                             }
                         }
                     }
@@ -156,9 +166,10 @@ public class Example extends Window {
                         mouse.y >= comp.y() && mouse.y <= comp.y()+((BoxComponent) comp).height()) {
                     if(comp instanceof Button) {
                         ((Button) comp).setSelected(!((Button) comp).selected());
-                    }
-                    if(comp instanceof Link) {
+                    }else if(comp instanceof Link) {
                         comp.setColor(comp.color() == color() ? CursesConstants.LIGHT_RED : color());
+                    }else {
+                        comp.handleClick(mouse);
                     }
                 }
             }

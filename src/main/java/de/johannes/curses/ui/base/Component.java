@@ -43,11 +43,11 @@ public abstract class Component {
     public void drawString(int x, int y, String s, int color) {
         UI.drawString(s, this.x() + x, this.y() + y, color);
     }
-    public void drawStringIndependent(int x, int y, String s, int color) {
-        UI.drawString(s, x, y, color);
-    }
     public void drawCenteredString(int x, int y, String s, int color) {
         UI.drawCenteredString(s, this.x() + x, this.y() + y, color);
+    }
+    public void drawStringIndependent(int x, int y, String s, int color) {
+        UI.drawString(s, x, y, color);
     }
     public void drawCenteredStringIndependent(int x, int y, String s, int color) {
         UI.drawCenteredString(s, x, y, color);

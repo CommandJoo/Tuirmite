@@ -48,7 +48,11 @@ public class BoxComponentBuilder<T extends BoxComponent> extends ComponentBuilde
         obj.y = y;
         obj.width = width;
         obj.height = height;
-        obj.color = color;
+        if(color == -1) {
+            obj.color = parent.color;
+        }else {
+            obj.color = color;
+        }
         obj.rounded = rounded;
         obj.init();
         return obj;
