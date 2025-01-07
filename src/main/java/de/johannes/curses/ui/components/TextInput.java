@@ -26,10 +26,13 @@ public class TextInput extends TextComponent {
     @Override
     public void draw() {
         if (input != null) {
+            this.width = this.input.toString().isEmpty() ? this.placeholder.length()+1 : this.input.toString().length()+1;
             String text = !input.isEmpty() ? input.toString() : placeholder;
             String cursor = !input.isEmpty() ? blinker.check(500) ? " " : "█" : "";
             drawString(0, 0, text + cursor, color);
             if (blinker.check(1000)) blinker.reset();
+        }else {
+            this.width = this.placeholder.length()+1;
         }
     }
 

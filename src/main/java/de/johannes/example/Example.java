@@ -1,8 +1,10 @@
 package de.johannes.example;
 
+import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
 import de.johannes.curses.Keys;
 import de.johannes.curses.Mouse;
+import de.johannes.curses.ui.WindowManager;
 import de.johannes.curses.ui.base.*;
 import de.johannes.curses.ui.components.*;
 
@@ -84,7 +86,10 @@ public class Example extends Window {
                         .parent(this)
                         .color(color())
                         .build(Button::new)
-                        .setText("Another One");
+                        .setText("Another One")
+                        .setExecutor((m) -> {
+                            WindowManager.instance().kill();
+                        });
                 addComponent(0, btn);
 
                 Listable list = new BoxComponentBuilder<Listable>()
@@ -106,6 +111,15 @@ public class Example extends Window {
                         .values("1", "2", "3", "4", "E", "F", "G");
 
                 addComponent(2, dropdown);
+
+                Checkbox box = new BoxComponentBuilder<Checkbox>()
+                        .at(24, 1)
+                        .bounds(5, 2)
+                        .parent(this)
+                        .color(color())
+                        .build(Checkbox::new);
+
+                addComponent(3, box);
             }
 
             @Override
@@ -132,6 +146,7 @@ public class Example extends Window {
                                 mouse.y >= comp.y() && mouse.y <= comp.y()+((BoxComponent) comp).height()) {
                             if(comp instanceof Button) {
                                 ((Button) comp).setSelected(!((Button) comp).selected());
+                                comp.handleClick(mouse);
                             }else if(comp instanceof Link) {
                                 comp.setColor(comp.color() == color() ? CursesConstants.LIGHT_RED : color());
                             }else {
@@ -166,6 +181,7 @@ public class Example extends Window {
                         mouse.y >= comp.y() && mouse.y <= comp.y()+((BoxComponent) comp).height()) {
                     if(comp instanceof Button) {
                         ((Button) comp).setSelected(!((Button) comp).selected());
+                        comp.handleClick(mouse);
                     }else if(comp instanceof Link) {
                         comp.setColor(comp.color() == color() ? CursesConstants.LIGHT_RED : color());
                     }else {

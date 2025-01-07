@@ -1,5 +1,7 @@
 package de.johannes.curses.nerdfont;
 
+import static de.johannes.curses.nerdfont.NFFontAwesome.*;
+
 public class NFFontAwesomeExtension {
 
     public static final String APPLE_FRUIT = "\ue29e";

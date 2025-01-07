@@ -4,13 +4,13 @@ import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
 import de.johannes.curses.Mouse;
 import de.johannes.curses.ui.base.BoxComponent;
-import de.johannes.curses.ui.base.Component;
+import java.util.function.Consumer;
 
 public class Button extends BoxComponent {
 
     private String text;
     private boolean selected;
-
+    private Consumer<Mouse> executor;
     public Button() {}
 
     @Override
@@ -36,12 +36,25 @@ public class Button extends BoxComponent {
 
     @Override
     public boolean handleClick(Mouse mouse) {
+        if(executor() != null) {
+            executor().accept(mouse);
+            return true;
+        }
         return false;
     }
 
     public Button setText(String text) {
         this.text = text;
         return this;
+    }
+
+    public Button setExecutor(Consumer<Mouse> executor) {
+        this.executor = executor;
+        return this;
+    }
+
+    public Consumer<Mouse> executor() {
+        return executor;
     }
 
     public void setSelected(boolean selected) {

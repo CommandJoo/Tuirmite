@@ -14,7 +14,7 @@ WINDOW* keywin;
 // init()
 JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_init(JNIEnv *env,
                                                            jobject obj) {
-  setlocale(LC_CTYPE, "");
+  setlocale(LC_ALL, "");
   
   // initialize standard curses features
   initscr();
@@ -115,9 +115,8 @@ JNIEXPORT jint JNICALL Java_de_johannes_curses_Curses_defineColorPair(
 // print()
 JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_print(JNIEnv *env,
                                                             jobject obj,
-                                                            jchar ch) {
+															jchar ch) {
   addch(ch);
-  // refresh();
 }
 
 JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_printstr(JNIEnv *env,
@@ -125,7 +124,6 @@ JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_printstr(JNIEnv *env,
                                                                jstring str) {
   const char *txt = (*env)->GetStringUTFChars(env, str, 0);
   printw(txt);
-  // refresh();
   (*env)->ReleaseStringUTFChars(env, str, txt);
 }
 
@@ -157,13 +155,12 @@ Java_de_johannes_curses_Curses_getMouseEvent(JNIEnv* env, jobject obj) {
   return NULL;
 }
 
-/*
+/f015i*
  * Class:     de_johannes_curses_Curses
  * Method:    inch
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_de_johannes_curses_Curses_inch(JNIEnv *, jobject) {
-
   return inch() & A_CHARTEXT;
 }
 

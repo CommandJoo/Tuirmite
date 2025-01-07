@@ -181,6 +181,17 @@ public class Curses {
         }
         instance().setColor(WHITE);
     }
+    public static void reverseClearBox(int x, int y, int width, int height, int color) {
+        String line = " ".repeat(width);
+        instance().attron(ATTRIB_REVERSE);
+        for (int i = 0; i < height; i++) {
+            instance().moveCursor(x,y+i);
+            instance().setColor(color);
+            instance().printstr(line);
+        }
+        instance().setColor(WHITE);
+        instance().attroff(ATTRIB_REVERSE);
+    }
 
     public native void refresh();
 
