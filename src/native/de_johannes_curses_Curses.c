@@ -42,6 +42,7 @@ JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_init(JNIEnv *env,
 
 JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_destroy(JNIEnv *,
                                                               jobject) {
+  mousemask(0, NULL);
   clear();
   curs_set(1);
   endwin();
@@ -155,7 +156,7 @@ Java_de_johannes_curses_Curses_getMouseEvent(JNIEnv* env, jobject obj) {
   return NULL;
 }
 
-/f015i*
+/*
  * Class:     de_johannes_curses_Curses
  * Method:    inch
  * Signature: ()I

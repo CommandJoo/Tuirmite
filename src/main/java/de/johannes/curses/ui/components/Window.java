@@ -5,6 +5,7 @@ import de.johannes.curses.Mouse;
 import de.johannes.curses.nerdfont.NFFontAwesome;
 import de.johannes.curses.nerdfont.NFFontAwesomeExtension;
 import de.johannes.curses.nerdfont.NFMaterialDesign;
+import de.johannes.curses.ui.WindowManager;
 import de.johannes.curses.ui.base.BoxComponent;
 import de.johannes.curses.ui.base.Component;
 import de.johannes.curses.util.ColorBuilder;

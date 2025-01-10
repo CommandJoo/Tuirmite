@@ -115,11 +115,22 @@ public class Example extends Window {
                 Checkbox box = new BoxComponentBuilder<Checkbox>()
                         .at(24, 1)
                         .bounds(5, 2)
+                        .rounded(true)
                         .parent(this)
                         .color(color())
                         .build(Checkbox::new);
 
                 addComponent(3, box);
+
+                ScrollingText scrollingText = new TextComponentBuilder<ScrollingText>()
+                        .at(1, 17)
+                        .parent(this)
+                        .color(color)
+                        .text("Hello, This is a really long sentence, however it will scroll so you can read it all!")
+                        .build(ScrollingText::new)
+                        .width(20);
+
+                addComponent(4, scrollingText);
             }
 
             @Override
@@ -144,10 +155,7 @@ public class Example extends Window {
                     if((comp instanceof BoxComponent)) {
                         if(mouse.x >= comp.x() && mouse.x <= comp.x()+((BoxComponent) comp).width() &&
                                 mouse.y >= comp.y() && mouse.y <= comp.y()+((BoxComponent) comp).height()) {
-                            if(comp instanceof Button) {
-                                ((Button) comp).setSelected(!((Button) comp).selected());
-                                comp.handleClick(mouse);
-                            }else if(comp instanceof Link) {
+                            if(comp instanceof Link) {
                                 comp.setColor(comp.color() == color() ? CursesConstants.LIGHT_RED : color());
                             }else {
                                 comp.handleClick(mouse);
@@ -179,10 +187,7 @@ public class Example extends Window {
             if((comp instanceof BoxComponent)) {
                 if(mouse.x >= comp.x() && mouse.x <= comp.x()+((BoxComponent) comp).width() &&
                         mouse.y >= comp.y() && mouse.y <= comp.y()+((BoxComponent) comp).height()) {
-                    if(comp instanceof Button) {
-                        ((Button) comp).setSelected(!((Button) comp).selected());
-                        comp.handleClick(mouse);
-                    }else if(comp instanceof Link) {
+                    if(comp instanceof Link) {
                         comp.setColor(comp.color() == color() ? CursesConstants.LIGHT_RED : color());
                     }else {
                         comp.handleClick(mouse);

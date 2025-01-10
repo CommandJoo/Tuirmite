@@ -97,7 +97,12 @@ public class WindowManager {
                         }
                     }else {
                         Mouse event = Curses.instance().getMouseEvent();
-                        for(Window window : windows.values()) {
+                        for(Integer id : windows.keySet()) {
+                            Window window = windows.get(id);
+//                            if(event.x == window.x()+ window.width() && event.y == window.y() && window.isCloseable()) {
+//                                removeWindow(id);
+//                                Curses.instance().cls();
+//                            }
                             window.handleClick(event);
                         }
                     }

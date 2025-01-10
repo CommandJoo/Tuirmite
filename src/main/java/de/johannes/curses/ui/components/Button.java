@@ -4,6 +4,8 @@ import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
 import de.johannes.curses.Mouse;
 import de.johannes.curses.ui.base.BoxComponent;
+import de.johannes.curses.util.Timer;
+
 import java.util.function.Consumer;
 
 public class Button extends BoxComponent {
@@ -14,11 +16,16 @@ public class Button extends BoxComponent {
     public Button() {}
 
     @Override
-    public void init() {}
+    public void init() {
+        this.selectedTimer = new Timer();
+    }
 
     @Override
     public void draw() {
         this.drawBox();
+        if(selectedTimer.check(150)) {
+            setSelected(false);
+        }
         if(selected) {
             Curses.instance().attron(CursesConstants.ATTRIB_REVERSE);
             this.drawCenteredString(width/2, height/2, text, color);
@@ -34,11 +41,19 @@ public class Button extends BoxComponent {
         return false;
     }
 
+    private Timer selectedTimer;
+
     @Override
     public boolean handleClick(Mouse mouse) {
-        if(executor() != null) {
-            executor().accept(mouse);
-            return true;
+        if(!mouse.check(Mouse.BUTTON1_RELEASED)) {
+            if(!selected()) {
+                setSelected(true);
+                selectedTimer.reset();
+                if(executor() != null) {
+                    executor().accept(mouse);
+                    return true;
+                }
+            }
         }
         return false;
     }

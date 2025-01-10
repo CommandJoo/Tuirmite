@@ -32,7 +32,9 @@ public class Checkbox extends BoxComponent {
 
     @Override
     public boolean handleClick(Mouse mouse) {
-        setSelected(!selected);
+        if(!mouse.check(Mouse.BUTTON1_RELEASED)) {
+            setSelected(!selected);
+        }
         return true;
     }
 
