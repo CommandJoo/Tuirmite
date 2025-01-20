@@ -40,7 +40,6 @@ public class Link extends TextComponent {
 
     @Override
     public boolean handleClick(Mouse mouse) {
-        System.exit(-1);
         return false;
     }
 }

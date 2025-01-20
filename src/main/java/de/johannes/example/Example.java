@@ -128,7 +128,8 @@ public class Example extends Window {
                         .color(color)
                         .text("Hello, This is a really long sentence, however it will scroll so you can read it all!")
                         .build(ScrollingText::new)
-                        .width(20);
+                        .width(20)
+                        .scrollSpeedMillis(100);
 
                 addComponent(4, scrollingText);
             }

@@ -5,9 +5,17 @@ import de.johannes.curses.ui.base.TextComponent;
 import de.johannes.curses.util.Timer;
 
 public class ScrollingText extends TextComponent {
+
+    private int speed = 100;
+
     @Override
     public void init() {
         this.scrollTimer = new Timer();
+    }
+
+    public ScrollingText scrollSpeedMillis(int millis) {
+        this.speed = millis;
+        return this;
     }
 
     private Timer scrollTimer;
@@ -15,11 +23,11 @@ public class ScrollingText extends TextComponent {
 
     @Override
     public void draw() {
-        if(offset+width < text.length() && scrollTimer.check(100)) {
+        if(offset+width < text.length() && scrollTimer.check(speed)) {
             offset++;
             scrollTimer.reset();
         }
-        else if(offset+width >= text.length() && scrollTimer.check(1500)) {
+        else if(offset+width >= text.length() && scrollTimer.check(15*speed)) {
             offset = -15;
             scrollTimer.reset();
         }
