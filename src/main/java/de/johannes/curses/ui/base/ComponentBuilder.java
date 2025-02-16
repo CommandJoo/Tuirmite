@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 public class ComponentBuilder<T extends Component> {
 
     protected Window parent;
-    protected int x,y, color = -1;
+    protected int x,y, color, hoverColor = -1;
 
     public static <T extends Component> ComponentBuilder<T> create(Class<T> clazz) {
         return new ComponentBuilder<T>();
@@ -38,6 +38,12 @@ public class ComponentBuilder<T extends Component> {
         return builder;
     }
 
+    public ComponentBuilder<T> hoverColor(int color) {
+        ComponentBuilder<T> builder = createBuilder();
+        builder.hoverColor = color;
+        return builder;
+    }
+
     protected ComponentBuilder<T> createBuilder() {
         ComponentBuilder<T> builder = new ComponentBuilder<T>();
         builder.x = x;
@@ -54,8 +60,15 @@ public class ComponentBuilder<T extends Component> {
         obj.y = y;
         if(color == -1) {
             obj.color = parent.color;
+            obj.originalColor = parent.color;
         }else {
             obj.color = color;
+            obj.originalColor = color;
+        }
+        if(hoverColor == -1) {
+            obj.hoverColor = parent.hoverColor;
+        }else {
+            obj.hoverColor = hoverColor;
         }
         obj.init();
         return obj;

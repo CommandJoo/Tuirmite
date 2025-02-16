@@ -39,6 +39,12 @@ public class WindowBuilder<T extends Window> extends BoxComponentBuilder<T> {
         return builder;
     }
 
+    public WindowBuilder<T> hoverColor(int color) {
+        WindowBuilder<T> builder = createBuilder();
+        builder.hoverColor = color;
+        return builder;
+    }
+
     public WindowBuilder<T> bounds(int width, int height) {
         WindowBuilder<T> builder = createBuilder();
         builder.width  = width;
@@ -56,8 +62,15 @@ public class WindowBuilder<T extends Window> extends BoxComponentBuilder<T> {
         obj.height = height;
         if(color == -1) {
             obj.color = parent.color;
+            obj.originalColor = parent.color;
         }else {
             obj.color = color;
+            obj.originalColor = color;
+        }
+        if(hoverColor == -1) {
+            obj.hoverColor = parent != null ? parent.hoverColor : obj.color;
+        }else {
+            obj.hoverColor = hoverColor;
         }
         obj.rounded = rounded;
         obj.init();
@@ -75,6 +88,7 @@ public class WindowBuilder<T extends Window> extends BoxComponentBuilder<T> {
         builder.rounded = rounded;
         builder.parent = parent;
         builder.color = color;
+        builder.hoverColor = hoverColor;
         return builder;
     }
 }

@@ -34,6 +34,12 @@ public class BoxComponentBuilder<T extends BoxComponent> extends ComponentBuilde
         return builder;
     }
 
+    public BoxComponentBuilder<T> hoverColor(int color) {
+        BoxComponentBuilder<T> builder = createBuilder();
+        builder.hoverColor = color;
+        return builder;
+    }
+
     public BoxComponentBuilder<T> bounds(int width, int height) {
         BoxComponentBuilder<T> builder = createBuilder();
         builder.width  = width;
@@ -50,8 +56,15 @@ public class BoxComponentBuilder<T extends BoxComponent> extends ComponentBuilde
         obj.height = height;
         if(color == -1) {
             obj.color = parent.color;
+            obj.originalColor = parent.color;
         }else {
             obj.color = color;
+            obj.originalColor = color;
+        }
+        if(hoverColor == -1) {
+            obj.hoverColor = parent.hoverColor;
+        }else {
+            obj.hoverColor = hoverColor;
         }
         obj.rounded = rounded;
         obj.init();
@@ -67,6 +80,7 @@ public class BoxComponentBuilder<T extends BoxComponent> extends ComponentBuilde
         builder.height = height;
         builder.parent = parent;
         builder.color = color;
+        builder.hoverColor = hoverColor;
         builder.rounded = rounded;
         return builder;
     }

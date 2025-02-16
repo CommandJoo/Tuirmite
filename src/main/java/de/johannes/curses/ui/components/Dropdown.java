@@ -5,6 +5,7 @@ import de.johannes.curses.CursesConstants;
 import de.johannes.curses.Keys;
 import de.johannes.curses.Mouse;
 import de.johannes.curses.ui.base.BoxComponent;
+import de.johannes.curses.util.Pair;
 
 public class Dropdown extends BoxComponent {
 
@@ -95,6 +96,10 @@ public class Dropdown extends BoxComponent {
 
     @Override
     public boolean handleHover(int x, int y) {
+        if(inBounds(x,y)) {
+            Pair<Integer, Integer> mouse = insideCoordinates(x, y);
+            index = mouse.value2()-1;
+        }
         return false;
     }
 }

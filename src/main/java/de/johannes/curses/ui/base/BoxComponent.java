@@ -2,6 +2,7 @@ package de.johannes.curses.ui.base;
 
 import de.johannes.curses.Curses;
 import de.johannes.curses.ui.UI;
+import de.johannes.curses.util.Pair;
 
 public abstract class BoxComponent extends Component {
 
@@ -54,8 +55,21 @@ public abstract class BoxComponent extends Component {
     }
 
     public boolean inBounds(int x, int y) {
-        return x >= this.x && y >= this.y &&
-                x <= this.x+this.width && y <= this.y+this.height;
+        return x >= this.x() && y >= this.y() && x <= this.x()+this.width && y <= this.y()+this.height;
+    }
+
+    public Pair<Integer, Integer> insideCoordinates(int realX, int realY) {
+        return new Pair<>(realX-this.x, realY-this.y);
+    }
+
+    @Override
+    public boolean handleHover(int x, int y) {
+        if(inBounds(x,y)) {
+            setColor(hoverColor);
+        }else {
+            setColor(originalColor);
+        }
+        return false;
     }
 }
 

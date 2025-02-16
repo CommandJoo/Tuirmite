@@ -169,6 +169,15 @@ public class Example extends Window {
 
             @Override
             public boolean handleHover(int x, int y) {
+                if(inBounds(x,y)) {
+                    setColor("#FF00FF");
+                    for(Component component : this.getComponents()) {
+                        component.handleHover(x, y);
+                    }
+                    return true;
+                }else{
+                    setColor(CursesConstants.DARK_CYAN);
+                }
                 return false;
             }
         };
@@ -206,12 +215,7 @@ public class Example extends Window {
 
     @Override
     public boolean handleHover(int x, int y) {
-        if(inBounds(x, y)) {
-            setColor("#FF0000");
-            return true;
-        }else{
-            setColor(CursesConstants.DARK_CYAN);
-        }
+        super.handleHover(x,y);
         return false;
     }
 }

@@ -3,6 +3,7 @@ package de.johannes.curses.ui;
 import de.johannes.curses.Curses;
 import de.johannes.curses.Keys;
 import de.johannes.curses.Mouse;
+import de.johannes.curses.MouseLocation;
 import de.johannes.curses.util.ColorBuilder;
 import de.johannes.curses.util.Timer;
 import de.johannes.curses.ui.components.Window;
@@ -101,6 +102,8 @@ public class WindowManager {
                             for(Integer id : windows.keySet()) {
                                 Window window = windows.get(id);
                                 window.handleHover(event.x, event.y);
+                                MouseLocation.x = event.x;
+                                MouseLocation.y = event.y;
                             }
                         }else{
                             for(Integer id : windows.keySet()) {

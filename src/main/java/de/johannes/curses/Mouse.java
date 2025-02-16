@@ -33,5 +33,4 @@ public class Mouse {
     public boolean check(int key) {
         return (state & key) != 0;
     }
-
 }

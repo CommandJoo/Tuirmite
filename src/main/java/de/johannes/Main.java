@@ -18,7 +18,7 @@ public class Main {
         winman.render();
         winman.handleKey();
 
-        Window example = new WindowBuilder<Example>().color(CursesConstants.DARK_CYAN).at(Curses.width()/2-Curses.width()/6,Curses.height()/2-Curses.height()/4).bounds(Curses.width()/3, Curses.height()/2).rounded(true).title("Example").build(Example::new).closeable(true);
+        Window example = new WindowBuilder<Example>().color(CursesConstants.DARK_CYAN).hoverColor(CursesConstants.LIGHT_RED).at(Curses.width()/2-Curses.width()/6,Curses.height()/2-Curses.height()/4).bounds(Curses.width()/3, Curses.height()/2).rounded(true).title("Example").build(Example::new).closeable(true);
         winman.addWindow(0, example);
         winman.addKeyHandler((ch, key) -> {
             if(ch=='q') {

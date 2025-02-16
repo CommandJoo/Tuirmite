@@ -33,6 +33,12 @@ public class TextComponentBuilder<T extends TextComponent> extends ComponentBuil
         return builder;
     }
 
+    public TextComponentBuilder<T> hoverColor(int color) {
+        TextComponentBuilder<T> builder = createBuilder();
+        builder.hoverColor = color;
+        return builder;
+    }
+
     public T build(Supplier<T> supp) {
         T obj = supp.get();
         obj.parent = parent;
@@ -43,8 +49,15 @@ public class TextComponentBuilder<T extends TextComponent> extends ComponentBuil
         obj.height = 1;
         if(color == -1) {
             obj.color = parent.color;
+            obj.originalColor = parent.color;
         }else {
             obj.color = color;
+            obj.originalColor = color;
+        }
+        if(hoverColor == -1) {
+            obj.hoverColor = parent.hoverColor;
+        }else {
+            obj.hoverColor = hoverColor;
         }
         obj.init();
         return obj;
@@ -58,6 +71,7 @@ public class TextComponentBuilder<T extends TextComponent> extends ComponentBuil
         builder.text = text;
         builder.parent = parent;
         builder.color = color;
+        builder.hoverColor = hoverColor;
         return builder;
     }
 }

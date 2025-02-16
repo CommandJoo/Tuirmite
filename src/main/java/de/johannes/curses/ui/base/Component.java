@@ -10,13 +10,16 @@ public abstract class Component {
 
     protected Window parent;
     protected int x, y;
-    protected int color;
+    protected int color, originalColor, hoverColor;
+    protected int renderColor;
 
     public Component() {
         this.parent = null;
         this.x = Integer.MIN_VALUE;
         this.y = Integer.MIN_VALUE;
         this.color = CursesConstants.WHITE;
+        this.originalColor = this.color;
+        this.hoverColor = CursesConstants.BLACK;
     }
 
     public Window parent() {

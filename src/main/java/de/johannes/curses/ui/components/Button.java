@@ -3,6 +3,7 @@ package de.johannes.curses.ui.components;
 import de.johannes.curses.Curses;
 import de.johannes.curses.CursesConstants;
 import de.johannes.curses.Mouse;
+import de.johannes.curses.MouseLocation;
 import de.johannes.curses.ui.base.BoxComponent;
 import de.johannes.curses.util.Timer;
 
