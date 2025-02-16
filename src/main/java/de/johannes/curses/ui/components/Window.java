@@ -23,7 +23,7 @@ public abstract class Window extends BoxComponent {
     private final HashMap<Integer, Component> components;
     private boolean closeable;
 
-    public Window(Window parent, String title, int x, int y, int width, int height, int color) {
+    public Window(Window parent, String title, int x, int y, int width, int height, int color, int hoverColor) {
         this();
         this.parent = parent;
         this.title = title;
@@ -32,6 +32,8 @@ public abstract class Window extends BoxComponent {
         this.width = width;
         this.height = height;
         this.color = color;
+        this.originalColor = color;
+        this.hoverColor = hoverColor;
         this.init();
     }
 
@@ -81,6 +83,15 @@ public abstract class Window extends BoxComponent {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean handleHover(int x, int y) {
+        boolean b = super.handleHover(x,y);
+        for(Component component : this.getComponents()) {
+            component.handleHover(x,y);
+        }
+        return b;
     }
 
     public void drawComponent(Component comp) {

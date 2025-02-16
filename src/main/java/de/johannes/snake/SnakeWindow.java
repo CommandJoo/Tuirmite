@@ -26,7 +26,7 @@ public class SnakeWindow extends Window {
     private static final int START_SIZE = 4;
 
     public SnakeWindow(Window parent, String title, int x, int y, int width, int height, int color) {
-        super(parent, title, x, y, width, height, color);
+        super(parent, title, x, y, width, height, color, color);
         this.gameTimer = new Timer();
         this.player = new ArrayList<>();
         this.food = new ArrayList<>();

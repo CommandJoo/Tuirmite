@@ -77,7 +77,7 @@ public class Example extends Window {
                 .append(Text.of(" + Appended Text").format("#77AF99").attrib(CursesConstants.ATTRIB_ITALIC));
         addComponent(6, text);
 
-        Window sub = new Window(this, "Sub Window", width/2, 1, width/2-1,height-2 ,color) {
+        Window sub = new Window(this, "Sub Window", width/2, 1, width/2-1,height-2 ,color, hoverColor) {
             @Override
             public void init() {
                 Button btn = new BoxComponentBuilder<Button>()
@@ -107,6 +107,7 @@ public class Example extends Window {
                         .bounds(9, 0)
                         .parent(this)
                         .color(color())
+                        .hoverColor(hoverColor)
                         .build(Dropdown::new)
                         .values("1", "2", "3", "4", "E", "F", "G");
 
@@ -169,15 +170,7 @@ public class Example extends Window {
 
             @Override
             public boolean handleHover(int x, int y) {
-                if(inBounds(x,y)) {
-                    setColor("#FF00FF");
-                    for(Component component : this.getComponents()) {
-                        component.handleHover(x, y);
-                    }
-                    return true;
-                }else{
-                    setColor(CursesConstants.DARK_CYAN);
-                }
+                super.handleHover(x,y);
                 return false;
             }
         };

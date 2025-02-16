@@ -59,7 +59,7 @@ public abstract class BoxComponent extends Component {
     }
 
     public Pair<Integer, Integer> insideCoordinates(int realX, int realY) {
-        return new Pair<>(realX-this.x, realY-this.y);
+        return new Pair<>(realX-this.x(), realY-this.y());
     }
 
     @Override

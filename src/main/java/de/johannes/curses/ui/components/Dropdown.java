@@ -96,9 +96,12 @@ public class Dropdown extends BoxComponent {
 
     @Override
     public boolean handleHover(int x, int y) {
-        if(inBounds(x,y)) {
+        super.handleHover(x,y);
+        if(inBounds(x,y) && isOpen()) {
             Pair<Integer, Integer> mouse = insideCoordinates(x, y);
-            index = mouse.value2()-1;
+            if(mouse.value2()-1 < values.length) {
+                index = mouse.value2()-1;
+            }
         }
         return false;
     }
