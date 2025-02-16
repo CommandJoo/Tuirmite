@@ -92,4 +92,9 @@ public class Dropdown extends BoxComponent {
         }
         return false;
     }
+
+    @Override
+    public boolean handleHover(int x, int y) {
+        return false;
+    }
 }

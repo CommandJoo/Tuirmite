@@ -151,4 +151,9 @@ public class SnakeWindow extends Window {
         }
         return false;
     }
+
+    @Override
+    public boolean handleHover(int x, int y) {
+        return false;
+    }
 }

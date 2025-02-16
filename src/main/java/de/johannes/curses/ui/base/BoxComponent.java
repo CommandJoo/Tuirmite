@@ -18,7 +18,6 @@ public abstract class BoxComponent extends Component {
     public int width() {
         return width;
     }
-
     public int height() {
         return height;
     }
@@ -42,7 +41,6 @@ public abstract class BoxComponent extends Component {
         Curses.instance().drawCorner(x(), y()+height(), 3, color, rounded);
         Curses.instance().drawCorner(x()+width(), y()+height(), 0, color, rounded);
     }
-
     public void drawDecoration(int x, boolean bottom, boolean parens, String deco, int color) {
         int width = deco.length() + 4;//+4 because of two space characters and two tees
         int correction = deco.length() % 2 == 0 ? 1 : 0;
@@ -53,6 +51,11 @@ public abstract class BoxComponent extends Component {
         }else {
             drawString(x + 1 + correction, bottom ? this.height() : 0, "( " + deco + " )", color);
         }
+    }
+
+    public boolean inBounds(int x, int y) {
+        return x >= this.x && y >= this.y &&
+                x <= this.x+this.width && y <= this.y+this.height;
     }
 }
 

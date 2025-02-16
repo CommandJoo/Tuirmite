@@ -166,6 +166,11 @@ public class Example extends Window {
                 }
                 return false;
             }
+
+            @Override
+            public boolean handleHover(int x, int y) {
+                return false;
+            }
         };
         addComponent(7, sub);
     }
@@ -195,6 +200,17 @@ public class Example extends Window {
                     }
                 }
             }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean handleHover(int x, int y) {
+        if(inBounds(x, y)) {
+            setColor("#FF0000");
+            return true;
+        }else{
+            setColor(CursesConstants.DARK_CYAN);
         }
         return false;
     }

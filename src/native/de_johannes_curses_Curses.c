@@ -24,6 +24,7 @@ JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_init(JNIEnv *env,
   noecho();
   keypad(keywin, TRUE);
   mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, NULL);
+  printf("\033[?1003h\n");
   curs_set(0);
   set_escdelay(0);
   // set pre-definied colors
@@ -43,6 +44,7 @@ JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_init(JNIEnv *env,
 JNIEXPORT void JNICALL Java_de_johannes_curses_Curses_destroy(JNIEnv *,
                                                               jobject) {
   mousemask(0, NULL);
+  printf("\033[?1003l\n");
   clear();
   curs_set(1);
   endwin();

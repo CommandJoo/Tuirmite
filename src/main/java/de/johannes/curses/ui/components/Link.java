@@ -42,4 +42,9 @@ public class Link extends TextComponent {
     public boolean handleClick(Mouse mouse) {
         return false;
     }
+
+    @Override
+    public boolean handleHover(int x, int y) {
+        return false;
+    }
 }

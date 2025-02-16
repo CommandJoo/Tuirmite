@@ -28,5 +28,10 @@ public class ColorTest extends Window {
     public boolean handleKey(char ch) {
         return false;
     }
+
+    @Override
+    public boolean handleHover(int x, int y) {
+        return false;
+    }
 }
 

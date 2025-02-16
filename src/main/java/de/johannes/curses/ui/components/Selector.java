@@ -47,4 +47,9 @@ public class Selector extends BoxComponent {
     public boolean handleClick(Mouse mouse) {
         return false;
     }
+
+    @Override
+    public boolean handleHover(int x, int y) {
+        return false;
+    }
 }

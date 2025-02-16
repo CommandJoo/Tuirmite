@@ -74,6 +74,11 @@ public class TextField extends BoxComponent {
     @Override
     public boolean handleClick(Mouse mouse) {return false;}
 
+    @Override
+    public boolean handleHover(int x, int y) {
+        return false;
+    }
+
     public String input() {
         return input.toString();
     }

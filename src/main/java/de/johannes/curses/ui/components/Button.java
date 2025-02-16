@@ -58,6 +58,11 @@ public class Button extends BoxComponent {
         return false;
     }
 
+    @Override
+    public boolean handleHover(int x, int y) {
+        return false;
+    }
+
     public Button setText(String text) {
         this.text = text;
         return this;

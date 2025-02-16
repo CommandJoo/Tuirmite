@@ -44,6 +44,11 @@ public class ScrollingText extends TextComponent {
         return false;
     }
 
+    @Override
+    public boolean handleHover(int x, int y) {
+        return false;
+    }
+
     public ScrollingText width(int width) {
         this.width = width;
         return this;

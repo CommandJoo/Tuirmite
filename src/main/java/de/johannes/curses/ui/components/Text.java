@@ -106,6 +106,11 @@ public class Text extends TextComponent {
         return false;
     }
 
+    @Override
+    public boolean handleHover(int x, int y) {
+        return false;
+    }
+
     private static void alloff() {
         Curses curses = Curses.instance();
         curses.attroff(CursesConstants.ATTRIB_REVERSE);

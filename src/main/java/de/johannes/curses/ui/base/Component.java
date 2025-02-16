@@ -39,7 +39,7 @@ public abstract class Component {
     public abstract void draw();
     public abstract boolean handleKey(char ch);
     public abstract boolean handleClick(Mouse mouse);
-
+    public abstract boolean handleHover(int x, int y);
     public void drawString(int x, int y, String s, int color) {
         UI.drawString(s, this.x() + x, this.y() + y, color);
     }

@@ -38,6 +38,11 @@ public class Checkbox extends BoxComponent {
         return true;
     }
 
+    @Override
+    public boolean handleHover(int x, int y) {
+        return false;
+    }
+
     public void setSelected(boolean selected) {
         this.selected = selected;
     }

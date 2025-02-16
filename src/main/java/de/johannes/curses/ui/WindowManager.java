@@ -97,13 +97,16 @@ public class WindowManager {
                         }
                     }else {
                         Mouse event = Curses.instance().getMouseEvent();
-                        for(Integer id : windows.keySet()) {
-                            Window window = windows.get(id);
-//                            if(event.x == window.x()+ window.width() && event.y == window.y() && window.isCloseable()) {
-//                                removeWindow(id);
-//                                Curses.instance().cls();
-//                            }
-                            window.handleClick(event);
+                        if(event.state == 268435456) {
+                            for(Integer id : windows.keySet()) {
+                                Window window = windows.get(id);
+                                window.handleHover(event.x, event.y);
+                            }
+                        }else{
+                            for(Integer id : windows.keySet()) {
+                                Window window = windows.get(id);
+                                window.handleClick(event);
+                            }
                         }
                     }
                 }
